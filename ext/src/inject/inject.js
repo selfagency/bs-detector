@@ -121,14 +121,27 @@ chrome.extension.sendMessage({}, function(response) {
 		];
 
 		function linkWarning() {
+			var aTags = $('a');
+			$.each(aTags, function(index, tag) {
+				var url = $(tag).attr('href');
+				if (url) {
+					var cleanUrl = url.toLowerCase;
+					$(this).attr('href', cleanUrl);
+				};
+			});
 			$.each(links, function(index, url) {
-				$('a[name*="' + url + '"]').each(function() {
-					console.log(this);
-					$(this).addClass('link-warning');
+				var badLink = 'a[href*="' + url + '"]';
+				$(badLink).each(function() {
+					$(this).addClass('hint--error hint--large hint--bottom');
+					$(this).attr('aria-label', 'This website is considered a questionable source.');
 				});
 			});
 		};
 		linkWarning();
+
+		$(window).scroll(function() {
+			linkWarning();
+		});
 	}
 	}, 10);
 });
