@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - width demos</title>
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+  <link type="text/css" href="jquery.foobar.2.1-widths.css" rel="Stylesheet" />
+  <style type="text/css">
+    .foobar-container-left { background-color: #828277 !important; }
+    .foobar-close-button-spacer { background-color:#D4E8C1 !important; }
+    .foobar-container-center { background-color: #8DB87C !important; }
+    .foobar-container-right { background-color:#F5D769 !important; }
+    .foobar-close-button-container { background-color:#ED8A3F !important; }
+  </style>
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $foobar({
+        "messages": ["Message 1", "Message 2", "Message 3", "Message 4", "Message 5"]
+      });
+
+      $(".demo-fixed-center").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "width": {
+            "left": "*",
+            "center": "500px",
+            "right": "*",
+            "button": "80px"
+          },
+          "display": {
+            "button": {
+              "spacer": true
+            }
+          }
+        });
+      });
+
+      $(".demo-fixed-sides").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "width": {
+            "left": "200px",
+            "center": "*",
+            "right": "200px",
+            "button": "80px"
+          },
+          "display": {
+            "button": {
+              "spacer": true
+            }
+          }
+        });
+      });
+
+      $(".demo-no-sides").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "width": {
+            "left": "0",
+            "center": "*",
+            "right": "0",
+            "button": "80px"
+          },
+          "display": {
+            "button": {
+              "spacer": true
+            }
+          }
+        });
+      });
+
+      $(".demo-no-sides-spacer").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "width": {
+            "left": "0",
+            "center": "*",
+            "right": "0",
+            "button": "80px"
+          },
+          "display": {
+            "button": {
+              "spacer": false
+            }
+          }
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>Width Demos</h2>
+	  <p>We had some requests to be able to control the various foobar section widths in a smarter way. So you can now use * to tell a foobar section to auto fill any remaining space. Multiple sections with * set as the width will divide up any remaining space and share it evenly.</p>
+    <p>The only width which must have a valid value set (px, %, etc.) is that of the button. If the value is set to null or * there will be rendering issues and the button may not be displayed at all.</p>
+	  <p>To be able to make full use of the width options you must first understand how the bar is constructed. There are 5 main sections of the bar, the below lists these and the colour they will appear as on this demo page.</p>
+	  <ul class="colors">
+	    <li><span class="color" style="background-color:#828277;"></span> left</li>
+	    <li><span class="color" style="background-color:#D4E8C1;"></span> button spacer</li>
+	    <li><span class="color" style="background-color:#8DB87C;"></span> center</li>
+	    <li><span class="color" style="background-color:#F5D769;"></span> right</li>
+	    <li><span class="color" style="background-color:#ED8A3F;"></span> button</li>
+	  </ul>
+	  <p>The only section that you cannot change the width of directly is the button spacer. This is dynamically generated if the <strong>display.button.spacer</strong> option is set to 'true', which it is by default, and will be the same width as the button but positioned immediately opposite it. This spacer was added to allow messages to be exactly centered within a page while still being able to use the * value for fluid layouts.</p>
+    <br />
+    <p>The below are some examples of how you can now adjust the widths of the foobar. Once you click on a demo resize your browser to see the effect.</p>
+    <br />
+    
+	  <h3 id="width_fixed_center">Fixed Center & Fluid Sides</h3>
+	  <p>The below example shows how you can set the widths of the bar so that the center section which displays the messages has a fixed width while the sides auto fill the remaining space.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "width": {
+    "left": "*",
+    "center": "500px",
+    "right": "*",
+    "button": "80px"
+  }
+});
+</pre>
+      <a class="demo-link demo-fixed-center" href="#">fixed center</a>
+    </div>
+	  <br />
+    
+	  <h3 id="width_fixed_sides">Fixed Sides & Fluid Center</h3>
+	  <p>The below example shows how you can set the widths of the bar so that the sides are set to a fixed width while the center auto fills the remaining space.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "width": {
+    "left": "200px",
+    "center": "*",
+    "right": "200px",
+    "button": "80px"
+  }
+});
+</pre>
+      <a class="demo-link demo-fixed-sides" href="#">fixed sides</a>
+    </div>
+	  <br />
+    
+	  <h3 id="width_no_sides">No Sides</h3>
+	  <p>The below example shows how you can set the widths of the bar so that the sides are hidden while the center auto fills the remaining space.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "width": {
+    "left": "0",
+    "center": "*",
+    "right": "0",
+    "button": "80px"
+  }
+});
+</pre>
+      <a class="demo-link demo-no-sides" href="#">no sides</a>
+    </div>
+	  <p>If you want you can remove the button spacer so the center extends right up to the outer left or right edge depending which side the button is positioned. Just note that the message is no longer exactly centered.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "width": {
+    "left": "0",
+    "center": "*",
+    "right": "0",
+    "button": "80px"
+  },
+  "display": {
+    "button": {
+      "spacer": false
+    }
+  }
+});
+</pre>
+      <a class="demo-link demo-no-sides-spacer" href="#">no sides or spacer</a>
+    </div>
+	  <br />
+
+	</div>
+  
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2011 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+
+</div>
+</body>
+</html>

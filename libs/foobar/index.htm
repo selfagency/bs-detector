@@ -1,0 +1,1085 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - Notification bars, done right!</title>
+	<link type="text/css" href="css/styles.css" rel="stylesheet" />
+	<link type="text/css" href="foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <style type="text/css">
+    #social_target { margin-left:20px; }
+    ul.socialbuttons { height: 32px; padding: 0 !important; margin:0 !important; }
+    ul.socialbuttons li { padding:6px !important; float: left; list-style: none !important; }  
+  </style>
+  <script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="foobar/jquery.foobar.2.1.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      /* Small bit of JS to enable the tabs */
+      $('.tab').click(function(e) {
+        e.preventDefault();
+        $('.tab').removeClass('selected');
+        var tab = $(this).addClass('selected').attr('href');
+        $('.tab-content').hide();
+        $(tab).show();
+      });
+      var selected = $('.tab.selected').attr('href');
+      $(selected).show();
+      
+      /* setup social buttons */
+      setupSocialButtons();
+      
+      /* The foobar constructor call */
+      $.foobar({
+        "display" : {
+          "theme" : { "bar" : "x-white" },
+          "type" : "delayed",
+          "delay" : 2000
+        },
+        "message" : {
+          "navigation" : true
+        },
+        "messages": [
+          "Welcome! Let me introduce myself...",
+          "I am the foobar!", 
+          "a neat and simple notification bar that sits at the top (or the bottom) of the page.", 
+          "with 80+ options to help customize the look and feel",
+          "check out these <a href='demos/custom.htm' target='_blank'>custom styling demos</a> to see what you can do!"
+        ],
+        "social" : {
+          "text" : "Follow Us:",
+          "profiles": [
+            { "name" : "Facebook", "url" : "http://www.facebook.com/themergency", "image" : "images/social/facebook.png", "target" : "_blank" },
+            { "name" : "Twitter", "url" : "http://www.twitter.com/themergency", "image" : "images/social/twitter.png", "target" : "_blank" },
+            { "name" : "RSS", "url" : "http://feeds2.feedburner.com/themergency", "image" : "images/social/social-rss.png", "target" : "_blank" }
+          ]
+        },
+        "events": {
+          expanding: function(o){
+            $("#console").append('expanding\n');
+          },
+          collapsing: function(o){
+            $("#console").append('collapsing\n');
+          },
+          setExpanded: function(o){
+            $("#console").append('setExpanded\n');
+          },
+          setCollapsed: function(o){
+            $("#console").append('setCollapsed\n');
+          },
+          preRender: function(o){
+            $("#console").append('preRender\n');
+          },           
+          postRender: function(o){
+            $("#console").append('postRender\n');
+          }         
+        }
+      });
+    });
+    
+    function setupSocialButtons() {
+      var url = 'http://themergency.com/foobar/index.htm';
+      
+      var $target = $("#social_target");
+      
+      var $ul = $('<ul class="socialbuttons"></ul>');
+      
+      $target.append($ul);
+
+      var tweet = 'Check out this #jQuery plugin to create awesome notification bars : FooBar - http://themergency.com/foobar/';
+      var twitter = 'themergency';
+
+      //add tweet HTML
+      var $twitter_li = $('<li/>')
+        .hide()
+        .append('<a href="http://twitter.com/share" class="twitter-share-button" data-text="'+tweet+'" data-count="horizontal" data-via="'+twitter+'">Tweet</a>')
+        .appendTo($ul);
+    
+      //add google+1 HTML
+      var $google_li = $('<li/>')
+        .hide()
+        .append('<g:plusone size="medium" href="'+url+'" count="true"></g:plusone>')
+        .appendTo($ul);
+        
+      var facebook_app_id = '125102657580278';
+        
+      //add facebook HTML
+      var $facebook_li = $('<li/>').hide()
+        .append('<iframe src="http://www.facebook.com/plugins/like.php?app_id='+facebook_app_id+'&amp;href='+encodeURIComponent(url)+'&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>')
+        .appendTo($ul);
+     
+      //load twitter script
+      $.getScript('http://platform.twitter.com/widgets.js', function() {
+        
+        // Load Google Plus script
+        $.getScript('https://apis.google.com/js/plusone.js', function() {
+          
+          $target.removeClass("buttons_loading");
+          $facebook_li.show();
+          $google_li.show();
+          $twitter_li.show(); //show it
+          
+        });          
+      });
+    }
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script>
+</head>
+<body>
+<div id="wrapper">
+
+	<div id="header" class="cf">
+    <div class="cf">
+      <h1 class="left"><span>foo</span>bar <span class="small">v2.1</span></h1>
+      <a class="left getitnow" href="http://bit.ly/getfoobar"><img border="0" src="images/getitnow.png" /></a>
+    </div>
+		<p class="left">Notification bars, done right!</p>
+    <div class="left" id='social_target'></div>
+    <div class="in-action"></div>
+    
+	</div>
+	<div class="cf"></div>
+	<div id="content">
+    <ul id="tabs" class="cf">
+      <li><a href="#tab_content_overview" class="tab selected">Overview</a></li>
+      <li><a href="#tab_content_setup" class="tab">Setup</a></li>
+      <li><a href="#tab_content_options" class="tab">Options</a></li>
+      <li><a href="#tab_content_events" class="tab">Events</a></li>
+      <li><a href="#tab_content_methods" class="tab">Methods</a></li>
+      <li><a href="#tab_content_demos" class="tab">Demos</a></li>
+    </ul>
+    <div id="tab_content_overview" class="tab-content">
+      <h4>What is the foobar?</h4>
+      <p>Foobar is a neat and simple notification bar that sits at the top (or the bottom) of the page to inform or announce specific information to site visitors. With over 40 options, the foobar can be customized to look and function however you want. The collapsible bar can be used in an unlimited number of scenarios, including:
+      </p>
+      <ul>
+        <li>Displaying notifications</li>
+        <li>Showing site announcements</li>
+        <li>Product specials or offers</li>
+        <li>Competitions, giveaways, etc.</li>
+        <li>Anything you can think of, really :)</li>
+      </ul>
+      <h4>Major Features</h4>
+      <ul>
+        <li>Show multiple messages containing any HTML</li>
+        <li>Long messages scroll across into view</li>
+        <li>Navigation between messages</li>
+        <li>Position the bar at the top, bottom or inline</li>
+        <li>Totally customizable appearance via options (or custom CSS)</li>
+        <li>Define your bar dimensions and content widths</li>
+        <li>Includes 4 button themes</li>
+        <li>Load an RSS feed (uses the Google feed API support)</li>
+        <li>Load a Twitter feed (uses the Google feed API support)</li>
+        <li>Showcase your social profiles</li>
+        <li>Show the bar immediately, after a certain time or only when the page is scrolled</li>
+        <li>Cookie integration, so state is "remembered"</li>
+        <li>Custom HTML areas</li>
+      </ul>
+    </div>
+    <div id="tab_content_setup" class="tab-content">
+      <h4>How to setup</h4>
+      <p>Firstly, extract all the files and then upload to your server. Next, include the foobar javascript file together with jquery in your head tag. Also include a link to the foobar CSS stylesheet.</p>
+      <p>Foobar will work with any version of jQuery from 1.4.4 upwards, so if you already have a version included in your page do not include another just for the foobar.</p>
+      <pre class="code" lang="html">
+&lt;link type=&quot;text/css&quot; href=&quot;css/jquery.foobar.2.1.css&quot; rel=&quot;Stylesheet&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;scripts/jquery-1.7.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;scripts/jquery.foobar.2.1.min.js&quot;&gt;&lt;/script&gt;
+</pre>
+      <p>Now initialize the bar when the page has loaded, by placing some code in the head tag of your page. The simplest way to initialize the foobar can been seen in the following code:</p>  
+      <pre class="code" lang="html">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(function(){
+    $foobar('Hello World!');
+  });
+&lt;/script&gt;
+</pre>
+      <p>Or override the default foobar options by using something like this code instead:</p>
+      <pre class="code" lang="html">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(function(){
+    $foobar({
+      "position" : {
+        "bar" : "inline"
+      },
+      "display" : {
+        "type" : "delayed",
+        "delay" : 2000
+      },
+      "messages": [ 
+        "foobar! Notification bars, done right!", 
+        "You can display multiple messages with &lt;a href='#'&gt;links!&lt;/a&gt;"
+      ],
+      "social": {
+        "profiles": [{
+            "name": "facebook",
+            "url": "#foobar-facebook",
+            "image": "images/social/facebook.png"
+          },{
+            "name": "twitter",
+            "url": "#foobar-twitter",
+            "image": "images/social/twitter.png"
+        }]
+      }
+    });
+  });
+&lt;/script&gt;
+</pre>
+      <h4>Constructor Changes</h4>
+      <p>If you have previously used foobar you may have noticed that the constructor call has changed in the above examples. The original $.foobar() or jQuery.foobar() constructor will still work as expected, we have just decided to implement new constructors for better compatibility.</p>
+      <p>You can now use any of the below to initialize the foobar or call any of the various methods:</p>
+      <ul>
+        <li>$.foobar</li>
+        <li>jQuery.foobar</li>
+        <li>$foobar</li>
+        <li>foobar</li>
+      </ul>
+      <h4>Notes</h4>
+      <p>In the above code examples the call to the foobar constructor always takes place after the page has been loaded. This is accomplished using the <a href="http://api.jquery.com/ready/" target="_blank">jQuery ready method</a>. If the foobar constructor is called prior to the page being ready, nothing will appear at all.</p>
+      <p>The below shows just the ready method code, both the shortcut and full version:</p>
+      <h6>Shortcut Method (used above)</h6>
+      <pre class="code" lang="html">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(function(){
+    
+  });
+&lt;/script&gt;
+</pre>
+<h6>Full Method</h6>
+<pre class="code" lang="html">
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(document).ready(function(){
+    
+  });
+&lt;/script&gt;
+</pre>
+    </div>
+    <div id="tab_content_options" class="tab-content grid-options">
+      <p>Below is the full list of supported options available in the foobar showing the type and default value of each.</p>
+      <p><strong>PLEASE NOTE</strong> foobar options have been completely changed from previous versions. If you previously used foobar prior to V2, please use our <a href="utils/option_converter_1.8-2.0.html">options converter</a> to convert your options to be compatible with V2.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>option</th>
+            <th></th>
+            <th>description</th>
+            <th>type</th>
+            <th>default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="first-column">height</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">bar</td>
+            <td class="demo-column"></td>
+            <td>The height of the bar in pixels</td>
+            <td>Number</td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">button</td>
+            <td class="demo-column"></td>
+            <td>The height of the button in pixels, when the bar is collapsed</td>
+            <td>Number</td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <td class="first-column">width</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/width.htm" target="_blank" title="Open width demos"></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">left</td>
+            <td class="demo-column"></td>
+            <td>The width for the left section of the bar, this can either be the actual width (%, px, etc) or set to null or * (null and * will auto fill the remaining space equally dividing it with any other sections set to null or *).</td>
+            <td>String</td>
+            <td>"*"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">center</td>
+            <td class="demo-column"></td>
+            <td>The width for the center section of the bar, this can either be the actual width (%, px, etc) or set to null or * (null and * will auto fill the remaining space equally dividing it with any other sections set to null or *).</td>
+            <td>String</td>
+            <td>"50%"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">right</td>
+            <td class="demo-column"></td>
+            <td>The width for the right section of the bar, this can either be the actual width (%, px, etc) or set to null or * (null and * will auto fill the remaining space equally dividing it with any other sections set to null or *).</td>
+            <td>String</td>
+            <td>"*"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">button</td>
+            <td class="demo-column"></td>
+            <td>The width for the button section of the bar, this must be an actual width (%, px, etc).</td>
+            <td>String</td>
+            <td>"80px"</td>
+          </tr>
+          <tr>
+            <td class="first-column">position</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/position.htm" target="_blank" title="Open position demos"></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">bar</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/position.htm#position_bar" target="_blank" title="Open position.bar demo"></a></td>
+            <td>How the bar is positioned within the page (<strong>inline</strong> | <strong>top</strong> | <strong>bottom</strong>)</td>
+            <td>String</td>
+            <td>"top"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">button</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/position.htm#position_button" target="_blank" title="Open position.button demo"></a></td>
+            <td>Position of the open / close button (<strong>left</strong> | <strong>right</strong> | <strong>hidden</strong>)</td>
+            <td>String</td>
+            <td>"right"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">social</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/position.htm#position_social" target="_blank" title="Open position.social demo"></a></td>
+            <td>Position of the social button area (<strong>left</strong> | <strong>right</strong> | <strong>hidden</strong>)</td>
+            <td>String</td>
+            <td>"left"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">ignoreOffsetMargin</td>
+            <td class="demo-column"></td>
+            <td>If you have a plugin that hides the default WP admin bar or similar web parts and the foobar is not correctly positioning itself at the top or bottom of the page set this value to 'true' to force the foobar to render correctly.</td>
+            <td>Boolean</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td class="first-column">display</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display.htm" target="_blank" title="Open display demos"></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">type</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display.htm#display_type" target="_blank" title="Open display.type demo"></a></td>
+            <td>The initial state of the foobar (<strong>expanded</strong> | <strong>collapsed</strong> | <strong>delayed</strong> | <strong>onscroll</strong>)</td>
+            <td>String</td>
+            <td>"expanded"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">delay</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display.htm#display_type" target="_blank" title="Open display.delay demo"></a></td>
+            <td>Used in conjunction with the 'delayed' and 'onscroll' <strong>display.type</strong> options to determine the amount of time to wait before showing the bar</td>
+            <td>Number</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">speed</td>
+            <td class="demo-column"></td>
+            <td>The speed at which to scroll the bar into view</td>
+            <td>Number</td>
+            <td>200</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">backgroundColor</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display.htm#display_background_color" target="_blank" title="Open display.backgroundColor demo"></a></td>
+            <td>The CSS background color of the bar</td>
+            <td>String</td>
+            <td>"#6c9e00"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">border</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display.htm#display_border" target="_blank" title="Open display.border demo"></a></td>
+            <td>The CSS border styling for the bar</td>
+            <td>String</td>
+            <td>"solid 3px #FFF"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">button</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display_button.htm" target="_blank" title="Open display.button demos"></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">type</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display_button.htm#display_button_type" target="_blank" title="Open display.button.type demo"></a></td>
+            <td>The type of action the close button performs (<strong>toggle</strong> | <strong>close</strong>). If set to 'close' the bar will be collapsed and then destroyed when the user clicks the button</td>
+            <td>String</td>
+            <td>"toggle"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">spacer</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display_button.htm#display_button_spacer" target="_blank" title="Open display.button.spacer demo"></a></td>
+            <td>Whether or not to create another block the same size as the button on the opposite side of the bar to the button to ensure the messages remain centered</td>
+            <td>Boolean</td>
+            <td>true</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">backgroundColor</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display_button.htm#display_button_background_color" target="_blank" title="Open display.button.backgroundColor demo"></a></td>
+            <td>The CSS background color of the open button, if set to null this will inherit the background color of the bar</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">border</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display_button.htm#display_button_border" target="_blank" title="Open display.button.border demo"></a></td>
+            <td>The CSS border styling for the open button, if set to null this will inherit border of the bar</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">theme</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/themes.htm" target="_blank" title="Open display.theme demos"></a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">bar</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/themes.htm#display_theme_bar" target="_blank" title="Open display.theme.bar demo"></a></td>
+            <td>The theme used for the arrow buttons that are shown in the bar. (<strong>triangle-arrow</strong> | <strong>long-arrow</strong> | <strong>small-white-arrow</strong> | <strong>x-close</strong> or use your own custom theme)</td>
+            <td>String</td>
+            <td>"triangle-arrow"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">navigation</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/themes.htm#display_theme_navigation" target="_blank" title="Open display.theme.navigation demo"></a></td>
+            <td>The theme used for the navigation arrow buttons. (<strong>triangle-arrow</strong> | <strong>long-arrow</strong> | <strong>small-white-arrow</strong> | <strong>x-close</strong> or use your own custom theme), if set to null this will inherit the bar theme</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">easing</td>
+            <td class="demo-column"></td>
+            <td>
+              The type of easing used when expanding the bar or displaying the open button (<strong>swing</strong> | <strong>linear</strong>).
+              You can extend the default options by using libraries such as <a href="http://gsgd.co.uk/sandbox/jquery/easing/" target="_blank">jQuery Easing v1.3</a> which add additional effects.
+              Also please check out the <a href="http://api.jquery.com/animate/" target="_blank">jQuery docs</a> on the <i>.animate()</i> method for more info on easing.
+            </td>
+            <td>String</td>
+            <td>"swing"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">shadow</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/display.htm#display_shadow" target="_blank" title="Open display.shadow demo"></a></td>
+            <td>Show or hide the foobar shadows</td>
+            <td>Boolean</td>
+            <td>true</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">adjustPageHeight</td>
+            <td class="demo-column"></td>
+            <td>Whether or not the page height is adjusted to accommodate for the foobar so page content is not hidden when scrolled</td>
+            <td>Boolean</td>
+            <td>true</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">rtl</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/rtl.htm" target="_blank" title="Open display.rtl demo"></a></td>
+            <td>Whether or not to configure the bar for RTL languages. If true messages are scrolled from left to right and the social text is displayed to the right of the icons and right aligned</td>
+            <td>Boolean</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td class="first-column">cookie</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">enabled</td>
+            <td class="demo-column"></td>
+            <td>When set to <strong>true</strong> the state of the bar is stored in a client-side cookie (open or closed)</td>
+            <td>Boolean</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">name</td>
+            <td class="demo-column"></td>
+            <td>The name of the cookie. This is used to set the cookie and retrieve the cookie on the clients machine</td>
+            <td>String</td>
+            <td>"foobar-state"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">duration</td>
+            <td class="demo-column"></td>
+            <td>The number of days to store the cookie on the clients machine</td>
+            <td>Number</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">version</td>
+            <td class="demo-column"></td>
+            <td>If the user cookie version is not the same as the one provided the plugin will ignore any set cookie and force a reshow of the bar. It then creates a new cookie with the new version so it will be ignored just once.</td>
+            <td>Number</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td class="first-column">messages[]</td>
+            <td class="demo-column"></td>
+            <td>The array of messages to display in the bar. If only 1 message it will be displayed permanently otherwise the <strong>message.delay</strong> value is used to cycle through the array</td>
+            <td>Array</td>
+            <td>[]</td>
+          </tr>
+          <tr>
+            <td class="first-column">message</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">delay</td>
+            <td class="demo-column"></td>
+            <td>The delay between switching of messages (if more than 1 message is supplied)</td>
+            <td>Number</td>
+            <td>4000</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">fadeDelay</td>
+            <td class="demo-column"></td>
+            <td>The time it takes to transition to the next message (if more than 1 message is supplied)</td>
+            <td>Number</td>
+            <td>300</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">random</td>
+            <td class="demo-column"></td>
+            <td>Whether or not to randomly select messages to be displayed</td>
+            <td>Boolean</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">navigation</td>
+            <td class="demo-column"></td>
+            <td>Whether or not to display the navigation arrows (previous and next) when there are 2 or more messages</td>
+            <td>Boolean</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">cssClass</td>
+            <td class="demo-column"></td>
+            <td>The CSS class to apply to the messages. If this option is set the <strong>message.font</strong> options are ignored.</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">scroll</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">enabled</td>
+            <td class="demo-column"></td>
+            <td>Sets whether or not to allow extra length messages to be scrolled into view</td>
+            <td>Boolean</td>
+            <td>true</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">speed</td>
+            <td class="demo-column"></td>
+            <td>The pixels per second to scroll extra length messages into view (if the message does not fit by default)</td>
+            <td>Number</td>
+            <td>50</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">delay</td>
+            <td class="demo-column"></td>
+            <td>The delay between initially displaying a long message and the beginning of scrolling it</td>
+            <td>Number</td>
+            <td>2000</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">font</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">family</td>
+            <td class="demo-column"></td>
+            <td>The font family used for the messages</td>
+            <td>String</td>
+            <td>"Verdana"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">size</td>
+            <td class="demo-column"></td>
+            <td>The font size used for the messages</td>
+            <td>String</td>
+            <td>"10pt"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">color</td>
+            <td class="demo-column"></td>
+            <td>The font color used for the messages</td>
+            <td>String</td>
+            <td>"White"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">decoration</td>
+            <td class="demo-column"></td>
+            <td>The text decoration used for the messages</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">shadow</td>
+            <td class="demo-column"></td>
+            <td>The shadow for the messages</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">weight</td>
+            <td class="demo-column"></td>
+            <td>The font weight for the messages</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">aFont</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">family</td>
+            <td class="demo-column"></td>
+            <td>The font family of any links in the messages</td>
+            <td>String</td>
+            <td>"Verdana"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">size</td>
+            <td class="demo-column"></td>
+            <td>The font size of any links in the messages</td>
+            <td>String</td>
+            <td>"10pt"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">color</td>
+            <td class="demo-column"></td>
+            <td>The font color of any links in the messages</td>
+            <td>String</td>
+            <td>"LightYellow"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">decoration</td>
+            <td class="demo-column"></td>
+            <td>The text decoration of any links in the messages</td>
+            <td>String</td>
+            <td>"underline"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">shadow</td>
+            <td class="demo-column"></td>
+            <td>The shadow for any links in the messages</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">weight</td>
+            <td class="demo-column"></td>
+            <td>The font weight for any links in the messages</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-3">hover</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-4">family</td>
+            <td class="demo-column"></td>
+            <td>The font family of any links in the messages when hovered</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-4">size</td>
+            <td class="demo-column"></td>
+            <td>The font size of any links in the messages when hovered</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-4">color</td>
+            <td class="demo-column"></td>
+            <td>The font color of any links in the messages when hovered</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-4">decoration</td>
+            <td class="demo-column"></td>
+            <td>The text decoration of any links in the messages when hovered</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-4">shadow</td>
+            <td class="demo-column"></td>
+            <td>The shadow for any links in the messages when hovered</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-4">weight</td>
+            <td class="demo-column"></td>
+            <td>The font weight for any links in the messages when hovered</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column">leftHtml</td>
+            <td class="demo-column"></td>
+            <td>Custom html to append to the left side of the bar</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column">rightHtml</td>
+            <td class="demo-column"></td>
+            <td>Custom html to append to the right side of the bar</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column">social</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">text</td>
+            <td class="demo-column"></td>
+            <td>The text displayed in the social area</td>
+            <td>String</td>
+            <td>"Follow us:"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">cssClass</td>
+            <td class="demo-column"></td>
+            <td>The CSS class to apply to the social links. If this option is set the <strong>social.font</strong> options are ignored.</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">font</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">family</td>
+            <td class="demo-column"></td>
+            <td>The font family of the text in the social area</td>
+            <td>String</td>
+            <td>"Verdana"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">size</td>
+            <td class="demo-column"></td>
+            <td>The font size of the text in the social area</td>
+            <td>String</td>
+            <td>"10pt"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">color</td>
+            <td class="demo-column"></td>
+            <td>The font color of the text in the social area</td>
+            <td>String</td>
+            <td>"White"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">decoration</td>
+            <td class="demo-column"></td>
+            <td>The text decoration of the text in the social area</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">shadow</td>
+            <td class="demo-column"></td>
+            <td>The text shadow of the text in the social area</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">weight</td>
+            <td class="demo-column"></td>
+            <td>The font weight of the text in the social area</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">profiles[]</td>
+            <td class="demo-column"></td>
+            <td>The array of social profiles to display in the bar.</td>
+            <td>Array</td>
+            <td>[]</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">name</td>
+            <td class="demo-column"></td>
+            <td>The name of the social network</td>
+            <td>String</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">url</td>
+            <td class="demo-column"></td>
+            <td>The URL to your profile on the social network</td>
+            <td>String</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">image</td>
+            <td class="demo-column"></td>
+            <td>The image to display in the bar</td>
+            <td>String</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-2">target</td>
+            <td class="demo-column"></td>
+            <td>The target for rss links (<strong>_blank</strong> | <strong>_self</strong> | <strong>_parent</strong> | <strong>_top</strong> | <strong>'frameName'</strong>)</td>
+            <td>String</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column">rss</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">enabled</td>
+            <td class="demo-column"></td>
+            <td>If messages can be populated using an RSS feed</td>
+            <td>Boolean</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">url</td>
+            <td class="demo-column"></td>
+            <td>The URL to the RSS feed</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">maxResults</td>
+            <td class="demo-column"></td>
+            <td>The maximum number of RSS feed results to display as messages</td>
+            <td>Number</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">linkText</td>
+            <td class="demo-column"></td>
+            <td>The text displayed in the link to the article</td>
+            <td>String</td>
+            <td>"Read More"</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">linkTarget</td>
+            <td class="demo-column"></td>
+            <td>The target for rss links (<strong>_blank</strong> | <strong>_self</strong> | <strong>_parent</strong> | <strong>_top</strong> | <strong>'frameName'</strong>)</td>
+            <td>String</td>
+            <td>"_blank"</td>
+          </tr>
+          <tr>
+            <td class="first-column">twitter</td>
+            <td class="demo-column"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">enabled</td>
+            <td class="demo-column"></td>
+            <td>If messages can be populated using a Twitter feed</td>
+            <td>Boolean</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">user</td>
+            <td class="demo-column"></td>
+            <td>The Twitter user to pull tweets from</td>
+            <td>String</td>
+            <td>null</td>
+          </tr>
+          <tr>
+            <td class="first-column indent-1">maxTweets</td>
+            <td class="demo-column"></td>
+            <td>The max number of tweets to pull</td>
+            <td>Number</td>
+            <td>5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="tab_content_events" class="tab-content grid-options">
+      <p>There are a few custom events built into foobar to help you extend it even further. To view the events firing in the below console window in real-time, expand and collapse the foobar on this page.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="first-column">expanding</td>
+            <td>Ocurrs just before the foobar is expanded.</td>
+          </tr>
+          <tr>
+            <td class="first-column">collapsing</td>
+            <td>Ocurrs just before the foobar is collapsed.</td>
+          </tr>          
+          <tr>
+            <td class="first-column">setExpanded</td>
+            <td>Ocurrs when the foobar is first initialized if the option 'display.type' is set to 'expanded'</td>
+          </tr>
+          <tr>
+            <td class="first-column">setCollapsed</td>
+            <td>Ocurrs when the foobar is first initialized if the option 'display.type' is set to 'collapsed'</td>
+          </tr>
+          <tr>
+            <td class="first-column">preRender</td>
+            <td>Ocurrs just before the foobar is rendered and added to the DOM.</td>
+          </tr>
+          <tr>
+            <td class="first-column">postRender</td>
+            <td>Ocurrs just after the foobar is rendered and added to the DOM.</td>
+          </tr>
+        </tbody>
+      </table>
+      <textarea id="console"></textarea>
+    </div>
+    <div id="tab_content_methods" class="tab-content grid-options">
+      <p>You can now call methods to tell foobar to perform certain actions after the initial creation of the bar. These can be used to create your own open or close buttons as an example.</p>
+      <p>These methods are called by simply passing the method name to the foobar constructor from within your own javascript.</p>
+      <p>Check out the <a href="demos/methods.htm" target="_blank">demos</a> to see how to use the methods.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th></th>
+            <th>description</th>
+            <th>example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="first-column">open</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_open" target="_blank" title="Open demo"></a></td>
+            <td>Opens the foobar, if it is already open nothing happens</td>
+            <td>$foobar('open')</td>
+          </tr>
+          <tr>
+            <td class="first-column">close</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_close" target="_blank" title="Open demo"></a></td>
+            <td>Closes the foobar, if it is already closed nothing happens</td>
+            <td>$foobar('close')</td>
+          </tr>
+          <tr>
+            <td class="first-column">toggle</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_toggle" target="_blank" title="Open demo"></a></td>
+            <td>Toggles the foobar between open and closed</td>
+            <td>$foobar('toggle')</td>
+          </tr>
+          <tr>
+            <td class="first-column">prev</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_prev" target="_blank" title="Open demo"></a></td>
+            <td>Displays the previous message, if there is only one message nothing happens</td>
+            <td>$foobar('prev')</td>
+          </tr>
+          <tr>
+            <td class="first-column">next</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_next" target="_blank" title="Open demo"></a></td>
+            <td>Displays the next message, if there is only one message nothing happens</td>
+            <td>$foobar('next')</td>
+          </tr>
+          <tr>
+            <td class="first-column">start</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_start" target="_blank" title="Open demo"></a></td>
+            <td>Starts the message loop, if it is already running or there is only one message nothing happens</td>
+            <td>$foobar('start')</td>
+          </tr>
+          <tr>
+            <td class="first-column">stop</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_stop" target="_blank" title="Open demo"></a></td>
+            <td>Stops the message loop, if it is already stopped or there is only one message nothing happens</td>
+            <td>$foobar('stop')</td>
+          </tr>
+          <tr>
+            <td class="first-column">destroy</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_destroy" target="_blank" title="Open demo"></a></td>
+            <td>Removes the foobar from the page completely. Once this has been executed you will have to create a new foobar by calling the constructor and supplying it options</td>
+            <td>$foobar('destroy')</td>
+          </tr>
+          <tr>
+            <td class="first-column">option</td>
+            <td class="demo-column"><a class="demo-link new-window" href="demos/methods.htm#method_option" target="_blank" title="Open demo"></a></td>
+            <td>Gets or sets any option. If no value is specified, will act as a getter.</td>
+            <td>$foobar('option', 'optionName', value)</td>
+          </tr>
+          <tr>
+            <td class="first-column">&nbsp;</td>
+            <td class="demo-column"></td>
+            <td>Set multiple options at once by providing an options object.</td>
+            <td>$foobar('option', options)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="tab_content_demos" class="tab-content">
+      <p><a class="demo-link new-window" href="demos/width.htm" target="_blank" title="Open in new window">Width Demos</a> Customize the widths of the various foobar sections.</p>
+      <p><a class="demo-link new-window" href="demos/position.htm" target="_blank" title="Open in new window">Position Demos</a> Change the positioning of the foobar, its buttons and the social links.</p>
+      <p><a class="demo-link new-window" href="demos/display.htm" target="_blank" title="Open in new window">Display Demos</a> Change the way the foobar looks and behaves.</p>
+      <p><a class="demo-link new-window" href="demos/display_button.htm" target="_blank" title="Open in new window">Button Display Demos</a> Change the way the foobar button looks and behaves.</p>
+      <p><a class="demo-link new-window" href="demos/themes.htm" target="_blank" title="Open in new window">Theme Demos</a> Customize the button themes.</p>
+      <p><a class="demo-link new-window" href="demos/custom.htm" target="_blank" title="Open in new window">Custom Styling Demo</a> Customize the look and feel of your foobar.</p>
+      <p><a class="demo-link new-window" href="demos/methods.htm" target="_blank" title="Open in new window">Method Demos</a> Call methods to perform certain functions such as opening or closing the foobar.</p>
+      <p><a class="demo-link new-window" href="demos/rtl.htm" target="_blank" title="Open in new window">RTL Demo</a> Change the foobar to handle RTL languages.</p>
+      <p><a class="demo-link new-window" href="demos/rss.htm" target="_blank" title="Open in new window">RSS / Tweets Demo</a> Load an RSS feed or twitter stream into your foobar.</p>      
+    </div>    
+  </div>
+  
+  <div id="footer">  
+    <p>&copy; 2012 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+
+</div>
+</body>
+</html>

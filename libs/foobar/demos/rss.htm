@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - </title>
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+	<link type="text/css" href="../foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $(".expandable").hover(
+        function() {
+          $(this).stop().animate({"marginRight" : "-250px"});
+        },
+        function() {
+          $(this).stop().animate({"marginRight" : "0"});
+        }
+      );    
+    
+      load_rss();
+
+      $('.demo-rss').click(function(e) {
+        e.preventDefault();
+        load_rss();
+      });  
+      
+      $('.demo-tweet').click(function(e) {
+        e.preventDefault();
+        $.foobar( {
+          "positioning" : "fixed",
+          "backgroundColor" : "#424242",
+          "messages": ["Check out my tweets..."],
+          "twitter":{
+            "enabled": true, // If messages can be populated using an RSS feed
+            "user": "themergency", // The twitter username
+            "maxTweets":5 //The maximum number of tweets
+          }
+        } );
+      });      
+      
+    });
+    
+    function load_rss() {
+      $.foobar( {
+        "positioning" : "fixed",
+        "backgroundColor" : "#424242",
+        "messages": ["Check out my RSS feed..."],
+        "rss":{
+          "enabled": true, // If messages can be populated using an RSS feed
+          "url": "http://feeds.feedburner.com/themergency?format=xml", // The URL to the RSS feed
+          "maxResults":5 //The maximum number of RSS feed resuls to display as messages
+        }
+      } );    
+    }
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>RSS Feed</h2>
+    <p>Load your favourite RSS Feed</p>
+    <div class="code">
+      <pre>
+"rss":{
+  "enabled": true,
+  "url": "http://feeds.feedburner.com/themergency?format=xml",
+  "maxResults":5 //The maximum number of items to show
+}
+</pre>
+      <a class="demo-link demo-rss" href="#">rss</a>
+    </div>
+	  <br />
+
+    <h2>Tweets</h2>
+    <p>Load your Tweets</p>
+    <div class="code">
+      <pre>
+"twitter":{
+  "enabled": true,
+  "user": "themergency", // The twitter username
+  "maxTweets":5 //The maximum number of tweets
+}
+</pre>
+      <a class="demo-link demo-tweet" href="#">tweets</a>
+    </div>
+	  <br />    
+    
+	</div>
+  
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2011 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+
+</div>
+</body>
+</html>

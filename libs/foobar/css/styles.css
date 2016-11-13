@@ -1,0 +1,110 @@
+body { margin:0;background:#dde0c8;}
+body p, body ul { font-family:Verdana; font-size:10pt; color:#64665b; margin:10px 0; }
+#wrapper { padding:5px; width:900px; margin:0 auto; }
+a { outline:none;color:#369; }
+a img, img { border:0 }
+a.modal { font-size:11px; }
+
+p {margin:0 0 10px 0;font-size:14px; color:#888;}
+h2 {font:normal 28px arial;color:#34352f;padding:45px 0 5px 0;}
+h3 {font:bold 18px arial;color:#56584e;padding:25px 0 10px 0;margin-bottom:10px; border-bottom:solid 1px #c6cab3;}
+h4 {font:bold 14px arial;color:#56584e;padding:10px 0 0 0;margin: 0;}
+h5 {font:bold 14px arial;color:#56584e;padding:10px 0 0 0;}
+h6 {font:bold 12px arial;color:#56584e;padding:10px 0 0 0;margin: 0;}
+
+.socialbox { float:left; }
+.left { float:left; }
+
+.center { margin: 0 auto;text-align: center; }
+
+#header h1 { font:bold 54pt arial; color:#111; margin:30px 0 0 0; letter-spacing:-6px; text-shadow:#64665b 0px 2px 1px; }
+#header h1 span, h2 span, h3 span { color:#6c9e00; }
+#header p { color:#56584e; font-size:20px; font-style:italic; text-shadow:#f0f3d8 0px 1px 1px; margin:0 0 20px 0; }
+#header h1 span.small { font-size:16pt; letter-spacing:-1px; text-shadow:none; }
+
+.in-action { position:fixed; top:0px; bottom:auto; right:24px; width:200px; height:135px; background:url('images/bg_in_action.png') no-repeat; }
+.in-action.bottom { top:auto; bottom:0px; background:url('images/bg_in_action_bottom.png') no-repeat; }
+
+.demo-source { display:none; }
+.demo-left { margin-top:10px; float:left; }
+.demo-right { margin-top:10px; float:right; }
+
+.demo-link {
+  font:12px arial;
+  text-decoration:none;
+  border:1px solid #527701;
+  background:#6c9e00;
+  margin:0 5px 5px 0;
+  padding:6px 10px;
+  -moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;
+	color:#FFF;
+	-moz-box-shadow:#adaf9c 0px 2px 1px;
+	-webkit-box-shadow:#adaf9c 0px 2px 1px;
+	box-shadow:#adaf9c 0px 2px 1px;
+	text-shadow:#808080 0px 1px 1px;
+  -moz-transition:all 0.3s linear;
+  -webkit-transition:all 0.3s linear;
+  transition:all 0.3s linear;
+}
+
+a.demo-link:hover, a.demo-current { background:#0090c6; border:solid 1px #016990; }
+a.demo-link.disabled { color:#b9b9b9; background:#d6d6d6; border:solid 1px #a1a1a1; cursor: default; }
+a.demo-link.new-window { padding: 0 8px 0 25px; display:inline-block; vertical-align: middle; height:24px; line-height:24px; background:#6c9e00 url('images/new_window_icon.png') no-repeat 8px center; }
+a.demo-link.new-window:hover { background:#0090c6 url('images/new_window_icon.png') no-repeat 8px center; border:solid 1px #016990; }
+.clear { clear:both; }
+.spacer { margin-bottom:30px; }
+
+.faq { list-style-type:none; margin:0; padding:0; }
+.faq p { padding:5px 20px 5px 20px; }
+
+.grid-options dt { font:bold 18px consolas,arial;border-bottom:1px dashed #333;color:#004499; }
+.grid-options dd { font:normal 12px consolas,arial,tahoma;padding:0 0 0 10px;margin:0 0 4px 0; }
+.grid-options dd.description { font-size:14px; }
+.grid-options dd.default { color:#555;font-style:italic;padding:0 0 0 20px; }
+.grid-options dd.example { color:#cc0000;padding:0 0 0 20px; }
+.grid-options dd.example span { border:1px solid #003300;background:#007744;color:#fff;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;padding:1px 5px; }
+.grid-options table { width:100%; border-collapse:collapse; border:1px solid #c6cab3; }
+.grid-options table th { font-family:arial, verdana; background:#56584e; color:#fff; padding:10px; text-align:left; }
+.grid-options table td { font-family:verdana; padding:12px; background:#fff; font-size:10px;}
+.grid-options table tr:nth-child(2n) td { background:#edefe1; }
+.grid-options table td:nth-child(4) { color:#555; white-space: nowrap; }
+.grid-options table td:nth-child(5) { font-style:italic; color:#555; white-space: nowrap; }
+.grid-options table td.indent-1 { padding-left:30px; font-size:12px !important; }
+.grid-options table td.indent-2 { padding-left:60px; font-size:11px !important; }
+.grid-options table td.indent-3 { padding-left:90px; font-size:10px !important; }
+.grid-options table td.indent-4 { padding-left:120px; font-size:9px !important; }
+.grid-options table td.indent-5 { padding-left:150px; font-size:8px !important; }
+.grid-options table td.first-column, .grid-options table td.demo-column { background-color:#6c9e00 !important; font-size:14px; color:#FFF; border-bottom:solid 1px #629000; line-height: 24px; white-space: nowrap; }
+.grid-options table td.demo-column { padding: 12px 12px 12px 0; }
+.grid-options table td.demo-column .demo-link { float: right; padding: 0 12px 0 12px; margin: 0; display:inline-block; -moz-box-shadow:none; -webkit-box-shadow:none; box-shadow:none; }
+
+.changelog { background:#fff; padding:10px; border-top:5px solid #333; }
+.changelog dl dt { border-bottom:1px solid #ccc; font:bold 16px consolas,arial,tahoma,sans; margin-top:0px; }
+.changelog dl dd { font:normal 12px consolas,arial,tahoma,sans; }
+
+/** Footer
+ ********************************************************** */
+#footer { clear:both; text-align:center; margin-top:300px; }
+
+/* Tabs */
+
+#tabs { list-style-type:none; padding:0; margin: 0; width: 100%; padding-bottom:10px;}
+#tabs li { padding: 0; margin: 0;float: left; }
+#tabs li a.tab { font:bold 16px arial; color:#999c8b; padding:10px 25px 10px 25px; text-decoration: none; position: relative; top:1px; }
+#tabs li a.tab:hover { color:#65675c; }
+#tabs li a.tab.selected { font:bold 18px arial; color:#56584e; border:solid 1px #c6cab3; border-bottom:solid 1px #eff1e0;margin: 0; background-color: #eff1e0;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.tab-content { width:100%; background-color: #eff1e0; border:solid 1px #c6cab3; padding: 10px; display:none; margin-bottom:20px; }
+.code { color: #000000; background-color: #FFFFFF; border:solid 1px #c6cab3;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px; padding:10px; }
+
+#console { margin-top:5px; padding:0; width:100%; height: 100px; font-size:12px; font-family:courier new; }
+
+.cf:before, .cf:after { content: ""; display: table; }
+.cf:after { clear: both; }
+.cf { zoom: 1; }

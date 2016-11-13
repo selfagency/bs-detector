@@ -1,0 +1,1 @@
+the foobar script is located in the foobar folder

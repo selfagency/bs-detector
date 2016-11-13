@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>foobar - Option Converter</title>
+  <script type="text/javascript" src="scripts/json2.js"></script>
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="scripts/foobar.option.converter.1.8-2.0.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      $("#convert").click(function() {
+        try {
+          var current = $('#options_1_8').val();
+          var converted = foc.convert(JSON.parse(current));
+          $('#options_2_0').val(JSON.stringify(converted, null, '  '));
+        } catch (err) {
+          alert(err);
+        }
+      });
+    });
+  </script>
+  <style type="text/css">
+    body { margin:20px;background:#dde0c8;}
+    body p { font-family:Verdana; font-size:10pt; color:#64665b; margin:10px 0; }
+    #wrapper { padding:5px; width:900px; margin:0 auto; }
+    a { outline:none;color:#369; }
+    a img, img { border:0 }
+    a.modal { font-size:11px; }
+
+    p {margin:0 0 10px 0;font-size:14px; color:#888;}
+    h3 {font:bold 18px arial;color:#56584e;padding:0 0 5px 0;margin-bottom:5px; border-bottom:solid 1px #c6cab3;}
+
+    #converter { width:100%; border-collapse:collapse; margin-bottom:30px; }
+    #options_1_8, #options_2_0 { width:100%; }
+    #convert { padding: 8px;float: right; }
+
+    #options { width:100%; border-collapse:collapse; border:1px solid #222; }
+    #options th { font-family:arial, verdana; background:#222; color:#fff; padding:10px; text-align:left; width:50%; }
+    #options td { font-family:verdana; padding:12px; background:#fff; font-size:10px;}
+    #options tr:nth-child(2n) td { background:#edefe1; }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="option_converter">
+      <p>
+        To use this converter simply paste your old 1.8 and below foobar options into the first textarea and then click the Convert button. You should then be able to use the outputted 2.1 options with the new version.
+      </p>
+      <table id="converter">
+        <tr>
+          <td>
+            <h3>1.8 Options</h3>
+<textarea id="options_1_8" rows="20" cols="80" wrap="off">{
+  "height": 30,
+  "collapsedButtonHeight": 30,
+  "positioning": "fixed",
+  "backgroundColor": "IndianRed",
+  "border": "solid 3px #FFF",
+  "enableShadow": true
+}</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td><input type="button" value="Convert" id="convert" /></td>
+        </tr>
+        <tr>
+          <td>
+            <h3>Converted 2.1 Options</h3>
+            <textarea id="options_2_0" rows="20" cols="80" wrap="off"></textarea>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id="changed_options">
+      <h3>1.8 to 2.1 Option Changes</h3>
+      <table id="options">
+        <thead>
+          <tr>
+            <th>1.8 Option</th><th>2.1 Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>rss.googleAPIKey</td><td>[REMOVED]</td></tr>
+          <tr><td>messagesDelay</td><td>message.delay</td></tr>
+          <tr><td>messagesFadeDelay</td><td>message.fadeDelay</td></tr>
+          <tr><td>enableRandomMessage</td><td>message.random</td></tr>
+          <tr><td>N/A</td><td>message.navigation</td></tr>
+          <tr><td>messagesScrollSpeed</td><td>message.scroll.speed</td></tr>
+          <tr><td>messagesScrollDelay</td><td>message.scroll.delay</td></tr>
+          <tr><td>messagesScrollDirection</td><td>message.scroll.direction</td></tr>
+          <tr><td>enableMessageScroll</td><td>message.scroll.enable</td></tr>
+          <tr><td>messageClass</td><td>message.cssClass</td></tr>
+          <tr><td>fontFamily</td><td>message.font.family</td></tr>
+          <tr><td>fontSize</td><td>message.font.size</td></tr>
+          <tr><td>fontColor</td><td>message.font.color</td></tr>
+          <tr><td>fontShadow</td><td>message.font.shadow</td></tr>
+          <tr><td>N/A</td><td>message.font.decoration</td></tr>
+          <tr><td>N/A</td><td>message.font.weight</td></tr>
+          <tr><td>aFontFamily</td><td>message.aFont.family</td></tr>
+          <tr><td>aFontSize</td><td>message.aFont.size</td></tr>
+          <tr><td>aFontColor</td><td>message.aFont.color</td></tr>
+          <tr><td>aFontDecoration</td><td>message.aFont.decoration</td></tr>
+          <tr><td>aFontShadow</td><td>message.aFont.shadow</td></tr>
+          <tr><td>N/A</td><td>message.aFont.weight</td></tr>
+          <tr><td>aHoverFontFamily</td><td>message.aFont.hover.family</td></tr>
+          <tr><td>aHoverFontSize</td><td>message.aFont.hover.size</td></tr>
+          <tr><td>aHoverFontColor</td><td>message.aFont.hover.color</td></tr>
+          <tr><td>aHoverFontDecoration</td><td>message.aFont.hover.decoration</td></tr>
+          <tr><td>aHoverFontShadow</td><td>message.aFont.hover.shadow</td></tr>
+          <tr><td>N/A</td><td>message.aFont.hover.weight</td></tr>
+          <tr><td>socialClass</td><td>social.cssClass</td></tr>
+          <tr><td>social.fontFamily</td><td>social.font.family</td></tr>
+          <tr><td>social.fontSize</td><td>social.font.size</td></tr>
+          <tr><td>social.fontColor</td><td>social.font.color</td></tr>
+          <tr><td>social.fontShadow</td><td>social.font.shadow</td></tr>
+          <tr><td>N/A</td><td>social.font.decoration</td></tr>
+          <tr><td>N/A</td><td>social.font.weight</td></tr>
+          <tr><td>enableCookie</td><td>cookie.enabled</td></tr>
+          <tr><td>N/A</td><td>cookie.name</td></tr>
+          <tr><td>N/A</td><td>cookie.duration</td></tr>
+          <tr><td>N/A</td><td>cookie.version</td></tr>
+          <tr><td>height</td><td>height.bar</td></tr>
+          <tr><td>collapsedButtonHeight</td><td>height.button</td></tr>
+          <tr><td>leftWidth</td><td>width.left</td></tr>
+          <tr><td>centerWidth</td><td>width.center</td></tr>
+          <tr><td>rightWidth</td><td>width.right</td></tr>
+          <tr><td>N/A</td><td>width.button</td></tr>
+          <tr><td>ignoreHtmlMarginTop</td><td>position.ignoreOffsetMargin</td></tr>
+          <tr><td>positioning</td><td>position.bar</td></tr>
+          <tr><td>positionClose</td><td>position.button</td></tr>
+          <tr><td>positionSocial</td><td>position.social</td></tr>
+          <tr><td>display</td><td>display.type</td></tr>
+          <tr><td>displayDelay</td><td>display.delay</td></tr>
+          <tr><td>speed</td><td>display.speed</td></tr>
+          <tr><td>backgroundColor</td><td>display.backgroundColor</td></tr>
+          <tr><td>border</td><td>display.border</td></tr>
+          <tr><td>buttonTheme</td><td>display.theme.bar</td></tr>
+          <tr><td>N/A</td><td>display.theme.navigation</td></tr>
+          <tr><td>easing</td><td>display.easing</td></tr>
+          <tr><td>enableShadow</td><td>display.shadow</td></tr>
+          <tr><td>N/A</td><td>display.adjustPageHeight</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

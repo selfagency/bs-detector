@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - method demos</title>
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+	<link type="text/css" href="../foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <style type="text/css">
+    .demo-destroy, .demo-set-single, .demo-set-multiple { right: 65px; }
+  </style>
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $foobar({
+        "messages": ["Message 1", "Message 2", "Message 3", "Message 4", "Message 5"]
+      });
+
+      $(".demo-open").click(function(e) {
+        e.preventDefault();
+        $foobar("open");
+      });
+
+      $(".demo-close").click(function(e) {
+        e.preventDefault();
+        $foobar("close");
+      });
+
+      $(".demo-toggle").click(function(e) {
+        e.preventDefault();
+        $foobar("toggle");
+      });
+
+      $(".demo-prev").click(function(e) {
+        e.preventDefault();
+        $foobar("prev");
+      });
+
+      $(".demo-next").click(function(e) {
+        e.preventDefault();
+        $foobar("next");
+      });
+
+      $(".demo-start").click(function(e) {
+        e.preventDefault();
+        $foobar("start");
+      });
+
+      $(".demo-stop").click(function(e) {
+        e.preventDefault();
+        $foobar("stop");
+      });
+
+      $(".demo-destroy").click(function(e) {
+        e.preventDefault();
+        $foobar("destroy");
+      });
+
+      $(".demo-destroy-reset").click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "messages": ["Message 1", "Message 2", "Message 3", "Message 4", "Message 5"]
+        });
+      });
+      
+      $(".demo-get-single").click(function(e) {
+        e.preventDefault();
+        var barPosition = $foobar("option", "position.bar");
+        alert(barPosition);
+      });
+      
+      $(".demo-set-single").click(function(e) {
+        e.preventDefault();
+        $foobar("option", "position.bar", "bottom");
+      });
+
+      $(".demo-set-single-reset").click(function(e) {
+        e.preventDefault();
+        $foobar("option", "position.bar", "top");
+      });
+      
+      $(".demo-set-multiple").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "position": {
+            "bar": "bottom"
+          },
+          "display": {
+            "backgroundColor": "IndianRed"
+          }
+        });
+      });
+
+      $(".demo-set-multiple-reset").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "position": {
+            "bar": "top"
+          },
+          "display": {
+            "backgroundColor": "#6c9e00"
+          }
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>Method Demos</h2>
+    <p>The foobar now supports method calls to perform certain functions after the initial call to the constructor. You can do this by by simply calling the foobar constructor passing in the name of the method to execute.</p>
+    <p>The below are examples of all the supported methods.</p>
+    <br />
+    
+    <h3 id="method_open">open</h3>
+    <p>Open the foobar, if it is already open nothing happens.</p>
+    <div class="code">
+      <pre>
+$(".demo-open").click(function(e) {
+  e.preventDefault();
+  $foobar("open");
+});
+</pre>
+      <a class="demo-link demo-open" href="#">open</a>
+    </div>
+    <br />
+    
+    <h3 id="method_close">close</h3>
+    <p>Close the foobar, if it is already closed nothing happens.</p>
+    <div class="code">
+      <pre>
+$(".demo-close").click(function(e) {
+  e.preventDefault();
+  $foobar("close");
+});
+</pre>
+      <a class="demo-link demo-close" href="#">close</a>
+    </div>
+    <br />
+    
+    <h3 id="method_toggle">toggle</h3>
+    <p>Toggle the foobar between open and closed.</p>
+    <div class="code">
+      <pre>
+$(".demo-toggle").click(function(e) {
+  e.preventDefault();
+  $foobar("toggle");
+});
+</pre>
+      <a class="demo-link demo-toggle" href="#">toggle</a>
+    </div>
+    <br />
+    
+    <h3 id="method_prev">prev</h3>
+    <p>Display the previous message, if there is only one message nothing happens.</p>
+    <div class="code">
+      <pre>
+$(".demo-prev").click(function(e) {
+  e.preventDefault();
+  $foobar("prev");
+});
+</pre>
+      <a class="demo-link demo-prev" href="#">prev</a>
+    </div>
+    <br />
+    
+    <h3 id="method_next">next</h3>
+    <p>Display the next message, if there is only one message nothing happens.</p>
+    <div class="code">
+      <pre>
+$(".demo-next").click(function(e) {
+  e.preventDefault();
+  $foobar("next");
+});
+</pre>
+      <a class="demo-link demo-next" href="#">next</a>
+    </div>
+    <br />
+    
+    <h3 id="method_start">start</h3>
+    <p>Start the message loop, if it is already running or there is only one message nothing happens.</p>
+    <div class="code">
+      <pre>
+$(".demo-start").click(function(e) {
+  e.preventDefault();
+  $foobar("start");
+});
+</pre>
+      <a class="demo-link demo-start" href="#">start</a>
+    </div>
+    <br />
+    
+    <h3 id="method_stop">stop</h3>
+    <p>Stop the message loop, if it is already stopped or there is only one message nothing happens.</p>
+    <div class="code">
+      <pre>
+$(".demo-stop").click(function(e) {
+  e.preventDefault();
+  $foobar("stop");
+});
+</pre>
+      <a class="demo-link demo-stop" href="#">stop</a>
+    </div>
+    <br />
+    
+    <h3 id="method_destroy">destroy</h3>
+    <p>Remove the foobar from the page completely. Once this has been executed you will have to create a new foobar by calling the constructor and supplying it options.</p>
+    <div class="code">
+      <pre>
+$(".demo-destroy").click(function(e) {
+  e.preventDefault();
+  $foobar("destroy");
+});
+</pre>
+      <a class="demo-link demo-destroy" href="#">destroy</a>
+      <a class="demo-link demo-destroy-reset" href="#">reset</a>
+    </div>
+    <br />
+    
+    <h3 id="method_option">option</h3>
+    <p>The option method has multiple uses. You can use it to retrieve the value of a single option, set the value of a single option or set the values of multiple options at once.</p>
+    <br />
+    <p>This first example shows how to retrieve a single options current value and alert it.</p>
+    <div class="code">
+      <pre>
+$(".demo-get-single").click(function(e) {
+  e.preventDefault();
+  var barPosition = $foobar("option", "position.bar");
+  alert(barPosition);
+});
+</pre>
+      <a class="demo-link demo-get-single" href="#">get option</a>
+    </div>
+    <br />
+
+    <p>This second example shows how to set a single options value. The below shows how to change the bar's position from top to bottom.</p>
+    <div class="code">
+      <pre>
+$(".demo-set-single").click(function(e) {
+  e.preventDefault();
+  $foobar("option", "position.bar", "bottom");
+});
+</pre>
+      <a class="demo-link demo-set-single" href="#">set option</a>
+      <a class="demo-link demo-set-single-reset" href="#">reset</a>
+    </div>
+    <br />
+    
+    <p>This last example shows how to set multiple option values at once by supplying an options object. The below switches the bar's position from top to bottom and also changes the color.</p>
+    <div class="code">
+      <pre>
+$(".demo-set-multiple").click(function(e) {
+  e.preventDefault();
+  $foobar("option", {
+    "position": {
+      "bar": "bottom"
+    },
+    "display": {
+      "backgroundColor": "IndianRed"
+    }
+  });
+});
+</pre>
+      <a class="demo-link demo-set-multiple" href="#">set options</a>
+      <a class="demo-link demo-set-multiple-reset" href="#">reset</a>
+    </div>
+
+  </div>
+  
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2011 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,836 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>foobar - Notification bars, done right!</title>
+
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+	<link type="text/css" href="../foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <style type="text/css">
+    /* demo 1 */
+    .custom-bg .foobar-container {
+      background:url(dotted_bg.png) repeat-x;
+    }
+    
+    /* demo 2 */
+    .bottom h1 {
+      font:bold 34pt arial;
+      color:#9cf;
+      margin:0;
+      text-shadow:#64665b 0px 2px 1px;
+    }
+
+    .bottom p {
+      color:#56584e;
+      font-size:20px;
+      font-style:italic;
+      text-shadow:#f0f3d8 0px 1px 1px;
+    }
+    
+    /* demo 4 */
+    .buttons_loading { display:block; width:135px; height:15px; background:url(throbber.gif) no-repeat center center; }
+    ul.socialbuttons { height: 32px; padding: 0 !important; margin:0 !important; }
+    ul.socialbuttons li { padding:6px !important; float: left; list-style: none !important; }    
+
+    /* demo 5 */
+    ul.socialbuttonsbig { padding: 0 !important; margin:0 !important; }
+    ul.socialbuttonsbig li { padding:6px !important; float: left; list-style: none !important; }    
+    #social_target2 { margin:auto 0; width:200px }
+    .social-big-demo .foobar-container-left { background:url(social_big.png) no-repeat center center; }
+
+    /* demo 6 */
+    .subscribe-demo .foobar-container-center { background:url(subscribe.png) no-repeat left center; height:100px;}
+    #subscribeform { padding-left:320px; }
+    #subscribeform span { position: relative; display: block; float: left; }
+    #subscribeform label { position: absolute; top: 0; left: 0; font-size: 15px; padding-left: 5px; 
+      line-height: 35px; color: #666; cursor:text; }    
+    .subscribeInput { border: 1px solid #E5E5E5; font-size: 15px; height:30px; padding-left: 5px;
+      margin-right:10px; outline: none; width: 150px; color:#000; float:left;
+      -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+    .subscribeSubmit { width:120px; height:34px; border:0px; background:#f44; display:inline-table;
+      color:#fff; cursor:pointer; font-size:14px; position:relative; text-shadow:0 2px 2px rgba(0, 0, 0, .4);
+      font-weight:bold; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+
+    </style>
+
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../scripts/jquery.infieldlabel.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>  
+  <script type="text/javascript">
+    function showDemo1() {
+      $foobar({
+        "height" : {
+          "bar" : 100, "button" : 30
+        },
+    
+        "width": {
+          "left": "0", "center": "*",
+          "right": "0", "button": "80px"
+        },
+   
+        "display" : {
+          "button": { "type": "toggle" },
+          "backgroundColor" : "transparent",
+          "border": "solid 3px #000",
+          "button": {
+            "backgroundColor": "#800"
+          },
+          "theme": {
+            "bar": "x-white custom-bg"
+          }
+        },
+    
+        "messages": [
+          "Woo hoo - look how good this bar looks!",
+          "There are no limits to the possibilities!"
+        ],
+    
+        "message": {
+          "font": {
+            "color": "#ff0",
+            "size": "24px",
+            "shadow": "1px 1px 0 #444",
+            "weight": "bold"
+          }
+        }
+      });    
+    }
+  
+    function showDemo2() {
+      $foobar({
+        "height" : {
+          "bar" : 120, "button" : 30
+        },
+        
+        "width": {
+          "left": "0", "center": "*",
+          "right": "0", "button": "80px"
+        },
+
+        "position": {
+          "bar": "bottom"
+        },    
+        
+        "display" : {
+          "button": { "type": "toggle" },
+          "type" : "delayed",
+          "delay" : 500,
+          "speed": 100,
+          "backgroundColor" : "#ffe9b0"
+        },
+        
+        "messages": [
+          "<div class='bottom'><h1>Purchase Now!</h1><p>WOW - this is at the bottom!</p></div>",
+          "<div class='bottom'><p>The foobar now works at the bottom. The foobar is awesome!</p></div>"
+        ],
+        
+        "message": {
+          "delay": 2000,
+          "fadeDelay": 500,
+          "navigation": true
+        }
+      });    
+    }
+  
+    function showDemo3() {
+      $foobar({
+        "height" : {
+          "bar" : 50
+        },
+        
+        "width": {
+          "left": "0", "center": "*",
+          "right": "0", "button": "80px"
+        },
+
+        "display" : {
+          "button": { "type": "close" },
+          "backgroundColor" : "#888",
+          "theme": {
+            "bar": "x-white"
+          }
+        },
+        
+        "messages": [
+          "<img width='917' height='50' src='demo-banner.png' title='some ridiculous offer' />"
+        ]
+      });
+    }
+    
+    function showDemo4() {
+      $foobar({
+        "height" : {
+          "bar" : 32
+        },      
+      
+        "width": {
+          "left": "340px", "center": "*",
+          "right": "340px", "button": "80px"
+        },
+
+        "display" : {
+          "button": { "type": "toggle" },
+          "backgroundColor" : "#369",
+          "theme": {
+            "bar": "x-white"
+          }
+        },
+        
+        "leftHtml" : "<div class='buttons_loading' id='social_target'></div>",
+        
+        "messages": [
+          "Spread the love", "Share this post with your friends"
+        ]
+      });
+      
+      initDemo4Buttons();
+    }
+    
+    function initDemo4Buttons() {
+      var url = 'http://themergency.com/foobar/index.htm';
+
+      //replace this with your facebook app ID
+      var facebook_app_id = '125102657580278';
+      
+      var $target = $("#social_target");
+      
+      if ($target.hasClass("buttons_loading")) {
+        var $ul = $('<ul class="socialbuttons"></ul>');
+        
+        $target.append($ul);
+        
+        //add facebook HTML
+        var $facebook_li = $('<li/>').hide()
+          .append('<iframe src="http://www.facebook.com/plugins/like.php?app_id='+facebook_app_id+'&amp;href='+encodeURIComponent(url)+'&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>')
+          .appendTo($ul);
+        
+        var tweet = 'foobar #jQuery plugin - Notification bars, done right!';
+        var twitter = 'themergency';
+
+        //add tweet HTML
+        var $twitter_li = $('<li/>')
+          .hide()
+          .append('<a href="http://twitter.com/share" class="twitter-share-button" data-url="'+url+'" data-text="'+tweet+'" data-count="horizontal" data-via="'+twitter+'">Tweet</a>')
+          .appendTo($ul);
+      
+        //add google+1 HTML
+        var $google_li = $('<li/>')
+          .hide()
+          .append('<g:plusone size="medium" href="'+url+'" count="true"></g:plusone>')
+          .appendTo($ul);
+       
+        //load twitter script
+        $.getScript('http://platform.twitter.com/widgets.js', function() {
+          
+          // Load Google Plus script
+          $.getScript('https://apis.google.com/js/plusone.js', function() {
+            $target.removeClass("buttons_loading");
+            $facebook_li.show();
+            $google_li.show();
+            $twitter_li.show(); //show it
+          });          
+        });
+
+      }
+    }
+
+    function showDemo5() {
+      $foobar({
+        "height" : {
+          "bar" : 75
+        },      
+      
+        "width": {
+          "left": "*", "center": "300px",
+          "right": "*", "button": "80px"
+        },
+
+        "display" : {
+          "button": { "type": "toggle" },
+          "backgroundColor" : "#369",
+          "theme": {
+            "bar": "x-white social-big-demo"
+          }
+        },
+        
+        "messages" : ["<div class='buttons_loading' id='social_target2'></div>"]
+      });
+      
+      initDemo5Buttons();
+    }        
+
+    function initDemo5Buttons() {
+      var url = 'http://themergency.com/foobar/index.htm';
+
+      //replace this with your facebook app ID
+      var facebook_app_id = '125102657580278';
+      
+      var $target = $("#social_target2");
+      
+      if ($target.hasClass("buttons_loading")) {
+        var $ul = $('<ul class="socialbuttonsbig"></ul>');
+        
+        $target.append($ul);
+        
+        //add facebook HTML
+        var $facebook_li = $('<li/>').hide()
+          .append('<iframe src="http://www.facebook.com/plugins/like.php?app_id='+facebook_app_id+'&amp;href='+encodeURIComponent(url)+'&amp;send=false&amp;layout=box_count&amp;width=45&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=64" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:45px; height:64px;" allowTransparency="true"></iframe>')
+          .appendTo($ul);
+        
+        var tweet = 'foobar #jQuery plugin - Notification bars, done right!';
+        var twitter = 'themergency';
+
+        //add tweet HTML
+        var $twitter_li = $('<li/>')
+          .hide()
+          .append('<a href="http://twitter.com/share" class="twitter-share-button" data-url="'+url+'" data-text="'+tweet+'" data-count="vertical" data-via="'+twitter+'">Tweet</a>')
+          .appendTo($ul);
+          
+        //add google+1 HTML
+        var $google_li = $('<li/>')
+          .hide()
+          .append('<g:plusone size="tall" href="'+url+'" count="true"></g:plusone>')
+          .appendTo($ul);
+       
+        //load twitter script
+        $.getScript('http://platform.twitter.com/widgets.js', function() {
+          
+          // Load Google Plus script
+          $.getScript('https://apis.google.com/js/plusone.js', function() {
+            
+            $target.removeClass("buttons_loading");
+            $facebook_li.show();
+            $google_li.show();
+            $twitter_li.show(); //show it
+
+            });          
+        });
+      }
+    }    
+  
+    function showDemo6() {
+    
+      var html = "<div id='subscribeform'><span><label for='name'>Name</label>";
+      html += "<input id='name' class='subscribeInput' type='text' name='name' value=''></span>";
+      html += "<span><label for='email'>Email</label>";
+      html += "<input id='email' class='subscribeInput' type='text' name='email' value=''></span>";
+      html += "<input class='subscribeSubmit' type='submit' value='Sign Me Up!'></div>";
+      
+      $foobar({
+        "height" : {
+          "bar" : 100
+        },      
+      
+        "width": {
+          "left": "*", "center": "900px",
+          "right": "*", "button": "80px"
+        },
+
+        "display" : {
+          "button": { "type": "toggle" },
+          "backgroundColor" : "#320070",
+          "theme": {
+            "bar": "x-white subscribe-demo"
+          }
+        },
+        
+        "messages" : [ html ],
+        
+        "events": {
+          "postRender" : function(settings) {
+            $('#subscribeform label').inFieldLabels();
+          }
+        }
+      });
+    }    
+    
+    $(function(){
+      /* Small bit of JS to enable the tabs */
+      $('.tab').click(function(e) {
+        e.preventDefault();
+        $('.tab').removeClass('selected');
+        var tab = $(this).addClass('selected').attr('href');
+        var tabNo = $(this).text();
+        $('.tab-content').hide();
+        $(tab).show();
+        $foobar('destroy');
+        eval('showDemo'+tabNo+'();');
+      });
+      var selected = $('.tab.selected').attr('href');
+      $(selected).show();
+    
+      showDemo1();
+      
+      $(".expandable").hover(
+        function() {
+          $(this).stop().animate({"marginRight" : "-250px"});
+        },
+        function() {
+          $(this).stop().animate({"marginRight" : "0"});
+        }
+      );      
+    });  
+ </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>Custom Styling Demos</h2>
+    <p>These demos show how you can completely customize the look and feel of the foobar by changin the various options as desired. Click on a tab to view the different customization demos.</p>
+    <div class="spacer"></div>
+    <ul id="tabs">
+      <li><a href="#tab_content_1" class="tab selected">1</a></li>
+      <li><a href="#tab_content_2" class="tab">2</a></li>
+      <li><a href="#tab_content_3" class="tab">3</a></li>
+      <li><a href="#tab_content_4" class="tab">4</a></li>
+      <li><a href="#tab_content_5" class="tab">5</a></li>
+      <li><a href="#tab_content_6" class="tab">6</a></li>
+    </ul>
+    <div class="spacer"></div>
+    <div id="tab_content_1" class="tab-content">
+      <h4>CSS:</h4>
+      <div class="code">
+      <pre>
+.custom-bg .foobar-container {
+  background:url(dotted_bg.png) repeat-x;
+}</pre>
+      </div>
+      <br />
+      <h4>Javascript:</h4>
+      <div class="code">
+      <pre>
+$foobar({
+  "height" : {
+    "bar" : 100, "button" : 30
+  },
+  
+  "width": {
+    "left": "0", "center": "*",
+    "right": "0", "button": "80px"
+  },
+ 
+  "display" : {
+    "backgroundColor" : "transparent",
+    "border": "solid 3px #000",
+    "button": {
+      "backgroundColor": "#800"
+    },
+    "theme": {
+      "bar": "x-white custom-bg"
+    }
+  },
+  
+  "messages": [
+    "Woo hoo - look how good this bar looks!",
+    "There are no limits to the possibilities!"
+  ],
+  
+  "message": {
+    "font": {
+      "color": "#ff0",
+      "size": "24px",
+      "shadow": "1px 1px 0 #444",
+      "weight": "bold"
+    }
+  }
+});</pre>
+      </div>
+    </div>
+    <div id="tab_content_2" class="tab-content">
+      
+      <h4>CSS:</h4>
+      <div class="code">
+      <pre>
+.bottom h1 {
+	font:bold 34pt arial;
+	color:#9cf;
+	margin:0;
+	text-shadow:#64665b 0px 2px 1px;
+}
+
+.bottom p {
+	color:#56584e;
+	font-size:20px;
+  font-style:italic;
+	text-shadow:#f0f3d8 0px 1px 1px;
+}</pre>
+      </div>
+      <br />
+      <h4>Javascript:</h4>
+      <div class="code">
+      <pre>
+  $foobar({
+    "height" : {
+      "bar" : 120, "button" : 30
+    },
+    
+    "width": {
+      "left": "0", "center": "*",
+      "right": "0", "button": "80px"
+    },
+
+    "position": {
+      "bar": "bottom"
+    },    
+    
+    "display" : {
+      "type" : "delayed",
+      "delay" : 1000,
+      "speed": 100,
+      "backgroundColor" : "#ffe9b0"
+    },
+    
+    "messages": [
+      "&lt;div class=&#39;bottom&#39;&gt;&lt;h1&gt;Purchase Now!&lt;/h1&gt;&lt;p&gt;WOW - this is at the bottom!&lt;/p&gt;&lt;/div&gt;",
+      "&lt;div class=&#39;bottom&#39;&gt;&lt;p&gt;The foobar now works at the bottom. The foobar is awesome!&lt;/p&gt;&lt;/div&gt;"
+    ],
+    
+    "message": {
+      "delay": 2000,
+      "fadeDelay": 500,
+      "navigation": true
+    }
+  });</pre>
+      </div>
+    </div>
+    <div id="tab_content_3" class="tab-content">
+      <p><strong>PLEASE NOTE :</strong> when you close this foobar, it closes completely and does not show the expand button.
+      This is done by setting the display.button.type option to "close". To show the foobar again, click the current tab.</p>
+      <p><strong>HINT :</strong> You can also set the foobar to 'remember' state by setting the cookie options, so if a visitor closes the foobar, it stay's closed.</p>
+      <h4>Javascript:</h4>
+      <div class="code">
+      <pre>
+$foobar({
+  "height" : {
+    "bar" : 50, "button" : 30
+  },
+  
+  "width": {
+    "left": "0", "center": "*",
+    "right": "0", "button": "80px"
+  },
+
+  "display" : {
+    "button": { "type": "close" },
+    "backgroundColor" : "#888",
+    "theme": {
+      "bar": "x-white"
+    }
+  },
+  
+  "messages": [
+    "&lt;img width=&#39;917&#39; height=&#39;50&#39; src=&#39;demo-banner.png&#39; title=&#39;some ridiculous offer&#39; /&gt;"
+  ]
+});</pre>
+      </div>
+    </div>
+    <div id="tab_content_4" class="tab-content">
+      <p>This demo loads your social buttons into the foobar. The script to load the buttons is listed below the foobar initialization code.</p>
+      <h4>CSS:</h4>
+      <div class="code expandable">
+      <pre>
+.buttons_loading { display:block; width:117px; height:32px; background:url(throbber.gif) no-repeat center center; }
+ul.socialbuttons { height: 32px; padding: 0 !important; margin:0 !important; }
+ul.socialbuttons li { padding:6px !important; float: left; list-style: none !important; }</pre>
+      </div>
+      <br />
+      <h4>Javascript:</h4>
+      <div class="code expandable">
+      <pre>
+$foobar({
+  "height" : {
+    "bar" : 32
+  },      
+
+  "width": {
+    "left": "500px", "center": "*",
+    "right": "0", "button": "80px"
+  },
+
+  "display" : {
+    "button": { "type": "toggle" },
+    "backgroundColor" : "#369",
+    "theme": {
+      "bar": "x-white"
+    }
+  },
+  
+  "leftHtml" : "&lt;div class=&#39;buttons_loading&#39; id=&#39;social_target&#39;&gt;&lt;/div&gt;",
+  
+  "messages": [
+    "Spread the love", "Share this post with your friends"
+  ]
+});
+
+initDemo4Buttons();
+
+function initDemo4Buttons() {
+  var url = window.location;
+
+  //replace this with your facebook app ID
+  var facebook_app_id = &#39;125102657580278&#39;;
+  
+  var $target = $(&quot;#social_target&quot;);
+  
+  if ($target.hasClass(&quot;buttons_loading&quot;)) {
+    var $ul = $(&#39;&lt;ul class=&quot;socialbuttons&quot;&gt;&lt;/ul&gt;&#39;);
+    
+    $target.append($ul);
+    
+    //add facebook HTML
+    var $facebook_li = $(&#39;&lt;li/&gt;&#39;).hide()
+      .append(&#39;&lt;iframe src=&quot;http://www.facebook.com/plugins/like.php?app_id=&#39;+facebook_app_id+&#39;&amp;amp;href=&#39;+encodeURIComponent(url)+&#39;&amp;amp;send=false&amp;amp;layout=button_count&amp;amp;width=90&amp;amp;show_faces=false&amp;amp;action=like&amp;amp;colorscheme=light&amp;amp;font&amp;amp;height=21&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; style=&quot;border:none; overflow:hidden; width:90px; height:21px;&quot; allowTransparency=&quot;true&quot;&gt;&lt;/iframe&gt;&#39;)
+      .appendTo($ul);
+    
+    var tweet = &#39;FooBar - the unobtrusive jQuery notification bar that doesnt suck&#39;;
+    var twitter = &#39;themergency&#39;;
+
+    //add tweet HTML
+    var $twitter_li = $(&#39;&lt;li/&gt;&#39;)
+      .hide()
+      .append(&#39;&lt;a href=&quot;http://twitter.com/share&quot; class=&quot;twitter-share-button&quot; data-url=&quot;&#39;+url+&#39;&quot; data-text=&quot;&#39;+tweet+&#39;&quot; data-count=&quot;horizontal&quot; data-via=&quot;&#39;+twitter+&#39;&quot;&gt;Tweet&lt;/a&gt;&#39;)
+      .appendTo($ul);
+  
+    //add google+1 HTML
+    var $google_li = $(&#39;&lt;li/&gt;&#39;)
+      .hide()
+      .append(&#39;&lt;g:plusone size=&quot;medium&quot; href=&quot;&#39;+url+&#39;&quot; count=&quot;true&quot;&gt;&lt;/g:plusone&gt;&#39;)
+      .appendTo($ul);
+   
+    var $stumble_li = $(&#39;&lt;li/&gt;&#39;)
+      .hide()
+      .append(&#39;&lt;div id=&quot;socialprogress-su&quot;&gt;&lt;/div&gt;&#39;)
+      .appendTo($ul);
+    
+    var $linked_li = $(&#39;&lt;li/&gt;&#39;)
+      .hide()
+      .append(&#39;&lt;scr&#39;+&#39;ipt type=&quot;in/share&quot; data-url=&quot;&#39;+url+&#39;&quot; data-counter=&quot;right&quot;&gt;&lt;/scr&#39;+&#39;ipt&gt;&#39;)
+      .appendTo($ul);
+
+    //load twitter script
+    $.getScript(&#39;http://platform.twitter.com/widgets.js&#39;, function() {
+      
+      // Load Google Plus script
+      $.getScript(&#39;https://apis.google.com/js/plusone.js&#39;, function() {
+        
+        // Load StumbleUpon script
+        $.getScript(&#39;http://www.stumbleupon.com/hostedbadge.php?s=2&amp;r=&#39;+url+&#39;&amp;a=1&amp;d=socialprogress-su&#39;, function() {
+          
+          // Load LinkedIn script
+          $.getScript(&#39;http://platform.linkedin.com/in.js&#39;, function() {
+            
+            $target.removeClass(&quot;buttons_loading&quot;);
+            $facebook_li.show();
+            $linked_li.show();
+            $stumble_li.show();
+            $google_li.show();
+            $twitter_li.show(); //show it
+          });
+        });
+      });          
+    });
+  }
+}      
+</pre>
+      </div>
+    </div> 
+    <div id="tab_content_5" class="tab-content">
+      <p>This demo is similar to demo 4, but these social icons are big. Again the code to include the social buttons is below the foobar code.</p>
+      <h4>CSS:</h4>
+      <div class="code expandable">
+      <pre>
+ul.socialbuttonsbig { padding: 0 !important; margin:0 !important; }
+ul.socialbuttonsbig li { padding:6px !important; float: left; list-style: none !important; }    
+#social_target2 { margin:auto 0; width:200px }
+.social-big-demo .foobar-container-left { background:url(social_big.png) no-repeat center center; }</pre>
+      </div>
+      <br />
+      <h4>Javascript:</h4>
+      <div class="code expandable">
+      <pre>
+$foobar({
+  "height" : {
+    "bar" : 75
+  },      
+
+  "width": {
+    "left": "*", "center": "350px",
+    "right": "*", "button": "80px"
+  },
+
+  "display" : {
+    "button": { "type": "toggle" },
+    "backgroundColor" : "#369",
+    "theme": {
+      "bar": "x-white social-big-demo"
+    }
+  },
+  
+  "messages" : ["&lt;div class=&#39;buttons_loading&#39; id=&#39;social_target2&#39;&gt;&lt;/div&gt;"]
+});
+
+initDemo5Buttons();
+
+function initDemo5Buttons() {
+  var url = window.location;
+
+  //replace this with your facebook app ID
+  var facebook_app_id = &#39;125102657580278&#39;;
+  
+  var $target = $(&quot;#social_target2&quot;);
+  
+  if ($target.hasClass(&quot;buttons_loading&quot;)) {
+    var $ul = $(&#39;&lt;ul class=&quot;socialbuttonsbig&quot;&gt;&lt;/ul&gt;&#39;);
+    
+    $target.append($ul);
+    
+    //add facebook HTML
+    var $facebook_li = $(&#39;&lt;li/&gt;&#39;).hide()
+      .append(&#39;&lt;iframe src=&quot;http://www.facebook.com/plugins/like.php?app_id=&#39;+facebook_app_id+&#39;&amp;amp;href=&#39;+encodeURIComponent(url)+&#39;&amp;amp;send=false&amp;amp;layout=box_count&amp;amp;width=45&amp;amp;show_faces=false&amp;amp;action=like&amp;amp;colorscheme=light&amp;amp;font&amp;amp;height=64&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; style=&quot;border:none; overflow:hidden; width:45px; height:64px;&quot; allowTransparency=&quot;true&quot;&gt;&lt;/iframe&gt;&#39;)
+      .appendTo($ul);
+    
+    var tweet = &#39;FooBar - the unobtrusive jQuery notification bar that doesnt suck&#39;;
+    var twitter = &#39;themergency&#39;;
+
+    //add tweet HTML
+    var $twitter_li = $(&#39;&lt;li/&gt;&#39;)
+      .hide()
+      .append(&#39;&lt;a href=&quot;http://twitter.com/share&quot; class=&quot;twitter-share-button&quot; data-url=&quot;&#39;+url+&#39;&quot; data-text=&quot;&#39;+tweet+&#39;&quot; data-count=&quot;vertical&quot; data-via=&quot;&#39;+twitter+&#39;&quot;&gt;Tweet&lt;/a&gt;&#39;)
+      .appendTo($ul);
+      
+    //add linked-in HTML
+    var $linked_li = $(&#39;&lt;li/&gt;&#39;)
+      .hide()
+      .append(&#39;&lt;scr&#39;+&#39;ipt type=&quot;in/share&quot; data-url=&quot;&#39;+url+&#39;&quot; data-counter=&quot;top&quot;&gt;&lt;/scr&#39;+&#39;ipt&gt;&#39;)
+      .appendTo($ul);          
+  
+    //add google+1 HTML
+    var $google_li = $(&#39;&lt;li/&gt;&#39;)
+      .hide()
+      .append(&#39;&lt;g:plusone size=&quot;tall&quot; href=&quot;&#39;+url+&#39;&quot; count=&quot;true&quot;&gt;&lt;/g:plusone&gt;&#39;)
+      .appendTo($ul);
+   
+    //add stumble upon HTML
+    var $stumble_li = $(&#39;&lt;li/&gt;&#39;)
+      .hide()
+      .append(&#39;&lt;div id=&quot;socialprogressbig-su&quot;&gt;&lt;/div&gt;&#39;)
+      .appendTo($ul);
+
+    //load twitter script
+    $.getScript(&#39;http://platform.twitter.com/widgets.js&#39;, function() {
+      
+      // Load Google Plus script
+      $.getScript(&#39;https://apis.google.com/js/plusone.js&#39;, function() {
+        
+        // Load StumbleUpon script
+        $.getScript(&#39;http://www.stumbleupon.com/hostedbadge.php?s=5&amp;r=&#39;+url+&#39;&amp;a=1&amp;d=socialprogressbig-su&#39;, function() {
+          
+          // Load LinkedIn script
+          $.getScript(&#39;http://platform.linkedin.com/in.js&#39;, function() {
+            
+            $target.removeClass(&quot;buttons_loading&quot;);
+            $facebook_li.show();
+            $linked_li.show();
+            $stumble_li.show();
+            $google_li.show();
+            $twitter_li.show(); //show it
+          });
+        });
+      });          
+    });
+  }
+}</pre>
+      </div>
+    </div>
+    <div id="tab_content_6" class="tab-content">
+      <p>This demo shows a newsletter opt-in form in the foobar.</p>
+      <h4>CSS:</h4>
+      <div class="code expandable">
+      <pre>
+    .subscribe-demo .foobar-container-center { background:url(subscribe.png) no-repeat left center; height:100px;}
+    #subscribeform { padding-left:320px; }
+    #subscribeform span { position: relative; display: block; float: left; }
+    #subscribeform label { position: absolute; top: 0; left: 0; font-size: 15px; padding-left: 5px; 
+      line-height: 35px; color: #666; cursor:text; }    
+    .subscribeInput { border: 1px solid #E5E5E5; font-size: 15px; height:30px; padding-left: 5px;
+      margin-right:10px; outline: none; width: 150px; color:#000; float:left;
+      -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+    .subscribeSubmit { width:120px; height:34px; border:0px; background:#f44; display:inline-table;
+      color:#fff; cursor:pointer; font-size:14px; position:relative; text-shadow:0 2px 2px rgba(0, 0, 0, .4);
+      font-weight:bold; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }</pre>
+      </div>
+      <br />
+      <h4>Javascript:</h4>
+      <div class="code expandable">
+      <pre>
+var html = &quot;&lt;div id=&#39;subscribeform&#39;&gt;&lt;span&gt;&lt;label for=&#39;name&#39;&gt;Name&lt;/label&gt;&quot;;
+html += &quot;&lt;input id=&#39;name&#39; class=&#39;subscribeInput&#39; type=&#39;text&#39; name=&#39;name&#39; value=&#39;&#39;&gt;&lt;/span&gt;&quot;;
+html += &quot;&lt;span&gt;&lt;label for=&#39;email&#39;&gt;Email&lt;/label&gt;&quot;;
+html += &quot;&lt;input id=&#39;email&#39; class=&#39;subscribeInput&#39; type=&#39;text&#39; name=&#39;email&#39; value=&#39;&#39;&gt;&lt;/span&gt;&quot;;
+html += &quot;&lt;input class=&#39;subscribeSubmit&#39; type=&#39;submit&#39; value=&#39;Sign Me Up!&#39;&gt;&lt;/div&gt;&quot;;
+
+$foobar({
+  &quot;height&quot; : {
+    &quot;bar&quot; : 100
+  },      
+
+  &quot;width&quot;: {
+    &quot;left&quot;: &quot;*&quot;, &quot;center&quot;: &quot;900px&quot;,
+    &quot;right&quot;: &quot;*&quot;, &quot;button&quot;: &quot;80px&quot;
+  },
+
+  &quot;display&quot; : {
+    &quot;button&quot;: { &quot;type&quot;: &quot;toggle&quot; },
+    &quot;backgroundColor&quot; : &quot;#320070&quot;,
+    &quot;theme&quot;: {
+      &quot;bar&quot;: &quot;x-white subscribe-demo&quot;
+    }
+  },
+  
+  &quot;messages&quot; : [ html ],
+  
+  &quot;events&quot;: {
+    &quot;postRender&quot; : function(settings) {
+      $(&#39;#subscribeform label&#39;).inFieldLabels();
+    }
+  }
+});</pre>
+      </div>
+    </div>    
+    <div id="tab_content_7" class="tab-content">
+      <h4>CSS:</h4>
+      <div class="code">
+      <pre>
+</pre>
+      </div>
+      <br />
+      <h4>Javascript:</h4>
+      <div class="code">
+      <pre>
+</pre>
+      </div>
+    </div>    
+  </div>
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2012 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+</div>
+</body>
+</html>

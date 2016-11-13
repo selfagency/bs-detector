@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - themes demos</title>
+
+  <style type="text/css">
+.foobar-wrapper.custom-theme .foobar-open-button { background: url('custom-theme.png') no-repeat -56px center; }
+.foobar-wrapper.custom-theme .foobar-close-button { background: url('custom-theme.png') no-repeat 0px center; }
+.foobar-wrapper .foobar-prev-button.custom-theme { background: url('custom-theme.png') no-repeat -112px center; }
+.foobar-wrapper .foobar-next-button.custom-theme { background: url('custom-theme.png') no-repeat -168px center; }  
+  </style>  
+  
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+	<link type="text/css" href="../foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $(".expandable").hover(
+        function() {
+          $(this).stop().animate({"marginRight" : "-250px"});
+        },
+        function() {
+          $(this).stop().animate({"marginRight" : "0"});
+        }
+      );
+    
+      $foobar({
+        "display": {
+          "theme": {
+            "bar": "small-white-arrow"
+          }
+        },
+        "message": { "navigation": true },
+        "messages": ["There are 5 built-in button themes", "You can also create a custom theme"]
+      });
+      
+      $('.demo-theme-triangle-arrow').click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "display": {
+            "backgroundColor": "#f44",
+            "theme": {
+              "bar": "triangle-arrow"
+            }
+          },
+          "message": { "navigation": true },
+          "messages": ["This foobar is using the button theme 'triangle-arrow'", "Hover over this message to see the message navigation buttons"]
+        });
+      });
+      
+      $('.demo-theme-long-arrow').click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "display": {
+            "backgroundColor": "#4a4",
+            "theme": {
+              "bar": "long-arrow"
+            }
+          },
+          "message": { "navigation": true },
+          "messages": ["This foobar is using the button theme 'long-arrow'", "Hover over this message to see the message navigation buttons"]
+        });
+      });
+      
+      $('.demo-theme-small-white-arrow').click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "display": {
+            "backgroundColor": "#00a",
+            "theme": {
+              "bar": "small-white-arrow"
+            }
+          },
+          "message": { "navigation": true },
+          "messages": ["This foobar is using the button theme 'small-white-arrow'", "Hover over this message to see the message navigation buttons"]
+        });
+      });
+      
+      $('.demo-theme-x-close').click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "display": {
+            "backgroundColor": "#9cf",
+            "theme": {
+              "bar": "x-close"
+            }
+          },
+          "message": { "navigation": true },
+          "messages": ["This foobar is using the button theme 'x-close'", "Hover over this message to see the message navigation buttons"]
+        });
+      });
+      
+      $('.demo-theme-x-white').click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "display": {
+            "backgroundColor": "#d8d",
+            "theme": {
+              "bar": "x-white"
+            }
+          },
+          "message": { "navigation": true },
+          "messages": ["This foobar is using the 'x-white' button theme", "Hover over this message to see the message navigation buttons"]
+        });
+      });      
+      
+      $('.demo-theme-custom-theme').click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "display": {
+            "backgroundColor": "#9cf",
+            "border": "solid 3px #369",
+            "theme": {
+              "bar": "custom-theme"
+            }
+          },
+          "message": { "navigation": true, "font": { "color": "black" } },
+          "messages": ["This foobar is using a custom button theme", "Hover over this message to see the message navigation buttons"]
+        });
+      });
+
+      $(".demo-theme-navigation").click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "display": {
+            "backgroundColor": "#9cf",
+            "theme": {
+              "bar": "long-arrow",
+              "navigation": "x-white"
+            }
+          },
+          "message": { "navigation": true },
+          "messages": ["This foobar is using the theme 'long-arrow' on the bar but 'x-white' theme on the navigation buttons", "Hover over this message to see the message navigation buttons"]
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>Themes Demos</h2>
+    <p>The foobar comes with 5 built-in button themes. To change the theme all your need to do is set 1 option:</p>
+    <h3 id="display_theme_bar">display.theme.bar</h3>
+    <p><strong>triangle-arrow</strong> | <strong>long-arrow</strong> | <strong>small-white-arrow</strong> | <strong>x-close</strong> | <strong>x-white</strong></p>
+    <br />
+
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "theme": {
+      "bar": "triangle-arrow"
+    }
+  }
+});
+</pre><br />
+<img src="../foobar/images/triangle-arrow.png" title="triangle-arrow theme" />
+      <a class="demo-link demo-theme-triangle-arrow" href="#">triangle-arrow</a>
+    </div>
+    <br />    
+    
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "theme": {
+      "bar": "long-arrow"
+    }
+  }
+});
+</pre><br />
+<img src="../foobar/images/long-arrow.png" title="long-arrow theme" />
+      <a class="demo-link demo-theme-long-arrow" href="#">long-arrow</a>
+    </div>
+    <br />
+    
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "theme": {
+      "bar": "small-white-arrow"
+    }
+  }
+});
+</pre><br />
+<img style="background:#888" src="../foobar/images/small-white-arrow.png" title="small-white-arrow theme" />
+      <a class="demo-link demo-theme-small-white-arrow" href="#">small-white-arrow</a>
+    </div>
+    <br />
+    
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "theme": {
+      "bar": "x-close"
+    }
+  }
+});
+</pre><br />
+<img src="../foobar/images/x-close.png" title="x-close theme" />
+      <a class="demo-link demo-theme-x-close" href="#">x-close</a>
+    </div>
+    <br />
+    
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "theme": {
+      "bar": "x-white"
+    }
+  }
+});
+</pre><br />
+<img src="../foobar/images/x-white.png" title="x-white theme" />
+      <a class="demo-link demo-theme-x-white" href="#">x-white</a>
+    </div>
+    <br />
+    
+    
+    <p>You can also set the theme to a custom theme. All you need is follow these steps:</p>
+    <ol>
+      <li>create a single png sprite image that has all the states of the buttons</li>
+      <li>add some custom CSS to your page (BEFORE jquery.foobar.2.0.css)</li>
+      <li>set display.theme.bar option to your new theme's css class name</li>
+    </ol>
+    <div class="code expandable">
+      <h4>CSS</h4>
+      <pre>
+.foobar-wrapper.<strong>custom-theme</strong> .foobar-open-button { background: url('custom-theme.png') no-repeat -56px center; }
+.foobar-wrapper.<strong>custom-theme</strong> .foobar-close-button { background: url('custom-theme.png') no-repeat 0px center; }
+.foobar-wrapper .foobar-prev-button.<strong>custom-theme</strong> { background: url('custom-theme.png') no-repeat -112px center; }
+.foobar-wrapper .foobar-next-button.<strong>custom-theme</strong> { background: url('custom-theme.png') no-repeat -168px center; }        
+</pre>
+<br />
+      <h4>JS</h4>
+      <pre>
+$foobar({
+  "display": {
+    "theme": {
+      "bar": "custom-theme"
+    }
+  }
+});
+</pre><br />
+<img src="custom-theme.png" title="custom-theme theme" />      
+      <a class="demo-link demo-theme-custom-theme" href="#">custom</a>
+    </div>
+    
+    <h3 id="display_theme_navigation">display.theme.navigation</h3>
+	  <p><strong>triangle-arrow</strong> | <strong>long-arrow</strong> | <strong>small-white-arrow</strong> | <strong>x-close</strong> | <strong>x-white</strong></p>
+    <p>This option was added to allow seperate theming of the navigation buttons. By default they will inherit the style of the bar theme but you can specify that the navigation buttons use a different theme, so you can mix and match the themes as you like.</p>
+    <br />
+
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "theme": {
+      "bar": "long-arrow",
+      "navigation": "x-white"
+    }
+  }
+});
+</pre>
+      <a class="demo-link demo-theme-navigation" href="#">navigation</a>
+    </div>
+    <br />
+    
+  </div>
+
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2011 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+</div>
+</body>
+</html>

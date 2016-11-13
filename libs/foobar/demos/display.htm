@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - display demos</title>
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+	<link type="text/css" href="../foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <style type="text/css">
+    .demo-background-color, .demo-border, .demo-shadow { right: 65px; }
+  </style>
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $foobar({
+        "messages": ["Message 1", "Message 2", "Message 3", "Message 4", "Message 5"]
+      });
+
+      $(".demo-collapsed").click(function (e) {
+        e.preventDefault();
+        $foobar("option", "display.type", "collapsed");
+      });
+
+      $(".demo-expanded").click(function (e) {
+        e.preventDefault();
+        $foobar("option", "display.type", "expanded");
+      });
+
+      $(".demo-delayed").click(function (e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "type": "delayed",
+            "delay": 2000
+          }
+        });
+      });
+
+      $(".demo-onscroll").click(function (e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "type": "onscroll",
+            "delay": 2000
+          }
+        });
+      });
+
+      $(".demo-background-color").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "backgroundColor": "#F00"
+          }
+        });
+      });
+
+      $(".demo-background-color-reset").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "backgroundColor": "#6c9e00"
+          }
+        });
+      });
+
+      $(".demo-border").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "border": "solid 3px #000"
+          }
+        });
+      });
+
+      $(".demo-border-reset").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "border": "solid 3px #FFF"
+          }
+        });
+      });
+
+      $(".demo-shadow").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "shadow": false
+          }
+        });
+      });
+
+      $(".demo-shadow-reset").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "shadow": true
+          }
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>Display Demos</h2>
+    <p>There are various ways to change how the foobar is displayed. You can customize the color, size, fonts and many other aspects of the bar.</p>
+	  <br />
+    
+	  <h3 id="display_type">display.type & display.delay</h3>
+	  <p>The initial state of the foobar (<strong>expanded</strong> | <strong>collapsed</strong> | <strong>delayed</strong> | <strong>onscroll</strong>).</p>
+	  <br />
+    
+	  <p>This example will display a <strong>collapsed</strong> foobar, it will initially not be visible to site visitors.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "type": "collapsed"
+  }
+});
+</pre>
+      <a class="demo-link demo-collapsed" href="#">collapsed</a>
+    </div>
+	  <br />
+    
+	  <p>This example will display an <strong>expanded</strong> foobar, it will be visible to visitors immediately.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "type": "expanded"
+  }
+});
+</pre>
+      <a class="demo-link demo-expanded" href="#">expanded</a>
+    </div>
+	  <br />
+    
+	  <p>This example will display a <strong>delayed</strong> foobar after the time specified by the value of <strong>display.delay</strong> has expired.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "type": "delayed",
+    "delay": 2000
+  }
+});
+</pre>
+      <a class="demo-link demo-delayed" href="#">delayed</a>
+    </div>
+	  <br />
+    
+	  <p>This example will display an <strong>onscroll</strong> foobar, which will only be displayed once the user has scrolled the page and after the time specified by the value of <strong>display.delay</strong> has expired.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "type": "onscroll",
+    "delay": 2000
+  }
+});
+</pre>
+      <a class="demo-link demo-onscroll" href="#">onscroll</a>
+    </div>
+	  <br />
+    
+	  <h3 id="display_background_color">display.backgroundColor</h3>
+	  <p>The CSS background color of the bar.</p><br />
+	  <p>You can set this value to be any valid HTML color, in the below example the background color is switched to red.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "backgroundColor": "#F00"
+  }
+});
+</pre>
+      <a class="demo-link demo-background-color" href="#">backgroundColor</a>
+      <a class="demo-link demo-background-color-reset" href="#">reset</a>
+    </div>
+	  <br />
+    
+	  <h3 id="display_border">display.border</h3>
+	  <p>The CSS border styling for the bar.</p><br />
+	  <p>You can set this value to be any valid CSS border value, however due to the way the shadow is created with images for IE backwards compatibility it is recommended to not create a border with a width larger than 6px as you will lose the shadow.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "border": "solid 3px #000"
+  }
+});
+</pre>
+      <a class="demo-link demo-border" href="#">border</a>
+      <a class="demo-link demo-border-reset" href="#">reset</a>
+    </div>
+	  <br />
+    
+	  <h3 id="display_shadow">display.shadow</h3>
+	  <p>Show or hide the foobar shadows.</p><br />
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "shadow": false
+  }
+});
+</pre>
+      <a class="demo-link demo-shadow" href="#">no shadow</a>
+      <a class="demo-link demo-shadow-reset" href="#">reset</a>
+    </div>
+	  <br />
+    
+	</div>
+  
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2011 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+
+</div>
+</body>
+</html>

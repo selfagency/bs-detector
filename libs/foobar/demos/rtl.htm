@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - right to left demo</title>
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+	<link type="text/css" href="../foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <style type="text/css">
+    .demo-rtl { right: 65px; }
+  </style>
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $foobar({
+        "messages": [
+          "This message is a very long message that will need to be scrolled into view. By clicking the RTL button below this should start fixed to the right of the message container and then scrolling in from the left. The social area text will also be switched."
+        ],
+        "social": {
+          "profiles": [{
+            "name": "twitter",
+            "url": "#",
+            "image": "../images/social/twitter.png",
+            "target": "_blank"
+          }, {
+            "name": "facebook",
+            "url": "#",
+            "image": "../images/social/facebook.png",
+            "target": "_blank"
+          }, {
+            "name": "delicious",
+            "url": "#",
+            "image": "../images/social/delicious.png",
+            "target": "_blank"
+          }]
+        }
+      });
+
+      $(".demo-rtl").click(function (e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "rtl": true
+          },
+          "position": {
+            "social": "right",
+            "button": "left"
+          }
+        });
+      });
+
+      $(".demo-rtl-reset").click(function (e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "rtl": false
+          },
+          "position": {
+            "social": "left",
+            "button": "right"
+          }
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>RTL Demo</h2>
+	  <p>As per request we have added in some support for right to left languages. While it may not be a massive amount you should now easily be able to accomplish what is required to handle RTL languages.</p>
+	  <br />
+    
+	  <h3 id="rtl_demo">display.rtl</h3>
+	  <p>Whether or not to configure the bar for RTL languages. If true messages are scrolled from right to left and the social text is displayed to the right of the icons and right aligned.</p>
+    <p>In the below example we enable the RTL option and switch the button and social link positions to complete the effect.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "rtl": true
+  },
+  "position": {
+    "social": "right",
+    "button": "left"
+  }
+});
+</pre>
+      <a class="demo-link demo-rtl" href="#">rtl</a>
+      <a class="demo-link demo-rtl-reset" href="#">reset</a>
+    </div>
+	  <br />
+
+	</div>
+  
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2011 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+
+</div>
+</body>
+</html>

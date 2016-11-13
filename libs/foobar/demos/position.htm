@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - position demos</title>
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+	<link type="text/css" href="../foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      /*
+        base demo code
+      */
+      
+      $foobar({
+        "position": {
+            "bar": "bottom"
+        },
+        "messages": ["Message 1", "Message 2", "Message 3", "Message 4", "Message 5"]
+      });
+      
+      /*
+        position.bar demo code
+      */
+      
+      $('.demo-position-bar-inline').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "bar": "inline"
+          },
+          "messages": ["This foobar is displayed 'inline'"]
+        });
+        $( 'html, body' ).animate( {scrollTop:0}, 'slow' );
+      });
+      
+      $('.demo-position-bar-top').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "bar": "top"
+          },
+          "messages": ["This foobar is displayed 'top'"]
+        });
+      });
+      
+      $('.demo-position-bar-bottom').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "bar": "bottom"
+          },
+          "messages": ["This foobar is displayed 'bottom'"]
+        });
+      });
+      
+      /*
+        position.button demo code
+      */
+      
+      $('.demo-position-button-hidden').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "button": "hidden"
+          },
+          "messages": ["This foobar's button is 'hidden'"]
+        });
+      });
+      
+      $('.demo-position-button-left').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "button": "left"
+          },
+          "messages": ["This foobar's button is 'left'"]
+        });
+      });
+      
+      $('.demo-position-button-right').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "button": "right"
+          },
+          "messages": ["This foobar's button is 'right'"]
+        });
+      });
+      
+      /*
+        position.hidden demo code
+      */
+      
+      $('.demo-position-social-hidden').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "social": "hidden"
+          },
+          "messages": ["This foobar's social button area is 'hidden'"],
+          "social": {
+            "profiles": [{
+              "name": "twitter",
+              "url": "#",
+              "image": "../images/social/twitter.png",
+              "target": "_blank"
+            }, {
+              "name": "facebook",
+              "url": "#",
+              "image": "../images/social/facebook.png",
+              "target": "_blank"
+            }, {
+              "name": "delicious",
+              "url": "#",
+              "image": "../images/social/delicious.png",
+              "target": "_blank"
+            }]
+          }
+        });
+      });
+      
+      $('.demo-position-social-right').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "social": "right"
+          },
+          "messages": ["This foobar's social button area is 'right'"],
+          "social": {
+            "profiles": [{
+              "name": "twitter",
+              "url": "#",
+              "image": "../images/social/twitter.png",
+              "target": "_blank"
+            }, {
+              "name": "facebook",
+              "url": "#",
+              "image": "../images/social/facebook.png",
+              "target": "_blank"
+            }, {
+              "name": "delicious",
+              "url": "#",
+              "image": "../images/social/delicious.png",
+              "target": "_blank"
+            }]
+          }
+        });
+      });
+      
+      $('.demo-position-social-left').click(function(e) {
+        e.preventDefault();
+        $foobar('option', {
+          "position": {
+            "social": "left"
+          },
+          "messages": ["This foobar's social button area is 'left'"],
+          "social": {
+            "profiles": [{
+              "name": "twitter",
+              "url": "#",
+              "image": "../images/social/twitter.png",
+              "target": "_blank"
+            }, {
+              "name": "facebook",
+              "url": "#",
+              "image": "../images/social/facebook.png",
+              "target": "_blank"
+            }, {
+              "name": "delicious",
+              "url": "#",
+              "image": "../images/social/delicious.png",
+              "target": "_blank"
+            }]
+          }
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>Position Demos</h2>
+    <p>The foobar's position can be manipulated using the below options. These options allow you to position the bar fixed at the top or bottom of the page or at the top of the page but inline with the rest of the content. You can also change the side the open/close button and the social links are created on.</p>
+    <br />
+    
+	  <h3 id="position_bar">position.bar</h3>
+    <p>How the bar is positioned within the page (<strong>inline</strong> | <strong>top</strong> | <strong>bottom</strong>).</p>
+    <br />
+
+    <p>This example will position the bar <strong>inline</strong> with the rest of the page content and set a message saying so. This allows the bar to be scrolled out of view.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "bar": "inline"
+  },
+  "messages": ["This foobar is displayed 'inline'"]
+});
+</pre>
+      <a class="demo-link demo-position-bar-inline" href="#">inline</a>
+    </div>
+    <br />
+    
+    <p>This example will position the bar <strong>bottom</strong> and set a message saying so. This will keep the bar always in view over other content.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "bar": "bottom"
+  },
+  "messages": ["This foobar is displayed 'bottom'"]
+});
+</pre>
+      <a class="demo-link demo-position-bar-bottom" href="#">bottom</a>
+    </div>
+    <br />
+    
+    <p>This example will position the bar <strong>top</strong> and set a message saying so. This will keep the bar always in view over other content.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "bar": "top"
+  },
+  "messages": ["This foobar is displayed 'top'"]
+});
+</pre>
+      <a class="demo-link demo-position-bar-top" href="#">top</a>
+    </div>
+    <br />
+    
+    <h3 id="position_button">position.button</h3>
+    <p>Position of the open / close button (<strong>left</strong> | <strong>right</strong> | <strong>hidden</strong>).</p>
+    <br />
+    
+    <p>This example will make the button <strong>hidden</strong>. This means no button at all will be created, unless you create your own buttons the user will not be able to open / close the bar and it would stay in the state it was initialized in.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "button": "hidden"
+  },
+  "messages": ["This foobar's button is 'hidden'"]
+});
+</pre>
+      <a class="demo-link demo-position-button-hidden" href="#">hidden</a>
+    </div>
+    <br />
+    
+    <p>This example will position the button to the <strong>left</strong> of the bar.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "button": "left"
+  },
+  "messages": ["This foobar's button is 'left'"]
+});
+</pre>
+      <a class="demo-link demo-position-button-left" href="#">left</a>
+    </div>
+    <br />
+    
+    <p>This example will position the button to the <strong>right</strong> of the bar.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "button": "right"
+  },
+  "messages": ["This foobar's button is 'right'"]
+});
+</pre>
+      <a class="demo-link demo-position-button-right" href="#">right</a>
+    </div>
+    <br />
+    
+    <h3 id="position_social">position.social</h3>
+    <p>Position of the social button area (<strong>left</strong> | <strong>right</strong> | <strong>hidden</strong>).</p>
+    <br />
+    
+    <p>This example will position the social button area to the <strong>left</strong> of the bar.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "social": "left"
+  },
+  "messages": ["This foobar's social button area is 'left'"]
+});
+</pre>
+      <a class="demo-link demo-position-social-left" href="#">left</a>
+    </div>
+    <br />
+    
+    <p>This example will position the social button area to the <strong>right</strong> of the bar.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "social": "right"
+  },
+  "messages": ["This foobar's social button area is 'right'"]
+});
+</pre>
+      <a class="demo-link demo-position-social-right" href="#">right</a>
+    </div>
+    <br />
+    
+    <p>This example will make the social button area <strong>hidden</strong>.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "position": {
+    "social": "hidden"
+  },
+  "messages": ["This foobar's social button area is 'hidden'"]
+});
+</pre>
+      <a class="demo-link demo-position-social-hidden" href="#">hidden</a>
+    </div>
+    <br />
+    
+  </div>
+
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2011 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+</div>
+</body>
+</html>

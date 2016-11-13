@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>foobar - display.button</title>
+	<link type="text/css" href="../css/demo.css" media="all" rel="stylesheet" />
+	<link type="text/css" href="../foobar/jquery.foobar.2.1.css" rel="Stylesheet" />
+  <style type="text/css">
+    .demo-button-type, .demo-button-background-color, .demo-button-border { right: 65px; }
+  </style>
+  <script type="text/javascript" src="../scripts/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="../foobar/jquery.foobar.2.1.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $foobar({
+        "messages": ["Message 1", "Message 2", "Message 3", "Message 4", "Message 5"]
+      });
+
+      $(".demo-button-type").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "button": {
+              "type": "close"
+            },
+            "theme": {
+              "bar": "x-white"
+            }
+          }
+        });
+      });
+
+      $(".demo-button-type-reset").click(function(e) {
+        e.preventDefault();
+        $foobar({
+          "messages": ["Message 1", "Message 2", "Message 3", "Message 4", "Message 5"]
+        });
+      });
+
+      $(".demo-button-background-color").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "type": "delayed",
+            "delay": 1000,
+            "button": {
+              "backgroundColor": "#F00"
+            }
+          }
+        });
+      });
+
+      $(".demo-button-background-color-reset").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "button": {
+              "backgroundColor": "#6c9e00"
+            }
+          }
+        });
+      });
+
+      $(".demo-button-border").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "type": "delayed",
+            "delay": 1000,
+            "button": {
+              "border": "solid 3px #000"
+            }
+          }
+        });
+      });
+
+      $(".demo-button-border-reset").click(function(e) {
+        e.preventDefault();
+        $foobar("option", {
+          "display": {
+            "button": {
+              "border": "solid 3px #FFF"
+            }
+          }
+        });
+      });
+    });
+  </script>
+  <script type="text/javascript">//<![CDATA[
+    // Google Analytics for WordPress by Yoast v4.1.1 | http://yoast.com/wordpress/google-analytics/
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount','UA-258761-17']);
+    _gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    //]]></script> 
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1><span>foo</span>bar <span class="small">v2.1</span></h1>
+		<p>Notification bars, done right!</p>
+	</div>
+	
+	<div id="content">
+    <h2>Display Button Demos</h2>
+    <p>The <strong>display.button</strong> object exposes 4 options to customize the look and function of the 'close' button.</p>
+	  <br />
+    
+	  <h3 id="display_button_type">display.button.type</h3>
+	  <p>The type of action the close button performs (<strong>toggle</strong> | <strong>close</strong>). If set to 'close' the bar will be collapsed and then destroyed when the user clicks the button.</p><br />
+	  <p>This option was added to allow the bar to act as a one time notification bar, to achieve this effect set this option to 'close' and then enable the 'cookie' option. To display another message you would then have to change the cookie version so the bar is forced to be shown again to the visitor. The themes 'x-close' and 'x-white' were specifically added to support this kind of one time functionality.</p>
+    <p>The below example simply displays the 'close' functionality ('toggle' is the default). The theme has also been changed to 'x-white'. Once you close the below bar you will need to reset it.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "button": {
+      "type": "close"
+    },
+    "theme": {
+      "bar": "x-white"
+    }
+  }
+});
+</pre>
+      <a class="demo-link demo-button-type" href="#">button.type</a>
+      <a class="demo-link demo-button-type-reset" href="#">reset</a>
+    </div>
+	  <br />
+    
+	  <h3 id="display_button_spacer">display.button.spacer</h3>
+	  <p>Whether or not to create another block the same size as the button on the opposite side of the bar to the button to ensure the messages remain centered.</p><br />
+	  <p>This option was added due to the new width options, to be able to center the messages correctly while still providing the ability to do fluid layouts a spacer element was required. To see examples of how it is used please check the <a href="width.htm">width demos</a>.</p>
+	  <br />
+    
+	  <h3 id="display_button_background_color">display.button.backgroundColor</h3>
+	  <p>The CSS background color of the open button, if set to null this will inherit the background color of the bar.</p><br />
+	  <p>You can set this value to be any valid HTML color, in the below example the background color is switched to red.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "button": {
+      "backgroundColor": "#F00"
+    }
+  }
+});
+</pre>
+      <a class="demo-link demo-button-background-color" href="#">button.backgroundColor</a>
+      <a class="demo-link demo-button-background-color-reset" href="#">reset</a>
+    </div>
+	  <br />
+    
+	  <h3 id="display_button_border">display.button.border</h3>
+	  <p>The CSS border styling for the open button, if set to null this will inherit border of the bar.</p><br />
+	  <p>You can set this value to be any valid CSS border value, however due to the way the shadow is created with images for IE backwards compatibility it is recommended to not create a border with a width larger than 6px.</p>
+    <div class="code">
+      <pre>
+$foobar({
+  "display": {
+    "button": {
+      "border": "solid 3px #000"
+    }
+  }
+});
+</pre>
+      <a class="demo-link demo-button-border" href="#">button.border</a>
+      <a class="demo-link demo-button-border-reset" href="#">reset</a>
+    </div>
+	  <br />
+    
+	</div>
+  
+  <div id="footer">  
+    <p>This is a demo of <a href="http://getfoobar.com">foobar notification bars</a><br />&copy; 2011 <a href="http://themergency.com">themergency.com</a></p>
+  </div>
+
+</div>
+</body>
+</html>
