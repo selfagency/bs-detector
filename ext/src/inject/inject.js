@@ -67,7 +67,6 @@ chrome.extension.sendMessage({}, function(response) {
 			'libertyvideos.org',
 			'mediamass.net',
 			'megynkelly.us',
-			'msnbc.co',
 			'msnbc.website',
 			'nahadaily.com',
 			'nationalreport.net',
@@ -121,14 +120,14 @@ chrome.extension.sendMessage({}, function(response) {
 		];
 
 		function linkWarning() {
-			var aTags = $('a');
-			$.each(aTags, function(index, tag) {
-				var url = $(tag).attr('href');
-				if (url) {
-					var cleanUrl = url.toLowerCase;
-					$(this).attr('href', cleanUrl);
-				};
-			});
+			// var aTags = $('a');
+			// $.each(aTags, function(index, tag) {
+			// 	var url = $(tag).attr('href');
+			// 	if (url) {
+			// 		var cleanUrl = url.toLowerCase;
+			// 		$(this).attr('href', cleanUrl);
+			// 	};
+			// });
 			$.each(links, function(index, url) {
 				var badLink = 'a[href*="' + url + '"]';
 				$(badLink).each(function() {
