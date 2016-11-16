@@ -6,7 +6,7 @@ This is a project I threw together in under an hour to push back against Mark Zu
 
 The B.S. Detector works by searching all links on a given webpage for the domains of questionable websites, checking against a manually compiled list. It then provides a tooltip warning the user when they hover over the link of a questionable site.
 
-[![The B.S. Detector in action](https://s22.postimg.org/ru4qaxndt/another_example_of_the_extensions_functionality.jpg)]
+![screenshot](https://s22.postimg.org/ru4qaxndt/another_example_of_the_extensions_functionality.jpg | width=250)
 
 The list was compiled from various sources and consists chiefly of websites that traffic in fake news, parody news, unsourced claims, fabrications, innuendo, and conspiracy theory. I have done my absolute best to stay wholly objective and as such the entries span the political spectrum.
 
