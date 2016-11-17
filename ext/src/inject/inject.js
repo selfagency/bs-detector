@@ -220,6 +220,7 @@ chrome.extension.sendMessage({}, function(response) {
 			'openmindmagazine.com',
 			'other98.com',
 			'pakalertpress.com',
+			'patriotchronicle.com',
 			'politicalblindspot.com',
 			'politicalears.com',
 			'politicalo.com',
