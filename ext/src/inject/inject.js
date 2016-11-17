@@ -380,7 +380,7 @@ chrome.extension.sendMessage({}, function(response) {
 			'zaytung.com'
 		];
 
-		function linkWarning() {
+		linkWarning = function() {
 			$.each(links, function(index, url) {
 				var badLink = 'a[href*="' + url + '"]';
 				$(badLink).each(function() {
@@ -389,7 +389,6 @@ chrome.extension.sendMessage({}, function(response) {
 				});
 			});
 		};
-		linkWarning();
 
 		$(window).scroll(function() {
 			linkWarning();
