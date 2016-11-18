@@ -383,9 +383,18 @@ chrome.extension.sendMessage({}, function(response) {
 		linkWarning = function() {
 			$.each(links, function(index, url) {
 				var badLink = 'a[href*="' + url + '"]';
+				var warnClass = "hint--error hint--large hint--bottom";
+				var warnMessage = 'This website is considered a questionable source.';
 				$(badLink).each(function() {
-					$(this).addClass('hint--error hint--large hint--bottom');
+					$(this).addClass("hint--error hint--large hint--bottom");
 					$(this).attr('aria-label', 'This website is considered a questionable source.');
+					if(window.location.hostname == "www.facebook.com"){
+						theWrapper = $(this).closest('div.userContentWrapper');
+						if(!theWrapper.hasClass('fFlagged')){
+							theWrapper.find('div.userContent').after('<div class="fakeNews">This website is considered a questionable source.<div>');
+							theWrapper.addClass('fFlagged');
+						}
+					}
 				});
 			});
 		};
