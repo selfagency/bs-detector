@@ -306,6 +306,7 @@ chrome.extension.sendMessage({}, function(response) {
 			'topekasnews.com',
 			'topinfopost.com',
 			'topnewspolitics.com',
+			'topratedviral.com',
 			'totalworldnews.com',
 			'trendingnewsguide.com',
 			'trendingnewstoday.net',
