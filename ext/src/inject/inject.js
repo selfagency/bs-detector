@@ -382,16 +382,23 @@ chrome.extension.sendMessage({}, function(response) {
 			'zaytung.com'
 		];
 
-		function linkWarning() {
+		linkWarning = function() {
 			$.each(links, function(index, url) {
 				var badLink = 'a[href*="' + url + '"]';
+				var warnMessage = 'This website is not a reliable news source.';
 				$(badLink).each(function() {
-					$(this).addClass('hint--error hint--large hint--bottom');
-					$(this).attr('aria-label', 'This website is considered a questionable source.');
+					$(this).addClass("hint--error hint--large hint--bottom");
+					$(this).attr('aria-label', warnMessage);
+					if(window.location.hostname == "www.facebook.com"){
+						theWrapper = $(this).closest('div.userContentWrapper');
+						if(!theWrapper.hasClass('fFlagged')){
+							theWrapper.find('div.userContent').after('<div class="fakeNews">'+warnMessage+'<div>');
+							theWrapper.addClass('fFlagged');
+						}
+					}
 				});
 			});
 		};
-		linkWarning();
 
 		$(window).scroll(function() {
 			linkWarning();
