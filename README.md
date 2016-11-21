@@ -9,7 +9,7 @@ Domain classifications include:
 +   **Satire:** Sources that provide humorous commentary on current events in the form of fake news.
 +   **Extreme Political Bias:** Sources that traffic in political propaganda and gross distortions of fact.
 +   **Conspiracy Theory:** Sources that are well-known promoters of kooky conspiracy theories.
-+   **State News:** Government-sanctioned news sources in repressive states.
++   **State News:** Sources in repressive states operating under government sanction.
 +   **Junk Science:** Sources that promote scientifically dubious claims, most often about natural products.
 +   **Hate Group:** Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.
 
