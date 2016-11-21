@@ -4,22 +4,20 @@
 
 ## 📖 About
 
-This is a project I threw together in under an hour to push back against Mark Zuckerberg's claim that Facebook is unable to do something about the proliferation of fake news on their platform. It is a proof of concept and not a fully developed product. You can read more about my reasoning behind it [here](https://www.inverse.com/article/23781-bs-detector-facebook-fake-news-daniel-sieradski).
+This Chrome extension was hastily assembled as a rejoinder to Mark Zuckerberg's dubious claims that Facebook is unable to substantively address the proliferation of fake news on its platform. The B.S. Detector searches all links on a given webpage for references to unreliable sources, checking against a manually compiled list of domains. It then provides a visual warning to the user when they hover over a questionable link, or, if the user is on Facebook, with a large alert bar at the top of any post containing a questionable link. The B.S. Detector is a proof of concept, not a fully developed product, and is presently undergoing development. You can read more about the extension's origins [here](https://www.inverse.com/article/23781-bs-detector-facebook-fake-news-daniel-sieradski).
 
-The B.S. Detector works by searching all links on a given webpage for the domains of questionable websites, checking against a manually compiled list. It then provides a tooltip warning the user when they hover over the link of a questionable site.
+The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web. We are actively in the process of reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee 100% accuracy of our data at this time, though it is a goal towards which we strive. You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/master/chrome/data/data.json).
 
-The list was compiled from various sources around the web. You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/master/chrome/data/data.json). We are actively in the process of reviewing the dataset, categorizing entries, and removing misidentified domains.
+Domain classifications include:
++   **Fake News:** Sources that fabricate stories out of whole cloth with the intent of pranking the public.
++   **Satire:** Sources that provide humorous commentary on current events in the form of fake news.
++   **Extreme Political Bias:** Sources that traffic in political propaganda and gross distortions of fact.
++   **Conspiracy Theory:** Sources that are well-known promoters of kooky conspiracy theories.
++   **State News:** Government-sanctioned news sources in repressive states.
++   **Junk Science:** Sources that promote scientifically dubious claims, most often about natural products.
++   **Hate Group:** Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.
 
-Classifications include:
-+ Fake News: Sources that fabricate stories out of whole cloth with the intent of pranking the public.
-+ Satire: Sources that provide humorous commentary on current events in the form of fake news.
-+ Extreme Political Bias: Sources that traffic in political propaganda and distortions.
-+ Conspiracy Theory: Sources that are well-known promoters of crank conspiracy theories.
-+ State News: Government-sanctioned news sources in repressive states.
-+ Junk Science: Sources that promote scientifically dubious claims, most often about public health.
-+ Hate Group: Sources that actively promote racism, misogyny, homophobia, and other forms of hate.
-
-If there are any sites you'd recommend adding or removing from the list, or if you object to your site being listed, you can submit an issue or a pull request above.
+If there are any sites you recommend adding or removing, or if you object to your site being listed, you can submit an issue or a pull request above.
 
 ## 🛠 Installation
 
