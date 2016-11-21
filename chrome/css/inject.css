@@ -1,13 +1,10 @@
-/**
- * Place your custom CSS styles here.
- **/
-div.fakeNews{
+div.bsAlert{
   background: rgba(255, 00, 00, .5);
   color: white;
   font-weight: bold;
   text-align: center;
-  padding-top: 1px;
-  padding-bottom: 1px;
+  margin-bottom: 8px;
+  padding: 2px;
 }
 [class*="hint--"] {
 }

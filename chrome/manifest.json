@@ -1,10 +1,10 @@
 {
   "name": "B.S. Detector",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "manifest_version": 2,
   "default_locale": "en",
-  "description": "Warns users about questionable news sources with a simple tooltip.",
-  "homepage_url": "https://self.agency",
+  "description": "Warns users about unreliable news sources.",
+  "homepage_url": "https://github.com/selfagency/bs-detector",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -12,13 +12,13 @@
   },
   "background": {
     "scripts": [
-      "src/bg/background.js"
+      "js/background.js"
     ],
     "persistent": true
   },
   "content_scripts": [ {
-     "css": [ "css/hint.min.css", "src/inject/inject.css"],
-     "js": [ "js/jquery/jquery.min.js", "src/inject/inject.js" ],
+     "css": [ "css/hint.min.css", "css/inject.css"],
+     "js": [ "js/jquery/jquery.min.js", "js/inject.js" ],
      "matches": [ "*://*/*" ],
      "run_at": "document_end"
   } ]
