@@ -14,25 +14,25 @@ chrome.extension.sendMessage({}, function(response) {
             function linkWarning(link) {
               $.each(link, function() {
                 var badLink = 'a[href*="' + this.url + '"]';
-                var warnMessage = ' This website is not a reliable news source. Reason: ';
+                var warnMessage = '💩 This website is not a reliable news source. Reason: ';
                 switch (this.type) {
                   case '':
-                    var warnMessage = '💩' + warnMessage + 'Classification Pending';
+                    var warnMessage = warnMessage + 'Classification Pending';
                     break;
                   case 'bias':
-                    var warnMessage = '🗯' + warnMessage + 'Extreme Bias';
+                    var warnMessage = warnMessage + 'Extreme Bias';
                     break;
                   case 'conspiracy':
-                    var warnMessage = '👁' + warnMessage + 'Conspiracy Theory';
+                    var warnMessage = warnMessage + 'Conspiracy Theory';
                     break;
                   case 'fake':
-                    var warnMessage = '📰' + warnMessage + 'Fake News';
+                    var warnMessage = warnMessage + 'Fake News';
                     break;
                   case 'satire':
-                    var warnMessage = '😂' + warnMessage + 'Satire';
+                    var warnMessage = warnMessage + 'Satire';
                     break;
                   case 'hate':
-                    var warnMessage = '💀' + warnMessage + 'Hate Group';
+                    var warnMessage = warnMessage + 'Hate Group';
                     break;
                 }
 

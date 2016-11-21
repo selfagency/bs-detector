@@ -1,10 +1,11 @@
 div.bsAlert{
-  background: rgba(255, 00, 00, .5);
-  color: white;
-  font-weight: bold;
+  background: rgba(255, 00, 00, .25);
+  border: 1px solid maroon;
+  border-radius: .25em;
+  color: maroon;
   text-align: center;
   margin-bottom: 8px;
-  padding: 2px;
+  padding: 4px;
 }
 [class*="hint--"] {
 }
