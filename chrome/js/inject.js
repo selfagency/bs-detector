@@ -28,8 +28,14 @@ chrome.extension.sendMessage({}, function(response) {
                   case 'fake':
                     var warnMessage = warnMessage + 'Fake News';
                     break;
+                  case 'junksci':
+                    var warnMessage = warnMessage + 'Junk Science';
+                    break;
                   case 'satire':
                     var warnMessage = warnMessage + 'Satire';
+                    break;
+                  case 'state':
+                    var warnMessage = warnMessage + 'State News Source';
                     break;
                   case 'hate':
                     var warnMessage = warnMessage + 'Hate Group';
