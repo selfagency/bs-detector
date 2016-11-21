@@ -1,9 +1,5 @@
 # 💩 B.S. Detector
 
-![screenshot](https://s22.postimg.org/ru4qaxndt/another_example_of_the_extensions_functionality.jpg)
-
-## 📖 About
-
 This Chrome extension was hastily assembled as a rejoinder to Mark Zuckerberg's dubious claims that Facebook is unable to substantively address the proliferation of fake news on its platform. The B.S. Detector searches all links on a given webpage for references to unreliable sources, checking against a manually compiled list of domains. It then provides a visual warning to the user when they hover over a questionable link, or, if the user is on Facebook, with a large alert bar at the top of any post containing a questionable link. The B.S. Detector is a proof of concept, not a fully developed product, and is presently undergoing development. You can read more about the extension's origins [here](https://www.inverse.com/article/23781-bs-detector-facebook-fake-news-daniel-sieradski).
 
 The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web. We are actively in the process of reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee 100% accuracy of our data at this time, though it is a goal towards which we strive. You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/master/chrome/data/data.json).
