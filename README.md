@@ -8,9 +8,9 @@ This is a project I threw together in under an hour to push back against Mark Zu
 
 The B.S. Detector works by searching all links on a given webpage for the domains of questionable websites, checking against a manually compiled list. It then provides a tooltip warning the user when they hover over the link of a questionable site.
 
-The list was compiled from various sources and consists chiefly of websites that traffic in fake news, parody news, unsourced claims, fabrications, innuendo, and conspiracy theory. I have done my absolute best to stay wholly objective and as such the entries span the political spectrum.
+The list was compiled from various sources around the web and consists chiefly of websites that traffic in fake news, parody news, unsourced claims, fabrications, innuendo, and conspiracy theory. I have done my absolute best to stay wholly objective and as such the entries span the political spectrum.
 
-You can view the complete list — and the very minimal code behind this plugin — [here](https://github.com/selfagency/bs-detector/blob/master/ext/src/inject/inject.js).
+You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/master/chrome/data/data.json).
 
 If there are any sites you'd recommend adding or removing from the list, or if you object to your site being listed, you can submit an issue or a pull request above.
 
