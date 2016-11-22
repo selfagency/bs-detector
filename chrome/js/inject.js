@@ -1,5 +1,14 @@
 var data = [];
     shorts = [];
+    toExpand = '';
+    expanded = {};
+
+function async(thisFunc, callback) {
+  setTimeout(function() {
+      thisFunc;
+      if (callback) {callback();}
+  }, 10);
+}
 
 chrome.runtime.sendMessage(null, {"operation": "passData"}, null, function(state) {
   data = state.sites;
@@ -11,43 +20,64 @@ chrome.extension.sendMessage({}, function(response) {
         if (document.readyState === "complete") {
             clearInterval(readyStateCheckInterval);
 
-            function linkWarning(link) {
-              $.each(link, function() {
-                var badLink = 'a[href*="' + this.url + '"]';
-                var warnMessage = '💩 This website is not a reliable news source. Reason: ';
+            function expandLinks() {
+              $.each(shorts, function() {
+                var shortLink = 'a[href*="' + this + '"]';
+                $(shortLink).each(function() {
+                  var theLink = ($(this).attr('href'));
+                  if (!toExpand) {
+                    toExpand = theLink;
+                  } else {
+                    toExpand = toExpand + '***' + theLink;
+                  }
+                });
+              });
+              chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
+                expanded = JSON.parse(response.expandedLinks);
+                $.each(expanded, function(short, long) {
+                  $('a[href="' + short + '"]').attr('longurl', long);
+                });
+              });
+            }
+
+            function linkWarning() {
+              $.each(data, function() {
+                var badLink = '[href*="' + this.url + '"],[data-expanded-url*="' + this.url +'"],[longurl*="' + this.url +'"]';
+                var classType = '';
                 switch (this.type) {
                   case '':
-                    var warnMessage = warnMessage + 'Classification Pending';
+                    classType = 'Classification Pending';
                     break;
                   case 'bias':
-                    var warnMessage = warnMessage + 'Extreme Bias';
+                    classType = 'Extreme Bias';
                     break;
                   case 'conspiracy':
-                    var warnMessage = warnMessage + 'Conspiracy Theory';
+                    classType = 'Conspiracy Theory';
                     break;
                   case 'fake':
-                    var warnMessage = warnMessage + 'Fake News';
+                    classType = 'Fake News';
                     break;
                   case 'junksci':
-                    var warnMessage = warnMessage + 'Junk Science';
+                    classType = 'Junk Science';
                     break;
                   case 'satire':
-                    var warnMessage = warnMessage + 'Satire';
+                    classType = 'Satire';
                     break;
                   case 'state':
-                    var warnMessage = warnMessage + 'State News Source';
+                    classType = 'State News Source';
                     break;
                   case 'hate':
-                    var warnMessage = warnMessage + 'Hate Group';
+                    classType = 'Hate Group';
                     break;
                 }
+                var warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
 
                 $(badLink).each(function() {
                   if (window.location.hostname == "www.facebook.com") {
-                    theWrapper = $(this).closest('div.userContentWrapper');
-                    if (!theWrapper.hasClass('fFlagged')) {
-                      theWrapper.find('div.userContent').before('<div class="bsAlert">' + warnMessage + '</div>');
-                      theWrapper.addClass('fFlagged');
+                    badLinkWrapper = $(this).closest('div.userContentWrapper');
+                    if (!badLinkWrapper.hasClass('fFlagged')) {
+                      badLinkWrapper.find('div.userContent').before('<div class="bsAlert">' + warnMessage + '</div>');
+                      badLinkWrapper.addClass('fFlagged');
                     }
                   } else {
                     $(this).addClass("hint--error hint--large hint--bottom");
@@ -55,11 +85,11 @@ chrome.extension.sendMessage({}, function(response) {
                   }
                 });
               });
-            };
+            }
 
             function watchPage() {
               var mutationObserver = new MutationObserver(function() {
-                linkWarning(data);
+                trigger();
               });
               var targetNode = document.body;
               var observerConfig = {
@@ -69,8 +99,14 @@ chrome.extension.sendMessage({}, function(response) {
               mutationObserver.observe(targetNode, observerConfig);
             }
 
-            linkWarning(data);
+            function trigger() {
+              async(expandLinks(), function() {
+                linkWarning();
+              });
+            }
+
+            trigger();
             watchPage();
           }
-    }, 2);
+    }, 3);
 });
