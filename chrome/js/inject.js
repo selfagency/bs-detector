@@ -32,12 +32,14 @@ chrome.extension.sendMessage({}, function(response) {
                   }
                 });
               });
-              chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
-                expanded = JSON.parse(response.expandedLinks);
-                $.each(expanded, function(short, long) {
-                  $('a[href="' + short + '"]').attr('longurl', long);
+              if (toExpand !='') {
+                chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
+                  expanded = JSON.parse(response.expandedLinks);
+                  $.each(expanded, function(short, long) {
+                    $('a[href="' + short + '"]').attr('longurl', long);
+                  });
                 });
-              });
+              }
             }
 
             function linkWarning() {
@@ -73,11 +75,20 @@ chrome.extension.sendMessage({}, function(response) {
                 var warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
 
                 $(badLink).each(function() {
-                  if (window.location.hostname == "www.facebook.com") {
-                    badLinkWrapper = $(this).closest('div.userContentWrapper');
-                    if (!badLinkWrapper.hasClass('fFlagged')) {
-                      badLinkWrapper.find('div.userContent').before('<div class="bsAlert">' + warnMessage + '</div>');
-                      badLinkWrapper.addClass('fFlagged');
+                  if (window.location.hostname == 'www.facebook.com') {
+                    if ($(this).parents('.UFICommentContent').length == 1) {
+                      badLinkWrapper = $(this).closest('.UFICommentBody');
+                      if (!badLinkWrapper.hasClass('fFlagged')) {
+                        badLinkWrapper.after('<div class="bsAlert">' + warnMessage + '</div>');
+                        badLinkWrapper.addClass('fFlagged');
+                      }
+                    }
+                    if ($(this).parents('.userContent').length == 1) {
+                      badLinkWrapper = $(this).closest('.userContent');
+                      if (!badLinkWrapper.hasClass('fFlagged')) {
+                        badLinkWrapper.before('<div class="bsAlert">' + warnMessage + '</div>');
+                        badLinkWrapper.addClass('fFlagged');
+                      }
                     }
                   } else {
                     $(this).addClass("hint--error hint--large hint--bottom");
