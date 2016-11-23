@@ -10,6 +10,15 @@ function async(thisFunc, callback) {
   }, 10);
 }
 
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 chrome.runtime.sendMessage(null, {"operation": "passData"}, null, function(state) {
   data = state.sites;
   shorts = state.shorteners;
@@ -34,10 +43,14 @@ chrome.extension.sendMessage({}, function(response) {
               });
               if (toExpand !='') {
                 chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
-                  expanded = JSON.parse(response.expandedLinks);
-                  $.each(expanded, function(short, long) {
-                    $('a[href="' + short + '"]').attr('longurl', long);
-                  });
+                  if (isJson(response.expandedLinks)) {
+                    expanded = JSON.parse(response.expandedLinks);
+                    $.each(expanded, function(short, long) {
+                      $('a[href="' + short + '"]').attr('longurl', long);
+                    });
+                  } else {
+                    console.log('BS Detector could not expand shortened links');
+                  }
                 });
               }
             }
