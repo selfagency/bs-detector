@@ -37,33 +37,21 @@ var shorts = [
 ];
 var expandedLinks = {};
 
-function readFile(file, callback) {
-    var rawFile = new XMLHttpRequest();
-    rawFile.overrideMimeType('application/json');
-    rawFile.open('GET', file, true);
-    rawFile.onreadystatechange = function() {
-      if (rawFile.readyState === 4 && rawFile.status == '200') {
-          callback(rawFile.responseText);
-      }
-    }
-    rawFile.send(null);
-}
-
-readFile(chrome.extension.getURL("/data/data.json"), function(file){
-  siteList = JSON.parse(file);
-});
-
-function checkLink(url, callback) {
+function xhReq(url, callback) {
   var xhr = new XMLHttpRequest();
-  getLink = 'https://x.self.agency/x?url=' + url;
-  xhr.open('GET', getLink, true);
+  xhr.overrideMimeType('application/json');
+  xhr.open('GET', url, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status == '200') {
-      callback(xhr.responseText);
+        callback(xhr.responseText);
     }
   }
   xhr.send(null);
 }
+
+xhReq(chrome.extension.getURL("/data/data.json"), function(file){
+  siteList = JSON.parse(file);
+});
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch(request.operation) {
@@ -71,7 +59,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       sendResponse({sites: siteList, shorteners: shorts});
       break;
     case 'expandLink':
-      checkLink(request.shortLink, function(response) {
+      var toExpand = 'https://x.self.agency/x?url=' + request.shortLink;
+      xhReq(toExpand, function(response) {
         expandedLinks = response;
       });
       sendResponse({expandedLinks: expandedLinks});

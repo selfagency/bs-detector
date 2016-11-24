@@ -43,14 +43,15 @@ chrome.extension.sendMessage({}, function(response) {
               });
               if (toExpand !='') {
                 chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
+
                   if (isJson(response.expandedLinks)) {
                     expanded = JSON.parse(response.expandedLinks);
-                    console.log(expanded);
                     $.each(expanded, function(key, value) {
                       $('a[href="' + value.shortUrl + '"]').attr('longurl', value.longUrl);
                     });
                   } else {
                    console.log('BS Detector could not expand shortened links');
+                   console.log(response.expandedLinks);
                   }
                 });
               }
@@ -89,6 +90,7 @@ chrome.extension.sendMessage({}, function(response) {
                 var warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
 
                 $(badLink).each(function() {
+                  // facebook handler
                   if (window.location.hostname == 'www.facebook.com') {
                     var testLink = decodeURIComponent(this).substring(0, 30);
                     if (testLink = 'https://l.facebook.com/l.php?u=') {
@@ -106,6 +108,14 @@ chrome.extension.sendMessage({}, function(response) {
                       badLinkWrapper = $(this).closest('.UFICommentBody');
                       if (!badLinkWrapper.hasClass('fFlagged')) {
                         badLinkWrapper.after('<div class="bsAlert">' + warnMessage + '</div>');
+                        badLinkWrapper.addClass('fFlagged');
+                      }
+                    }
+                  } else if (window.location.hostname == 'twitter.com') {
+                    if ($(this).parents('.TwitterCard').length == 1) {
+                      badLinkWrapper = $(this).closest('.TwitterCard');
+                      if (!badLinkWrapper.hasClass('fFlagged')) {
+                        badLinkWrapper.before('<div class="bsAlert">' + warnMessage + '</div>');
                         badLinkWrapper.addClass('fFlagged');
                       }
                     }
