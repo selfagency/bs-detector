@@ -10,6 +10,15 @@ function async(thisFunc, callback) {
   }, 10);
 }
 
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 chrome.runtime.sendMessage(null, {"operation": "passData"}, null, function(state) {
   data = state.sites;
   shorts = state.shorteners;
@@ -28,16 +37,24 @@ chrome.extension.sendMessage({}, function(response) {
                   if (!toExpand) {
                     toExpand = theLink;
                   } else {
-                    toExpand = toExpand + '***' + theLink;
+                    toExpand = toExpand + ',' + theLink;
                   }
                 });
               });
-              chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
-                expanded = JSON.parse(response.expandedLinks);
-                $.each(expanded, function(short, long) {
-                  $('a[href="' + short + '"]').attr('longurl', long);
+              if (toExpand !='') {
+                chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
+
+                  if (isJson(response.expandedLinks)) {
+                    expanded = JSON.parse(response.expandedLinks);
+                    $.each(expanded, function(key, value) {
+                      $('a[href="' + value.shortUrl + '"]').attr('longurl', value.longUrl);
+                    });
+                  } else {
+                   console.log('BS Detector could not expand shortened links');
+                   console.log(response.expandedLinks);
+                  }
                 });
-              });
+              }
             }
 
             function linkWarning() {
@@ -73,11 +90,34 @@ chrome.extension.sendMessage({}, function(response) {
                 var warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
 
                 $(badLink).each(function() {
-                  if (window.location.hostname == "www.facebook.com") {
-                    badLinkWrapper = $(this).closest('div.userContentWrapper');
-                    if (!badLinkWrapper.hasClass('fFlagged')) {
-                      badLinkWrapper.find('div.userContent').before('<div class="bsAlert">' + warnMessage + '</div>');
-                      badLinkWrapper.addClass('fFlagged');
+                  // facebook handler
+                  if (window.location.hostname == 'www.facebook.com') {
+                    var testLink = decodeURIComponent(this).substring(0, 30);
+                    if (testLink = 'https://l.facebook.com/l.php?u=') {
+                      thisUrl = decodeURIComponent(this).substring(30).split('&h=', 1);
+                      $(this).attr('longurl', thisUrl);
+                    }
+                    if ($(this).parents('._1dwg').length == 1) {
+                      badLinkWrapper = $(this).closest('.mtm');
+                      if (!badLinkWrapper.hasClass('fFlagged')) {
+                        badLinkWrapper.before('<div class="bsAlert">' + warnMessage + '</div>');
+                        badLinkWrapper.addClass('fFlagged');
+                      }
+                    }
+                    if ($(this).parents('.UFICommentContent').length == 1) {
+                      badLinkWrapper = $(this).closest('.UFICommentBody');
+                      if (!badLinkWrapper.hasClass('fFlagged')) {
+                        badLinkWrapper.after('<div class="bsAlert">' + warnMessage + '</div>');
+                        badLinkWrapper.addClass('fFlagged');
+                      }
+                    }
+                  } else if (window.location.hostname == 'twitter.com') {
+                    if ($(this).parents('.TwitterCard').length == 1) {
+                      badLinkWrapper = $(this).closest('.TwitterCard');
+                      if (!badLinkWrapper.hasClass('fFlagged')) {
+                        badLinkWrapper.before('<div class="bsAlert">' + warnMessage + '</div>');
+                        badLinkWrapper.addClass('fFlagged');
+                      }
                     }
                   } else {
                     $(this).addClass("hint--error hint--large hint--bottom");
