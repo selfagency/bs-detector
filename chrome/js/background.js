@@ -30,6 +30,7 @@ var shorts = [
   'tweez.me',
   'v.gd',
   'tr.im',
+  'trib.al',
   'zip.net',
   '➡.ws',
   '✩.ws'
@@ -54,7 +55,7 @@ readFile(chrome.extension.getURL("/data/data.json"), function(file){
 
 function checkLink(url, callback) {
   var xhr = new XMLHttpRequest();
-  getLink = 'http://urlex.org/json/' + url;
+  getLink = 'https://x.self.agency/x?url=' + url;
   xhr.open('GET', getLink, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status == '200') {

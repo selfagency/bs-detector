@@ -37,7 +37,7 @@ chrome.extension.sendMessage({}, function(response) {
                   if (!toExpand) {
                     toExpand = theLink;
                   } else {
-                    toExpand = toExpand + '***' + theLink;
+                    toExpand = toExpand + ',' + theLink;
                   }
                 });
               });
@@ -45,11 +45,12 @@ chrome.extension.sendMessage({}, function(response) {
                 chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
                   if (isJson(response.expandedLinks)) {
                     expanded = JSON.parse(response.expandedLinks);
-                    $.each(expanded, function(short, long) {
-                      $('a[href="' + short + '"]').attr('longurl', long);
+                    console.log(expanded);
+                    $.each(expanded, function(key, value) {
+                      $('a[href="' + value.shortUrl + '"]').attr('longurl', value.longUrl);
                     });
                   } else {
-                    console.log('BS Detector could not expand shortened links');
+                   console.log('BS Detector could not expand shortened links');
                   }
                 });
               }
@@ -89,17 +90,22 @@ chrome.extension.sendMessage({}, function(response) {
 
                 $(badLink).each(function() {
                   if (window.location.hostname == 'www.facebook.com') {
+                    var testLink = decodeURIComponent(this).substring(0, 30);
+                    if (testLink = 'https://l.facebook.com/l.php?u=') {
+                      thisUrl = decodeURIComponent(this).substring(30).split('&h=', 1);
+                      $(this).attr('longurl', thisUrl);
+                    }
+                    if ($(this).parents('._1dwg').length == 1) {
+                      badLinkWrapper = $(this).closest('.mtm');
+                      if (!badLinkWrapper.hasClass('fFlagged')) {
+                        badLinkWrapper.before('<div class="bsAlert">' + warnMessage + '</div>');
+                        badLinkWrapper.addClass('fFlagged');
+                      }
+                    }
                     if ($(this).parents('.UFICommentContent').length == 1) {
                       badLinkWrapper = $(this).closest('.UFICommentBody');
                       if (!badLinkWrapper.hasClass('fFlagged')) {
                         badLinkWrapper.after('<div class="bsAlert">' + warnMessage + '</div>');
-                        badLinkWrapper.addClass('fFlagged');
-                      }
-                    }
-                    if ($(this).parents('.userContent').length == 1) {
-                      badLinkWrapper = $(this).closest('.userContent');
-                      if (!badLinkWrapper.hasClass('fFlagged')) {
-                        badLinkWrapper.before('<div class="bsAlert">' + warnMessage + '</div>');
                         badLinkWrapper.addClass('fFlagged');
                       }
                     }
