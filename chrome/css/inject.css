@@ -9,7 +9,7 @@ div.bs-alert {
   height: 28px;
   left: 0;
   margin: 0;
-  padding: 4px 0;
+  padding: 4px 0 0;
   position: absolute;
   text-align: center;
   text-transform: uppercase;
@@ -19,7 +19,7 @@ div.bs-alert {
 }
 
 body.shift {
-  margin-top: 36px;
+  margin-top: 28px;
 }
 
 div.bs-alert-inline {
