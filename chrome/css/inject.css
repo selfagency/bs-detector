@@ -1,4 +1,16 @@
-div.bsAlert{
+div.bs-alert {
+  background: rgba(255, 00, 00, .25);
+  color: maroon;
+  height: 28px;
+  margin: 0;
+  padding: 4px;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+div.bs-alert-inline {
   background: rgba(255, 00, 00, .25);
   border: 1px solid maroon;
   border-radius: .25em;
@@ -7,5 +19,6 @@ div.bsAlert{
   margin: 8px 0;
   padding: 4px;
 }
+
 [class*="hint--"] {
 }

@@ -1,7 +1,7 @@
-var data = new Array();
-    shorts = new Array();
-    toExpand = new Array();
-    expanded = new Array();
+var data = [];
+    shorts = [];
+    toExpand = [];
+    expanded = [];
 
 function async(thisFunc, callback) {
   setTimeout(function() {
@@ -81,6 +81,9 @@ chrome.extension.sendMessage({}, function(response) {
                   case 'junksci':
                     classType = 'Junk Science';
                     break;
+                  case 'rumors':
+                    classType = 'Rumor Mill';
+                    break;
                   case 'satire':
                     classType = 'Satire';
                     break;
@@ -94,38 +97,53 @@ chrome.extension.sendMessage({}, function(response) {
                 var warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
 
                 $(badLink).each(function() {
-                  // facebook handler
+                  function flagIt() {
+                    if (!badLinkWrapper.hasClass('fFlagged')) {
+                      badLinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
+                      badLinkWrapper.addClass('fFlagged');
+                    }
+                  }
+
                   if (window.location.hostname == 'www.facebook.com') {
-                    var testLink = decodeURIComponent(this).substring(0, 30);
-                    if (testLink = 'https://l.facebook.com/l.php?u=') {
-                      thisUrl = decodeURIComponent(this).substring(30).split('&h=', 1);
-                      $(this).attr('longurl', thisUrl);
-                    }
-                    if ($(this).parents('._1dwg').length == 1) {
-                      badLinkWrapper = $(this).closest('.mtm');
-                      if (!badLinkWrapper.hasClass('fFlagged')) {
-                        badLinkWrapper.before('<div class="bsAlert">' + warnMessage + '</div>');
-                        badLinkWrapper.addClass('fFlagged');
-                      }
-                    }
-                    if ($(this).parents('.UFICommentContent').length == 1) {
-                      badLinkWrapper = $(this).closest('.UFICommentBody');
-                      if (!badLinkWrapper.hasClass('fFlagged')) {
-                        badLinkWrapper.after('<div class="bsAlert">' + warnMessage + '</div>');
-                        badLinkWrapper.addClass('fFlagged');
-                      }
-                    }
+                    siteId = 'facebook';
                   } else if (window.location.hostname == 'twitter.com') {
-                    if ($(this).parents('.TwitterCard').length == 1) {
-                      badLinkWrapper = $(this).closest('.TwitterCard');
-                      if (!badLinkWrapper.hasClass('fFlagged')) {
-                        badLinkWrapper.before('<div class="bsAlert">' + warnMessage + '</div>');
-                        badLinkWrapper.addClass('fFlagged');
-                      }
-                    }
+                    siteId = 'twitter';
+                  } else if (window.location.hostname == this.url || window.location.hostname == 'www.' + this.url) {
+                    siteId = 'badlink';
                   } else {
-                    $(this).addClass("hint--error hint--large hint--bottom");
-                    $(this).attr('aria-label', warnMessage);
+                    siteId = 'none';
+                  }
+
+                  switch(siteId) {
+                    case 'facebook':
+                      var testLink = decodeURIComponent(this).substring(0, 30);
+                      if (testLink = 'https://l.facebook.com/l.php?u=') {
+                        thisUrl = decodeURIComponent(this).substring(30).split('&h=', 1);
+                        $(this).attr('longurl', thisUrl);
+                      }
+                      if ($(this).parents('._1dwg').length == 1) {
+                        badLinkWrapper = $(this).closest('.mtm');
+                        flagIt();
+                      }
+                      if ($(this).parents('.UFICommentContent').length == 1) {
+                        badLinkWrapper = $(this).closest('.UFICommentBody');
+                        flagIt();
+                      }
+                      break;
+                    case 'twitter':
+                      if ($(this).parents('.TwitterCard').length == 1) {
+                        badLinkWrapper = $(this).closest('.TwitterCard');
+                        flagIt();
+                      }
+                      break;
+                    case 'badlink':
+                      $('body').prepend('<div class="bs-alert"></div>')
+                      $('bs-alert').css('display','block').append(warnMessage);
+                      break;
+                    case 'none':
+                      $(this).addClass("hint--error hint--large hint--bottom");
+                      $(this).attr('aria-label', warnMessage);
+                      break;
                   }
                 });
               });

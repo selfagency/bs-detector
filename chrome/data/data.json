@@ -13,7 +13,6 @@
   {"url": "abovetopsecret.com", "type": ""},
   {"url": "abriluno.com", "type": "fake"},
   {"url": "aceflashman.wordpress.com", "type": "fake"},
-  {"url": "activistpost.com", "type": ""},
   {"url": "activistpost.com", "type": "conspiracy"},
   {"url": "addictinginfo.org", "type": "bias"},
   {"url": "adobochronicles.com", "type": "fake"},
@@ -526,8 +525,8 @@
   {"url": "whatreallyhappened.com", "type": ""},
   {"url": "whydontyoutrythis.com", "type": ""},
   {"url": "wideawakeamerica.com", "type": ""},
-  {"url": "wikileaks.com", "type": ""},
-  {"url": "wikileaks.org", "type": ""},
+  {"url": "wikileaks.com", "type": "rumors"},
+  {"url": "wikileaks.org", "type": "rumors"},
   {"url": "wikispooks.com", "type": ""},
   {"url": "winkprogress.com", "type": ""},
   {"url": "winningdemocrats.com", "type": ""},
@@ -548,5 +547,5 @@
   {"url": "yourfunpage.com", "type": ""},
   {"url": "yournewswire.com", "type": ""},
   {"url": "zaytung.com", "type": ""},
-  {"url": "zerohedge.com", "type": ""}
+  {"url": "zerohedge.com", "type": "conspiracy"}
 ]

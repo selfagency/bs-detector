@@ -9,8 +9,9 @@ Domain classifications include:
 +   **Satire:** Sources that provide humorous commentary on current events in the form of fake news.
 +   **Extreme Political Bias:** Sources that traffic in political propaganda and gross distortions of fact.
 +   **Conspiracy Theory:** Sources that are well-known promoters of kooky conspiracy theories.
++   **Rumor Mill:** Sources that traffic in rumors, innuendo, and unverified claims.
 +   **State News:** Sources in repressive states operating under government sanction.
-+   **Junk Science:** Sources that promote scientifically dubious claims, most often about natural products.
++   **Junk Science:** Sources that promote scientifically dubious claims.
 +   **Hate Group:** Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.
 
 If there are any sites you recommend adding or removing, or if you object to your site being listed, you can submit an issue or a pull request above.
