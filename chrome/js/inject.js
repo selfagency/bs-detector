@@ -44,8 +44,9 @@ chrome.extension.sendMessage({}, function(response) {
               var currentSite = $.map(data, function(id, entry) {
                 if (currentUrl === id.url || currentUrl === 'www.' + id.url) return id;
               });
+              console.log(currentUrl + ' ' + currentSite.url);
 
-              if (currentSite.url && currentSite.url == currentUrl) {
+              if (currentSite.url && currentUrl == currentSite.url) {
                 siteId = 'badlink';
                 dataType = currentSite[0].type;
               } else {
@@ -165,7 +166,8 @@ chrome.extension.sendMessage({}, function(response) {
                   case 'badlink':
                   case 'none':
                     $(badLink).each(function() {
-                      if ($(this).text.substring(1) != '💩') {
+                      var firstChar = this.text.substring(0, 1);
+                      if (firstChar != '💩') {
                         $(this).prepend('💩 ');
                         $(this).addClass("hint--error hint--large hint--bottom");
                         $(this).attr('aria-label', warnMessage);
@@ -223,6 +225,7 @@ chrome.extension.sendMessage({}, function(response) {
               // });
               if (firstLoad) {
                 idSite();
+                console.log(siteId);
                 if (siteId === 'badlink') {
                   flagSite();
                   linkWarning();
