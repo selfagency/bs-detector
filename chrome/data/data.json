@@ -208,7 +208,6 @@
   {"url": "indiaarising.com", "type": ""},
   {"url": "informationclearinghouse.info", "type": ""},
   {"url": "informetoday.com", "type": ""},
-  {"url": "infowars.com", "type": ""},
   {"url": "infowars.com", "type": "conspiracy"},
   {"url": "inquisitor.com", "type": ""},
   {"url": "instaworldnews.com", "type": ""},
@@ -547,5 +546,6 @@
   {"url": "yourfunpage.com", "type": ""},
   {"url": "yournewswire.com", "type": ""},
   {"url": "zaytung.com", "type": ""},
-  {"url": "zerohedge.com", "type": "conspiracy"}
+  {"url": "zerohedge.com", "type": "conspiracy"},
+  {"url": "self.agency", "type": "conspiracy"}
 ]

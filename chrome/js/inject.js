@@ -1,10 +1,15 @@
-var data = [];
-    shorts = [];
-    toExpand = [];
+// declare variables
+var currentUrl = window.location.hostname;
+    data = [];
+    dataType = '';
     expanded = [];
-    currentUrl = window.location.hostname;
+    firstLoad = true;
+    shorts = [];
     siteId = '';
+    toExpand = [];
+    warnMessage = '';
 
+// asyncrhonus loading function
 function async(thisFunc, callback) {
   setTimeout(function() {
       thisFunc;
@@ -12,6 +17,7 @@ function async(thisFunc, callback) {
   }, 10);
 }
 
+// json validation function
 function isJson(str) {
   try {
     JSON.parse(str);
@@ -21,16 +27,46 @@ function isJson(str) {
   return true;
 }
 
+// grab data from background
 chrome.runtime.sendMessage(null, {"operation": "passData"}, null, function(state) {
   data = state.sites;
   shorts = state.shorteners;
 });
 
+// execute on load
 chrome.extension.sendMessage({}, function(response) {
     var readyStateCheckInterval = setInterval(function() {
         if (document.readyState === "complete") {
             clearInterval(readyStateCheckInterval);
 
+            // identify current site
+            function idSite() {
+              var currentSite = $.map(data, function(id, entry) {
+                if (currentUrl === id.url || currentUrl === 'www.' + id.url) return id;
+              });
+
+              if (currentSite.url && currentSite.url == currentUrl) {
+                siteId = 'badlink';
+                dataType = currentSite[0].type;
+              } else {
+                switch(currentUrl) {
+                  case 'www.facebook.com':
+                    siteId = 'facebook';
+                    break;
+                  case 'twitter.com':
+                    siteId = 'facebook';
+                    break;
+                  case currentSite:
+                    siteId = 'badlink';
+                    break;
+                  default:
+                    siteId = 'none';
+                    break;
+                }
+              }
+            }
+
+            // expand short urls and append to anchor tags
             function expandLinks() {
               function getLinks() {
                 $.each(shorts, function() {
@@ -41,6 +77,7 @@ chrome.extension.sendMessage({}, function(response) {
                   });
                 });
               }
+
               function processLinks() {
                 if (toExpand) {
                   console.log('url array: ' + toExpand);
@@ -58,81 +95,81 @@ chrome.extension.sendMessage({}, function(response) {
                   });
                 }
               }
+
               async(getLinks(), function() {
                 processLinks();
               });
             }
 
+            // generate warning message for a given url
+            function warningMsg() {
+              var classType = '';
+              switch (dataType) {
+                case 'bias':
+                  classType = 'Extreme Bias';
+                  break;
+                case 'conspiracy':
+                  classType = 'Conspiracy Theory';
+                  break;
+                case 'fake':
+                  classType = 'Fake News';
+                  break;
+                case 'junksci':
+                  classType = 'Junk Science';
+                  break;
+                case 'rumors':
+                  classType = 'Rumor Mill';
+                  break;
+                case 'satire':
+                  classType = 'Satire';
+                  break;
+                case 'state':
+                  classType = 'State News Source';
+                  break;
+                case 'hate':
+                  classType = 'Hate Group';
+                  break;
+                default:
+                  classType = 'Classification Pending';
+                  break;
+              }
+              warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
+            }
+
+            // flag entire site
+            function flagSite() {
+              warningMsg();
+              $('body').addClass('shift');
+              $('body').prepend('<div class="bs-alert"></div>');
+              $('.bs-alert').append(warnMessage);
+            }
+
+            // flag links
+            function flagIt() {
+              if (!badLinkWrapper.hasClass('fFlagged')) {
+                badLinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
+                badLinkWrapper.addClass('fFlagged');
+              }
+            }
+
+            // generate link warnings
             function linkWarning() {
               $.each(data, function() {
-                switch(currentUrl) {
-                  case 'www.facebook.com':
-                    siteId = 'facebook';
-                  case 'twitter.com':
-                    siteId = 'facebook';
-                  case this.url:
-                    siteId = 'badlink';
-                  case 'www' + this.url:
-                    siteId = 'badlink';
-                  case default:
-                    siteId = 'none';
-                }
-                console.log(currentUrl);
-                console.log(this.url);
-                console.log(siteId);
-
-                if (siteId != 'badlink') {
+                if (currentUrl != this.url) {
                   var badLink = '[href*="' + this.url + '"],[data-expanded-url*="' + this.url +'"],[longurl*="' + this.url +'"]';
-                }
-
-                var classType = '';
-                switch (this.type) {
-                  case '':
-                    classType = 'Classification Pending';
-                    break;
-                  case 'bias':
-                    classType = 'Extreme Bias';
-                    break;
-                  case 'conspiracy':
-                    classType = 'Conspiracy Theory';
-                    break;
-                  case 'fake':
-                    classType = 'Fake News';
-                    break;
-                  case 'junksci':
-                    classType = 'Junk Science';
-                    break;
-                  case 'rumors':
-                    classType = 'Rumor Mill';
-                    break;
-                  case 'satire':
-                    classType = 'Satire';
-                    break;
-                  case 'state':
-                    classType = 'State News Source';
-                    break;
-                  case 'hate':
-                    classType = 'Hate Group';
-                    break;
-                }
-                var warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
-
-                function flagIt() {
-                  if (!badLinkWrapper.hasClass('fFlagged')) {
-                    badLinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
-                    badLinkWrapper.addClass('fFlagged');
-                  }
+                  dataType = this.type;
+                  warningMsg();
                 }
 
                 switch(siteId) {
                   case 'badlink':
-                    $('body').prepend('<div class="bs-alert"></div>')
-                    $('bs-alert').css('display','block').append(warnMessage);
-                    break;
                   case 'none':
                     $(badLink).each(function() {
-                      $(this).addClass("hint--error hint--large hint--bottom");
-                      $(this).attr('aria-label', warnMessage);
+                      if ($(this).text.substring(1) != '💩') {
+                        $(this).prepend('💩 ');
+                        $(this).addClass("hint--error hint--large hint--bottom");
+                        $(this).attr('aria-label', warnMessage);
+                      }
                     });
                     break;
                   case 'facebook':
@@ -162,8 +199,11 @@ chrome.extension.sendMessage({}, function(response) {
                     break;
                 }
               });
+
+              firstLoad = false;
             }
 
+            // watch page for changes
             function watchPage() {
               var mutationObserver = new MutationObserver(function() {
                 trigger();
@@ -176,15 +216,27 @@ chrome.extension.sendMessage({}, function(response) {
               mutationObserver.observe(targetNode, observerConfig);
             }
 
+            // execution script
             function trigger() {
               // async(expandLinks(), function() {
               //   linkWarning();
               // });
-              linkWarning();
+              if (firstLoad) {
+                idSite();
+                if (siteId === 'badlink') {
+                  flagSite();
+                  linkWarning();
+                } else {
+                  linkWarning();
+                }
+              } else {
+                linkWarning();
+              }
             }
 
+            // execute
             trigger();
             watchPage();
           }
-    }, 3);
+    }, 10);
 });

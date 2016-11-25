@@ -1,20 +1,32 @@
 div.bs-alert {
   background: rgba(255, 00, 00, .25);
-  color: maroon;
+  border-bottom: 1px solid #800000;
+  color: #800000;
+  display: block;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: bold;
   height: 28px;
+  left: 0;
   margin: 0;
-  padding: 4px;
-  position: fixed;
+  padding: 4px 0;
+  position: absolute;
   text-align: center;
+  text-transform: uppercase;
   top: 0;
-  width: 100%;
+  width: 100vw;
+  z-index: 9999;
+}
+
+body.shift {
+  margin-top: 36px;
 }
 
 div.bs-alert-inline {
   background: rgba(255, 00, 00, .25);
-  border: 1px solid maroon;
+  border: 1px solid #800000;
   border-radius: .25em;
-  color: maroon;
+  color: #800000;
   text-align: center;
   margin: 8px 0;
   padding: 4px;
