@@ -1,7 +1,7 @@
-var data = [];
-    shorts = [];
-    toExpand = '';
-    expanded = {};
+var data = new Array();
+    shorts = new Array();
+    toExpand = new Array();
+    expanded = new Array();
 
 function async(thisFunc, callback) {
   setTimeout(function() {
@@ -30,31 +30,35 @@ chrome.extension.sendMessage({}, function(response) {
             clearInterval(readyStateCheckInterval);
 
             function expandLinks() {
-              $.each(shorts, function() {
-                var shortLink = 'a[href*="' + this + '"]';
-                $(shortLink).each(function() {
-                  var theLink = ($(this).attr('href'));
-                  if (!toExpand) {
-                    toExpand = theLink;
-                  } else {
-                    toExpand = toExpand + ',' + theLink;
-                  }
-                });
-              });
-              if (toExpand !='') {
-                chrome.runtime.sendMessage(null, {"operation": "expandLink", "shortLink": toExpand}, null, function(response) {
-
-                  if (isJson(response.expandedLinks)) {
-                    expanded = JSON.parse(response.expandedLinks);
-                    $.each(expanded, function(key, value) {
-                      $('a[href="' + value.shortUrl + '"]').attr('longurl', value.longUrl);
-                    });
-                  } else {
-                   console.log('BS Detector could not expand shortened links');
-                   console.log(response.expandedLinks);
-                  }
+              function getLinks() {
+                $.each(shorts, function() {
+                  var shortLink = 'a[href*="' + this + '"]';
+                  $(shortLink).each(function() {
+                    var theLink = ($(this).attr('href'));
+                    toExpand.push(theLink);
+                  });
                 });
               }
+              function processLinks() {
+                if (toExpand) {
+                  console.log('url array: ' + toExpand);
+                  chrome.runtime.sendMessage(null, {"operation": "expandLinks", "shortLinks": toExpand.toString()}, null, function(response) {
+                    console.log(response);
+                    if (isJson(response)) {
+                      expanded = JSON.parse(response);
+                      $.each(expanded, function(key, value) {
+                        $('a[href="' + value.requestedURL + '"]').attr('longurl', value.resolvedURL);
+                      });
+                    } else {
+                     console.log('BS Detector could not expand shortened link');
+                     console.log(response);
+                    }
+                  });
+                }
+              }
+              async(getLinks(), function() {
+                processLinks();
+              });
             }
 
             function linkWarning() {

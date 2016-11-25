@@ -35,7 +35,8 @@ var shorts = [
   '➡.ws',
   '✩.ws'
 ];
-var expandedLinks = {};
+var toExpand = [];
+var expanded = [];
 
 function xhReq(url, callback) {
   var xhr = new XMLHttpRequest();
@@ -53,17 +54,28 @@ xhReq(chrome.extension.getURL("/data/data.json"), function(file){
   siteList = JSON.parse(file);
 });
 
+function expandLinks() {
+  toExpand = request.shortLinks.split(',');
+  alert('incoming data: ' + toExpand);
+  // $.each(toExpand, function(index, url) {
+  //   // console.log('url to expand: ' + url);
+  //   var expandThis = 'https://unshorten.me/json/' + url;
+  //   // console.log('api call: ' + expandThis)
+  //   xhReq(expandThis, function(response) {
+  //     expanded.push(response);
+  //     // console.log('api response: ' + response);
+  //   });
+  // });
+}
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch(request.operation) {
     case 'passData':
       sendResponse({sites: siteList, shorteners: shorts});
       break;
     case 'expandLink':
-      var toExpand = 'https://x.self.agency/x?url=' + request.shortLink;
-      xhReq(toExpand, function(response) {
-        expandedLinks = response;
-      });
-      sendResponse({expandedLinks: expandedLinks});
+      expandLinks();
+      sendResponse({expandedLinks: expanded});
       break;
   }
 });
