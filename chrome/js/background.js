@@ -57,15 +57,15 @@ xhReq(chrome.extension.getURL("/data/data.json"), function(file){
 function expandLinks() {
   toExpand = request.shortLinks.split(',');
   alert('incoming data: ' + toExpand);
-  // $.each(toExpand, function(index, url) {
-  //   // console.log('url to expand: ' + url);
-  //   var expandThis = 'https://unshorten.me/json/' + url;
-  //   // console.log('api call: ' + expandThis)
-  //   xhReq(expandThis, function(response) {
-  //     expanded.push(response);
-  //     // console.log('api response: ' + response);
-  //   });
-  // });
+  $.each(toExpand, function(index, url) {
+    // console.log('url to expand: ' + url);
+    var expandThis = 'https://unshorten.me/json/' + url;
+    // console.log('api call: ' + expandThis)
+    xhReq(expandThis, function(response) {
+      expanded.push(response);
+      // console.log('api response: ' + response);
+    });
+  });
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {

@@ -144,9 +144,10 @@ chrome.extension.sendMessage({}, function(response) {
             }
 
             function trigger() {
-              async(expandLinks(), function() {
-                linkWarning();
-              });
+              // async(expandLinks(), function() {
+              //   linkWarning();
+              // });
+              linkWarning();
             }
 
             trigger();
