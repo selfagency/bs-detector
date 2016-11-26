@@ -133,11 +133,18 @@ chrome.extension.sendMessage({}, function(response) {
                 case 'hate':
                   classType = 'Hate Group';
                   break;
+                case 'test':
+                  classType = 'The Self Agency: Makers of the B.S. Detector';
+                  break;
                 default:
                   classType = 'Classification Pending';
                   break;
               }
-              warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
+              if (dataType != 'test') {
+                warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
+              } else {
+                warnMessage = classType;
+              }
             }
 
             // flag entire site
