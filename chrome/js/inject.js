@@ -42,12 +42,13 @@ chrome.extension.sendMessage({}, function(response) {
 
             // identify current site
             function idSite() {
+              // currentSite looks for the currentUrl (window.location.hostname) in the JSON data file
               if (self === top) {
                 currentSite = $.map(data, function(id, obj) {
                   if (currentUrl === id.url || currentUrl === 'www.' + id.url) return id;
                 });
 
-                if (currentSite && (currentUrl == currentSite[0].url || currentUrl == 'www.' + currentSite[0].url)) {
+                if (currentSite.length > 0 && (currentUrl == currentSite[0].url || currentUrl == 'www.' + currentSite[0].url)) {
                   siteId = 'badlink';
                   dataType = currentSite[0].type;
                 } else {
@@ -147,7 +148,7 @@ chrome.extension.sendMessage({}, function(response) {
               $('.bs-alert').append('<p>' + warnMessage + '</p>');
             }
 
-            // flag links
+            // flag links fb/twitter
             function flagIt() {
               if (!badLinkWrapper.hasClass('fFlagged')) {
                 badLinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
@@ -166,14 +167,23 @@ chrome.extension.sendMessage({}, function(response) {
 
                 switch(siteId) {
                   case 'badlink':
-                  case 'none':
                     $(badLink).each(function() {
                       if ($(this).attr('is-bs') != 'true' && $(this).attr('href').indexOf(currentSite[0].url) < 0) {
-                          $(this).prepend('💩 ');
-                          $(this).addClass("hint--error hint--large hint--bottom");
-                          $(this).attr('aria-label', warnMessage);
-                          $(this).attr('is-bs', 'true');
-                        }
+                        $(this).prepend('💩 ');
+                        $(this).addClass("hint--error hint--large hint--bottom");
+                        $(this).attr('aria-label', warnMessage);
+                        $(this).attr('is-bs', 'true');
+                      }
+                    });
+                    break;
+                  case 'none':
+                    $(badLink).each(function() {
+                      if ($(this).attr('is-bs') != 'true') {
+                        $(this).prepend('💩 ');
+                        $(this).addClass("hint--error hint--large hint--bottom");
+                        $(this).attr('aria-label', warnMessage);
+                        $(this).attr('is-bs', 'true');
+                      }
                     });
                     break;
                   case 'facebook':
@@ -229,10 +239,8 @@ chrome.extension.sendMessage({}, function(response) {
                 idSite();
                 if (siteId === 'badlink') {
                   flagSite();
-                  linkWarning();
-                } else {
-                  linkWarning();
                 }
+                linkWarning();
               } else {
                 linkWarning();
               }
