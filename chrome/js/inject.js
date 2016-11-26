@@ -42,27 +42,29 @@ chrome.extension.sendMessage({}, function(response) {
 
             // identify current site
             function idSite() {
-              currentSite = $.map(data, function(id, obj) {
-                if (currentUrl === id.url || currentUrl === 'www.' + id.url) return id;
-              });
+              if (self === top) {
+                currentSite = $.map(data, function(id, obj) {
+                  if (currentUrl === id.url || currentUrl === 'www.' + id.url) return id;
+                });
 
-              if (currentSite && currentUrl == currentSite[0].url) {
-                siteId = 'badlink';
-                dataType = currentSite[0].type;
-              } else {
-                switch(currentUrl) {
-                  case 'www.facebook.com':
-                    siteId = 'facebook';
-                    break;
-                  case 'twitter.com':
-                    siteId = 'facebook';
-                    break;
-                  case currentSite:
-                    siteId = 'badlink';
-                    break;
-                  default:
-                    siteId = 'none';
-                    break;
+                if (currentSite && (currentUrl == currentSite[0].url || currentUrl == 'www.' + currentSite[0].url)) {
+                  siteId = 'badlink';
+                  dataType = currentSite[0].type;
+                } else {
+                  switch(currentUrl) {
+                    case 'www.facebook.com':
+                      siteId = 'facebook';
+                      break;
+                    case 'twitter.com':
+                      siteId = 'facebook';
+                      break;
+                    case currentSite:
+                      siteId = 'badlink';
+                      break;
+                    default:
+                      siteId = 'none';
+                      break;
+                  }
                 }
               }
             }
@@ -142,7 +144,7 @@ chrome.extension.sendMessage({}, function(response) {
               warningMsg();
               $('body').addClass('shift');
               $('body').prepend('<div class="bs-alert"></div>');
-              $('.bs-alert').append(warnMessage);
+              $('.bs-alert').append('<p>' + warnMessage + '</p>');
             }
 
             // flag links
@@ -166,14 +168,12 @@ chrome.extension.sendMessage({}, function(response) {
                   case 'badlink':
                   case 'none':
                     $(badLink).each(function() {
-                      if (this.text) {
-                        var firstChar = this.text.substring(0, 1);
-                        if (firstChar != '💩') {
+                      if ($(this).attr('is-bs') != 'true' && $(this).attr('href').indexOf(currentSite[0].url) < 0) {
                           $(this).prepend('💩 ');
                           $(this).addClass("hint--error hint--large hint--bottom");
                           $(this).attr('aria-label', warnMessage);
+                          $(this).attr('is-bs', 'true');
                         }
-                      }
                     });
                     break;
                   case 'facebook':
@@ -242,5 +242,5 @@ chrome.extension.sendMessage({}, function(response) {
             trigger();
             watchPage();
           }
-    }, 10);
+    }, 5);
 });

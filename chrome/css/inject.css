@@ -1,15 +1,13 @@
-div.bs-alert {
-  background: rgba(255, 00, 00, .25);
+.bs-alert {
+  background: #ff0000;
   border-bottom: 1px solid #800000;
-  color: #800000;
+  color: #fff;
   display: block;
   font-family: sans-serif;
   font-size: 14px;
   font-weight: bold;
   height: 28px;
   left: 0;
-  margin: 0;
-  padding: 4px 0 0;
   position: absolute;
   text-align: center;
   text-transform: uppercase;
@@ -18,11 +16,17 @@ div.bs-alert {
   z-index: 9999;
 }
 
+.bs-alert p {
+  display: block;
+  line-height: 2em;
+  margin: 0;
+}
+
 body.shift {
   margin-top: 28px;
 }
 
-div.bs-alert-inline {
+.bs-alert-inline {
   background: rgba(255, 00, 00, .25);
   border: 1px solid #800000;
   border-radius: .25em;
