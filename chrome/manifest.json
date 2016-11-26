@@ -1,6 +1,6 @@
 {
   "name": "B.S. Detector",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "manifest_version": 2,
   "default_locale": "en",
   "description": "Warns users about unreliable news sources.",
