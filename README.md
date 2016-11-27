@@ -1,18 +1,20 @@
 # 💩 B.S. Detector
 
-![screenshot](https://s22.postimg.org/ru4qaxndt/another_example_of_the_extensions_functionality.jpg)
+This Chrome extension was hastily assembled as a rejoinder to Mark Zuckerberg's dubious claims that Facebook is unable to substantively address the proliferation of fake news on its platform. The B.S. Detector searches all links on a given webpage for references to unreliable sources, checking against a manually compiled list of domains. It then provides a visual warning to the user when they hover over a questionable link, or, if the user is on Facebook, with a large alert bar at the top of any post containing a questionable link. The B.S. Detector is a proof of concept, not a fully developed product, and is presently undergoing development. You can read more about the extension's origins [here](https://www.inverse.com/article/23781-bs-detector-facebook-fake-news-daniel-sieradski).
 
-## 📖 About
+The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/master/chrome/data/data.json).
 
-This is a project I threw together in under an hour to push back against Mark Zuckerberg's claim that Facebook is unable to do something about the proliferation of fake news on their platform. It is a proof of concept and not a fully developed product. You can read more about my reasoning behind it [here](https://www.inverse.com/article/23781-bs-detector-facebook-fake-news-daniel-sieradski).
+Domain classifications include:
++   **Fake News:** Sources that fabricate stories out of whole cloth with the intent of pranking the public.
++   **Satire:** Sources that provide humorous commentary on current events in the form of fake news.
++   **Extreme Political Bias:** Sources that traffic in political propaganda and gross distortions of fact.
++   **Conspiracy Theory:** Sources that are well-known promoters of kooky conspiracy theories.
++   **Rumor Mill:** Sources that traffic in rumors, innuendo, and unverified claims.
++   **State News:** Sources in repressive states operating under government sanction.
++   **Junk Science:** Sources that promote scientifically dubious claims.
++   **Hate Group:** Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.
 
-The B.S. Detector works by searching all links on a given webpage for the domains of questionable websites, checking against a manually compiled list. It then provides a tooltip warning the user when they hover over the link of a questionable site.
-
-The list was compiled from various sources and consists chiefly of websites that traffic in fake news, parody news, unsourced claims, fabrications, innuendo, and conspiracy theory. I have done my absolute best to stay wholly objective and as such the entries span the political spectrum.
-
-You can view the complete list — and the very minimal code behind this plugin — [here](https://github.com/selfagency/bs-detector/blob/master/ext/src/inject/inject.js).
-
-If there are any sites you'd recommend adding or removing from the list, or if you object to your site being listed, you can submit an issue or a pull request above.
+If there are any sites you recommend adding or removing, or if you object to your site being listed, you can submit an issue or a pull request above.
 
 ## 🛠 Installation
 
