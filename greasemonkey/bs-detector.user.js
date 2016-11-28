@@ -6,13 +6,13 @@
 // @grant       none
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
 // ==/UserScript==
-	
-// Account for possible jquery conflicts.
-this.$ = this.jQuery = jQuery.noConflict(true);
 
 /**
  * Run the script.
  */
+(function ($) {
+'use strict';
+
 function _bsDetector() {
 
 	// Inject the CSS for this.
@@ -398,32 +398,39 @@ function _bsDetector() {
 	];
 
 	/**
+	 * Add a warning to a link that points to a BS site.
+	 */
+	function processBS() { /* jshint validthis: true */
+		if (!$(this).hasClass('bs-detector-processed')) {
+			$(this).addClass('hint--error hint--large hint--bottom bs-detector-processed');
+			$(this).attr('aria-label', 'This website is considered a questionable source.');
+		}
+	}
+
+	/**
+	 * Add warnings to each link that points to a BS site.
+	 */
+	function checkBS(index, url) {
+		// Add to links.
+		var badLink = 'a[href*="' + url + '"]';
+		$(badLink).each(processBS);
+	}
+
+	/**
 	 * Loop over every link in the page to check the source.
 	 */
 	function linkWarning() {
 		// Loop over each given source.
-		$.each(bsDetectorLinks, function(index, url) {
-			// Add to links.
-			var badLink = 'a[href*="' + url + '"]';
-			$(badLink).each(function() {
-				if (!$(this).hasClass('bs-detector-processed')) {
-					$(this).addClass('hint--error hint--large hint--bottom bs-detector-processed');
-					$(this).attr('aria-label', 'This website is considered a questionable source.');
-				}
-			});
-		});
+		$.each(bsDetectorLinks, checkBS);
 	};
 
 	// Execute the warnings.
 	linkWarning();
 
 	// When the user scrolls, check again.
-	$(window).scroll(function() {
-		linkWarning();
-	});
+	$(window).scroll(linkWarning);
 }
 
 // Run the detector when document ready.
-$(document).ready(function() {
-	_bsDetector();
-});
+$(document).ready(_bsDetector);
+})(jQuery.noConflict(true)); // Account for possible jQuery conflicts.
