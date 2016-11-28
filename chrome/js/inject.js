@@ -190,7 +190,7 @@ chrome.extension.sendMessage({}, function(response) {
                 break;
               case 'facebook':
                 var testLink = decodeURIComponent(this).substring(0, 30);
-                if (testLink = 'https://l.facebook.com/l.php?u=') {
+                if (testLink === 'https://l.facebook.com/l.php?u=') {
                   thisUrl = decodeURIComponent(this).substring(30).split('&h=', 1);
                   $(this).attr('longurl', thisUrl);
                 }
