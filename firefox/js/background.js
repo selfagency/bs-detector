@@ -38,13 +38,14 @@ var shorts = [
 var toExpand = [];
 var expanded = [];
 
+// Make an ajax call.
 function xhReq(url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.overrideMimeType('application/json');
   xhr.open('GET', url, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status == '200') {
-        callback(xhr.responseText);
+      callback(xhr.responseText);
     }
   }
   xhr.send(null);
@@ -54,28 +55,13 @@ xhReq(browser.extension.getURL("/data/data.json"), function(file){
   siteList = JSON.parse(file);
 });
 
-function expandLinks() {
-  toExpand = request.shortLinks.split(',');
-  alert('incoming data: ' + toExpand);
-  $.each(toExpand, function(index, url) {
-    // console.log('url to expand: ' + url);
-    var expandThis = 'https://unshorten.me/json/' + url;
-    // console.log('api call: ' + expandThis)
-    xhReq(expandThis, function(response) {
-      expanded.push(response);
-      // console.log('api response: ' + response);
-    });
-  });
-}
-
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch(request.operation) {
     case 'passData':
       sendResponse({sites: siteList, shorteners: shorts});
       break;
-    case 'expandLink':
-      expandLinks();
-      sendResponse({expandedLinks: expanded});
+    case 'executeMain':
+      sendResponse({});
       break;
   }
 });
