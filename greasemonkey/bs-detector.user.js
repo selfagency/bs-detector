@@ -83,6 +83,7 @@ $(document).ready(function() {
     }, 10);
   }
 
+  // Make an ajax call.
   function xhReq(url, callback) {
     // Using built in Greasemonkey request to handle cross domain.
     GM_xmlhttpRequest({
@@ -291,6 +292,7 @@ $(document).ready(function() {
   // watch page for changes
   function watchPage() {
     var mutationObserver = new MutationObserver(function() {
+      expandLinks();
       trigger();
     });
     var targetNode = document.body;
@@ -323,12 +325,11 @@ $(document).ready(function() {
   var bsCss = "<style>.bs-alert{background:#ff0000;display:block;height:28px;left:0;position:absolute;top:0;width:100vw;}.bs-alertp{color:#fff;display:block;font-family:'Arial','Helvetica',sans-serif;font-size:14px;font-weight:bold;line-height:2em;margin:0;text-align:center;text-transform:uppercase;}body.shift{margin-top:28px;}.bs-alert-inline{background:rgba(255,00,00,.25);border:1pxsolid#800000;border-radius:.25em;color:#800000;text-align:center;margin:8px0;padding:4px;}[class*=hint--]{}</style>";
   $('body').prepend(bsCss);
 
-  // GM Change - replacing chrome.runtime call.
-  expandLinks();
   // Then trigger the behaviors.
   xhReq(JSON_URL, function(file) {
     data = JSON.parse(file);
     // execute
+    expandLinks();
     trigger();
     watchPage();
   });
