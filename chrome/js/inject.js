@@ -219,19 +219,16 @@ chrome.extension.sendMessage({}, function(response) {
           firstLoad = false;
         }
 
-        // watch page for changes
-        function watchPage() {
-          var mutationObserver = new MutationObserver(trigger);
-          var targetNode = document.body;
-          var observerConfig = {
-            childList: true,
-            subtree: true
-          };
-          mutationObserver.observe(targetNode, observerConfig);
-        }
-
         // execution script
-        function trigger() {
+        function trigger(mutations) {
+          if (arguments.length === 0) {
+            mutationObserver.disconnect();
+            linkWarning();
+            mutationObserver.observe(targetNode, observerConfig);
+            return;
+          }
+          var hasDesired = false, i = mutations.length, nodes, j;
+          mutationObserver.disconnect();
           // asynch(expandLinks, linkWarning);
           if (firstLoad) {
             idSite();
@@ -239,11 +236,41 @@ chrome.extension.sendMessage({}, function(response) {
               flagSite();
             }
           }
-          linkWarning();
+          nloop: while (i--) {
+            switch (mutations[i].type) {
+              case 'childList':
+                nodes = mutations[i].addedNodes;
+                j = nodes.length;
+                while (j--) if (nodes[j].nodeName.toLowerCase() === 'a') {
+                  hasDesired = true;
+                  break nloop;
+                }
+                break;
+              case 'attributes':
+                if (mutations[i].target.nodeName.toLowerCase() === 'a' &&
+                    mutations[i].attributeName.toLowerCase() === 'href') {
+                  hasDesired = true;
+                  break nloop;
+                }
+                break;
+              default:
+                break;
+            }
+          }
+          if (hasDesired) linkWarning();
+          mutationObserver.observe(targetNode, observerConfig);
         }
+
+        // watch page for changes
+        var mutationObserver = new MutationObserver(trigger);
+        var targetNode = document.body;
+        var observerConfig = {
+          childList: true,
+          subtree: true
+        };
+        mutationObserver.observe(targetNode, observerConfig);
 
         // execute
         trigger();
-        watchPage();
     });
 });
