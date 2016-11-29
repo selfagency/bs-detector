@@ -1,7 +1,7 @@
 ### Extension version
 
 ### Browser and browser version
-[ ] Chrome [ ] Firefox
+[ ] Chrome [ ] Firefox [ ] Other, Version:
 
 ### OS and OS version
 [ ] Mac [ ] Windows [ ] Linux, Version:
