@@ -54,18 +54,22 @@ xhReq(chrome.extension.getURL("/data/data.json"), function(file){
   siteList = JSON.parse(file);
 });
 
-function expandLinks() {
+function addExpanded(response) {
+  expanded.push(response);
+  // console.log('api response: ' + response);
+}
+
+function expandLink(index, url) {
+  // console.log('url to expand: ' + url);
+  var expandThis = 'https://unshorten.me/json/' + encodeURIComponent(url);
+  // console.log('api call: ' + expandThis)
+  xhReq(expandThis, addExpanded);
+}
+
+function expandLinks(request) {
   toExpand = request.shortLinks.split(',');
-  alert('incoming data: ' + toExpand);
-  $.each(toExpand, function(index, url) {
-    // console.log('url to expand: ' + url);
-    var expandThis = 'https://unshorten.me/json/' + url;
-    // console.log('api call: ' + expandThis)
-    xhReq(expandThis, function(response) {
-      expanded.push(response);
-      // console.log('api response: ' + response);
-    });
-  });
+  // console.log('incoming data: ' + toExpand);
+  $.each(toExpand, expandLink);
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -74,7 +78,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       sendResponse({sites: siteList, shorteners: shorts});
       break;
     case 'expandLink':
-      expandLinks();
+      expandLinks(request);
       sendResponse({expandedLinks: expanded});
       break;
   }
