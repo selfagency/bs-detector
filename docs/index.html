@@ -4,5 +4,6 @@ title: {{ site.name }}
 ---
 
 <div id="home">
-  {% markdown content.md %}
+  {% capture bs_content %}{% include content.md %}{% endcapture %}
+  {{ bs_content  | markdownify }}
 </div>

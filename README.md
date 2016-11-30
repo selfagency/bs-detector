@@ -23,7 +23,7 @@ If there are any sites you recommend adding or removing, or if you object to you
 <a name="chrome"></a>
 
 ### Chrome and Chrome-based browsers
-[Click here](https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/) to go to the Chrome Web Store and click 'Install.' The plugin is compatible with all Chromium browsers, including Opera.
+[Click here](https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/) to go to the Chrome Web Store and click 'Install.' The plugin is compatible with all Chromium browsers, including Opera (with the [Chrome Extension extension](https://addons.opera.com/en/extensions/details/download-chrome-extension-9/)).
 
 <a name="firefox"></a>
 
