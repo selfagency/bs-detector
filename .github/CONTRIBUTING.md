@@ -1,0 +1,3 @@
+# CONTRIBUTOR GUIDELINES
+
+Coming soon.
