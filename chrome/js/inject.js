@@ -265,6 +265,7 @@ chrome.extension.sendMessage({}, function(response) {
         var mutationObserver = new MutationObserver(trigger);
         var targetNode = document.body;
         var observerConfig = {
+          attributes: true,
           childList: true,
           subtree: true
         };
