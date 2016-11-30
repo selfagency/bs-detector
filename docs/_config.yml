@@ -1,0 +1,17 @@
+# Setup
+title:        B.S. 💩 Detector
+tagline:      A browser extension that alerts users to unreliable news sources.
+baseurl:      ""
+paginate:     1
+
+# About/contact
+author:
+  name:       The Self Agency, LLC
+  url:        https://self.agency
+
+# Gems
+gems:
+  - jekyll-paginate
+
+#Others
+markdown: kramdown
