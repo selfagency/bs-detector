@@ -1,6 +1,6 @@
 {
   "name": "B.S. Detector",
-  "version": "0.2.4",
+  "version": "0.2.3",
   "manifest_version": 2,
   "default_locale": "en",
   "description": "Warns users about unreliable news sources.",
@@ -11,18 +11,20 @@
     "128": "icons/icon128.png"
   },
   "background": {
-    "scripts": [
-      "js/background.js"
-    ],
+    "scripts": [ "js/background.js" ],
     "persistent": true
   },
   "content_scripts": [ {
-     "css": [ "css/hint.min.css", "css/inject.css"],
-     "js": [ "js/jquery-3.1.1.slim.min.js", "js/bs-detector.js" ],
+     "css": [ "css/hint.min.css", "css/inject.css" ],
+     "js": [ "js/jquery-3.1.1.slim.min.js", "js/inject.js" ],
      "matches": [ "*://*/*" ],
      "all_frames": true,
      "run_at": "document_end"
   } ],
+ "permissions": [
+    "*://unshorten.me/*",
+    "webRequest"
+  ],
   "web_accessible_resources": [
     "data/data.json"
   ]
