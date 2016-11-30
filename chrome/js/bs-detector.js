@@ -104,7 +104,9 @@ function processLinks() {
       console.log('url array: ' + toExpand);
     }
     chrome.runtime.sendMessage(null, {"operation": "expandLinks", "shortLinks": toExpand.toString()}, null, function(response) {
-      console.log(response);
+      if (debug) {
+        console.log('processLinks: ' + response);
+      }
       if (isJson(response)) {
         expanded = JSON.parse(response);
         $.each(expanded, function(key, value) {
@@ -156,7 +158,9 @@ function warningMsg() {
       break;
   }
   warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
-  console.log('warnMessage: ' + warnMessage);
+  if (debug) {
+    console.log('warnMessage: ' + warnMessage);
+  }
 }
 
 // flag entire site
