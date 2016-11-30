@@ -1,16 +1,16 @@
 // declare variables
-var bsId = [];
-    currentSite = [];
-    currentUrl = '';
-    data = [];
-    dataType = '';
-    debug = true;
-    expanded = {};
-    firstLoad = true;
-    shorts = [];
-    shortUrls = [];
-    siteId = '';
-    warnMessage = '';
+var bsId = [],
+    currentSite = [],
+    currentUrl = '',
+    data = [],
+    dataType = '',
+    debug = true,
+    expanded = {},
+    firstLoad = true,
+    shorts = [],
+    shortUrls = [],
+    siteId = '',
+    warnMessage = '',
     windowUrl = window.location.hostname;
 
 // asynchronous loading function
@@ -32,11 +32,11 @@ function isJson(str) {
 }
 
 // strip urls down to hostname
-var cleanUrl = function(url) {
-  url = url.replace(new RegExp(/^http\:\/\/|^https\:\/\/|^ftp\:\/\//i), '');
-  url = url.replace(new RegExp(/^www\./i), '');
-  url = url.replace(new RegExp(/\/(.*)/), '');
-  return(url);
+function cleanUrl(url) {
+  url = url.replace(/^(?:https?|ftp)\:\/\//i, '');
+  url = url.replace(/^www\./i, '');
+  url = url.replace(/\/.*/, '');
+  return url;
 }
 
 // grab data from background
@@ -88,39 +88,37 @@ function idSite() {
 }
 
 // expand short urls and append to anchor tags
-function expandLinks() {
-  function getLinks() {
-    $.each(shorts, function() {
-      var shortLink = 'a[href*="' + this + '"]';
-      $(shortLink).each(function() {
-        var theLink = ($(this).attr('href'));
-        toExpand.push(theLink);
-      });
+function getLinks() {
+  $.each(shorts, function() {
+    var shortLink = 'a[href*="' + this + '"]';
+    $(shortLink).each(function() {
+      var theLink = ($(this).attr('href'));
+      toExpand.push(theLink);
+    });
+  });
+}
+
+function processLinks() {
+  if (toExpand) {
+    if (debug) {
+      console.log('url array: ' + toExpand);
+    }
+    chrome.runtime.sendMessage(null, {"operation": "expandLinks", "shortLinks": toExpand.toString()}, null, function(response) {
+      console.log(response);
+      if (isJson(response)) {
+        expanded = JSON.parse(response);
+        $.each(expanded, function(key, value) {
+          $('a[href="' + value.requestedURL + '"]').attr('longurl', value.resolvedURL);
+        });
+      } else if (debug) {
+       console.log('BS Detector could not expand shortened link');
+       console.log(response);
+      }
     });
   }
-
-  function processLinks() {
-    if (toExpand) {
-      if (debug) {
-        console.log('url array: ' + toExpand);
-      }
-      chrome.runtime.sendMessage(null, {"operation": "expandLinks", "shortLinks": toExpand.toString()}, null, function(response) {
-        console.log(response);
-        if (isJson(response)) {
-          expanded = JSON.parse(response);
-          $.each(expanded, function(key, value) {
-            $('a[href="' + value.requestedURL + '"]').attr('longurl', value.resolvedURL);
-          });
-        } else if (debug) {
-         console.log('BS Detector could not expand shortened link');
-         console.log(response);
-        }
-      });
-    }
-  }
-
-  asynch(getLinks, processLinks);
 }
+
+var expandLinks = asynch.bind(null, getLinks, processLinks);
 
 // generate warning message for a given url
 function warningMsg() {
@@ -169,6 +167,31 @@ function flagSite() {
   $('.bs-alert').append('<p>' + warnMessage + '</p>');
 }
 
+// get the hostname of a given link
+function getHost(thisElement) {
+  var thisUrl = '';
+  if ($(thisElement).attr('data-expanded-url') != null) {
+    thisUrl = $(thisElement).attr('data-expanded-url');
+  } else {
+    thisUrl = $(thisElement).attr('href');
+  }
+  if (thisUrl != null) {
+    thisUrl = cleanUrl(thisUrl);
+  }
+  return thisUrl;
+}
+
+// check if short link and if so, add to array
+function checkIfShort(theHost, currentElement) {
+  var isShort = $.map(shorts, function(url) {
+    if (theHost == url || theHost == 'www.' + url) return true;
+  });
+  if (isShort == 'true') {
+    var shortUrl = $(currentElement).attr('href');
+    shortUrls.push(shortUrl);
+  }
+}
+
 // target links
 function targetLinks() {
 
@@ -186,43 +209,18 @@ function targetLinks() {
     }
 
     // convert facebook urls
-    if (siteId = 'facebook') {
+    if (siteId == 'facebook') {
       var testLink = decodeURIComponent(this).substring(0, 30);
       var thisUrl = '';
-      if (testLink == 'https://l.facebook.com/l.php?u=' || testLink == 'http://l.facebook.com/l.php?u=') {
+      if (testLink == 'https://l.facebook.com/l.php?u=') {
         thisUrl = decodeURIComponent(this).substring(30).split('&h=', 1);
       }
-      if (thisUrl != '') {
+      if (thisUrl !== '') {
         $(this).attr('data-external', true);
         $(this).attr('data-expanded-url', thisUrl);
       }
     }
   });
-
-  // get the hostname of a given link
-  function getHost(thisElement) {
-    var thisUrl = '';
-    if ($(thisElement).attr('data-expanded-url' != null)) {
-      thisUrl = $(thisElement).attr('data-expanded-url');
-    } else {
-      thisUrl = $(thisElement).attr('href');
-    }
-    if (thisUrl != null) {
-      thisUrl = cleanUrl(thisUrl);
-    }
-    return thisUrl;
-  }
-
-  // check if short link and if so, add to array
-  function checkIfShort(theHost, currentElement) {
-    var isShort = $.map(shorts, function(url) {
-      if (theHost == url || theHost == 'www.' + url) return true;
-    });
-    if (isShort == 'true') {
-      var shortUrl = $(currentElement).attr('href');
-      shortUrls.push(shortUrl);
-    }
-  }
 
   // process external links
   $('a[data-external="true"]').each(function() {
@@ -250,18 +248,18 @@ function targetLinks() {
   });
 }
 
+// flag links
+function flagIt(badLinkWrapper) {
+  if (!badlinkWrapper.hasClass('bs-flag')) {
+    badlinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
+    badlinkWrapper.addClass('bs-flag');
+  }
+}
+
 // generate link warnings
 function linkWarning() {
   var badlinkWrapper = '';
   targetLinks();
-
-  // flag links
-  function flagIt() {
-    if (!badlinkWrapper.hasClass('bs-flag')) {
-      badlinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
-      badlinkWrapper.addClass('bs-flag');
-    }
-  }
 
   $('a[data-is-bs="true"]').each(function() {
     if (debug) {
@@ -274,17 +272,17 @@ function linkWarning() {
       case 'facebook':
         if ($(this).parents('._1dwg').length >= 0) {
           badlinkWrapper = $(this).closest('.mtm');
-          flagIt();
+          flagIt(badLinkWrapper);
         }
         if ($(this).parents('.UFICommentContent').length >= 0) {
           badlinkWrapper = $(this).closest('.UFICommentBody');
-          flagIt();
+          flagIt(badLinkWrapper);
         }
         break;
       case 'twitter':
         if ($(this).parents('.tweet').length >= 0) {
           badlinkWrapper = $(this).closest('.js-tweet-text-container');
-          flagIt();
+          flagIt(badLinkWrapper);
         }
         break;
       case 'badlink':
@@ -320,7 +318,7 @@ function execute() {
         characterData: false,
         childList: true,
         subtree: true
-      }
+      };
       break;
     case 'twitter':
       targetNodes = [document.getElementById("content-main")];
@@ -329,7 +327,7 @@ function execute() {
         characterData: false,
         childList: true,
         subtree: true
-      }
+      };
       break;
     case 'badSite':
     case 'none':
@@ -391,7 +389,5 @@ function execute() {
 
 // execute on load
 chrome.extension.sendMessage({}, function(response) {
-    $(document).ready(function() {
-      execute();
-    });
+    $(document).ready(execute);
 });
