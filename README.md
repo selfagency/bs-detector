@@ -19,7 +19,3 @@ If there are any sites you recommend adding or removing, or if you object to you
 ## 🛠 Installation
 
 [Click here](https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/) to go to the Chrome Web Store and click 'Install.' The plugin is compatible with all Chromium browsers, including Opera.
-
-## Contributing
-
-If you want to contribute to this project, please review our [Code of Conduct](https://github.com/selfagency/bs-detector/wiki/Code-of-Conduct).
