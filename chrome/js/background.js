@@ -1,42 +1,12 @@
 var siteList = [];
-var shorts = [
-  'bit.do',
-  't.co',
-  'lnkd.in',
-  'db.tt',
-  'qr.ae',
-  'adf.ly',
-  'goo.gl',
-  'bit.ly',
-  'cur.lv',
-  'tinyurl.com',
-  'ow.ly',
-  'ht.ly',
-  'ity.im',
-  'q.gs',
-  'is.gd',
-  'po.st',
-  'bc.vc',
-  'u.to',
-  'j.mp',
-  'buzurl.com',
-  'cutt.us',
-  'u.bb',
-  'x.co',
-  'scrnch.me',
-  'vzturl.com',
-  'qr.net',
-  '1url.com',
-  'tweez.me',
-  'v.gd',
-  'tr.im',
-  'trib.al',
-  'zip.net',
-  '➡.ws',
-  '✩.ws'
-];
-var toExpand = [];
-var expanded = [];
+    shorts = ["✩.ws", "➡.ws", "1url.com", "adf.ly", "bc.vc", "bit.do", "bit.ly",
+              "buzurl.com", "cur.lv", "cutt.us", "db.tt", "goo.gl", "ht.ly",
+              "is.gd", "ity.im", "j.mp", "lnkd.in", "ow.ly", "po.st", "q.gs",
+              "qr.ae", "qr.net", "scrnch.me", "t.co", "tinyurl.com", "tr.im",
+              "trib.al", "tweez.me", "u.bb", "u.to", "v.gd", "vzturl.com",
+              "x.co", "zip.net"];
+    toExpand = [];
+    expanded = [];
 
 function xhReq(url, callback) {
   var xhr = new XMLHttpRequest();
