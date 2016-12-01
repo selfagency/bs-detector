@@ -169,24 +169,24 @@ chrome.extension.sendMessage({}, function(response) {
 
             switch(siteId) {
               case 'badlink':
-                $(badLink).each(function() {
-                  if ($(this).attr('is-bs') != 'true' && $(this).attr('href').indexOf(currentSite[0].url) < 0) {
-                    $(this).prepend('💩 ');
-                    $(this).addClass("hint--error hint--large hint--bottom");
-                    $(this).attr('aria-label', warnMessage);
-                    $(this).attr('is-bs', 'true');
-                  }
-                });
+                // $(badLink).each(function() {
+                //   if ($(this).attr('is-bs') != 'true' && $(this).attr('href').indexOf(currentSite[0].url) < 0) {
+                //     $(this).prepend('💩 ');
+                //     $(this).addClass("hint--error hint--large hint--bottom");
+                //     $(this).attr('aria-label', warnMessage);
+                //     $(this).attr('is-bs', 'true');
+                //   }
+                // });
                 break;
               case 'none':
-                $(badLink).each(function() {
-                  if ($(this).attr('is-bs') != 'true') {
-                    $(this).prepend('💩 ');
-                    $(this).addClass("hint--error hint--large hint--bottom");
-                    $(this).attr('aria-label', warnMessage);
-                    $(this).attr('is-bs', 'true');
-                  }
-                });
+                // $(badLink).each(function() {
+                //   if ($(this).attr('is-bs') != 'true') {
+                //     $(this).prepend('💩 ');
+                //     $(this).addClass("hint--error hint--large hint--bottom");
+                //     $(this).attr('aria-label', warnMessage);
+                //     $(this).attr('is-bs', 'true');
+                //   }
+                // });
                 break;
               case 'facebook':
                 var testLink = decodeURIComponent(this).substring(0, 30);
@@ -207,8 +207,8 @@ chrome.extension.sendMessage({}, function(response) {
                 break;
               case 'twitter':
                 $(badLink).each(function() {
-                  if ($(this).parents('.TwitterCard').length == 1) {
-                    badLinkWrapper = $(this).closest('.TwitterCard');
+                  if ($(this).parents('.tweet').length == 1) {
+                    badLinkWrapper = $(this).closest('.js-tweet-text-container');
                     flagIt();
                   }
                 });
@@ -221,6 +221,13 @@ chrome.extension.sendMessage({}, function(response) {
 
         // execution script
         function trigger(mutations) {
+          if (firstLoad) {
+            idSite();
+            if (siteId === 'badlink') {
+              flagSite();
+            }
+          }
+
           if (arguments.length === 0) {
             mutationObserver.disconnect();
             linkWarning();
@@ -229,13 +236,7 @@ chrome.extension.sendMessage({}, function(response) {
           }
           var hasDesired = false, i = mutations.length, nodes, j;
           mutationObserver.disconnect();
-          // asynch(expandLinks, linkWarning);
-          if (firstLoad) {
-            idSite();
-            if (siteId === 'badlink') {
-              flagSite();
-            }
-          }
+
           nloop: while (i--) {
             switch (mutations[i].type) {
               case 'childList':
