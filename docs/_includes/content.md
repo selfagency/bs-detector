@@ -37,4 +37,4 @@ Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonk
 
 ## 🤝 Contributing
 
-We welcome pull requests and community collaboration. Before contributing, please review our [Code of Conduct](https://github.com/selfagency/bs-detector/blob/master/CODE_OF_CONDUCT.md).
+We welcome pull requests and community collaboration. Before contributing, please review our [Code of Conduct](https://github.com/selfagency/bs-detector/blob/master/CODE_OF_CONDUCT.md). You can chat with other community members in realtime on Gitter [here](https://gitter.im/bs-detector/).
