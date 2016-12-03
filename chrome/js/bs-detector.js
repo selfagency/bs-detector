@@ -4,7 +4,7 @@ var bsId = [],
     currentUrl = '',
     data = [],
     dataType = '',
-    debug = true,
+    debug = false,
     expanded = {},
     firstLoad = true,
     shorts = [],
@@ -33,9 +33,25 @@ function isJson(str) {
 
 // strip urls down to hostname
 function cleanUrl(url) {
-  url = url.replace(/^(?:https?|ftp)\:\/\//i, '');
-  url = url.replace(/^www\./i, '');
-  url = url.replace(/\/.*/, '');
+
+  // convert facebook urls
+  if (siteId == 'facebook') {
+    var testLink = decodeURIComponent(url).substring(0, 30);
+    var thisUrl = '';
+    if (testLink == 'https://l.facebook.com/l.php?u=' || testLink == 'http://l.facebook.com/l.php?u=') {
+      thisUrl = decodeURIComponent(url).substring(30).split('&h=', 1);
+    }
+    // if (thisUrl !== '') {
+    //   $(url).attr('data-external', true);
+    //   $(url).attr('data-expanded-url', thisUrl);
+    // }
+    url = thisUrl;
+  }
+
+
+  url = url.toString().replace(/^(?:https?|ftp)\:\/\//i, '');
+  url = url.toString().replace(/^www\./i, '');
+  url = url.toString().replace(/\/.*/, '');
   return url;
 }
 
@@ -174,12 +190,12 @@ function flagSite() {
 // get the hostname of a given link
 function getHost(thisElement) {
   var thisUrl = '';
-  if ($(thisElement).attr('data-expanded-url') != null) {
+  if ($(thisElement).attr('data-expanded-url') !== null && $(thisElement).attr('data-expanded-url') !== undefined) {
     thisUrl = $(thisElement).attr('data-expanded-url');
   } else {
     thisUrl = $(thisElement).attr('href');
   }
-  if (thisUrl != null) {
+  if (thisUrl !== null && thisUrl !== undefined) {
     thisUrl = cleanUrl(thisUrl);
   }
   return thisUrl;
@@ -234,14 +250,22 @@ function targetLinks() {
     if ($(this).attr('data-is-bs') != 'true') {
       var urlHost = getHost(this);
       if (debug) {
-        console.log('urlHost: ' + urlHost);
       }
       // checkIfShort(urlHost, this);
 
       // check if link is in list of bad domains
       bsId = $.map(data, function(id, obj) {
-        if (urlHost == id.url || urlHost == 'www.' + id.url) return id;
+        if (urlHost == id.url || urlHost == 'www.' + id.url){
+          return id;
+        }
       });
+
+      // $.each(data, function(){
+      //   if (urlHost == $(this).url || urlHost == 'www.' + $(this).url){
+      //     var bsId = $(this);
+      //   }
+      // });
+
 
       // if link is in bad domain list, tag it
       if (bsId[0]) {
