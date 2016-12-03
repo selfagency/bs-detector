@@ -260,13 +260,6 @@ function targetLinks() {
         }
       });
 
-      // $.each(data, function(){
-      //   if (urlHost == $(this).url || urlHost == 'www.' + $(this).url){
-      //     var bsId = $(this);
-      //   }
-      // });
-
-
       // if link is in bad domain list, tag it
       if (bsId[0]) {
         $(this).attr('data-is-bs', true);
