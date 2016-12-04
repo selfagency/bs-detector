@@ -4,7 +4,7 @@ var bsId = [],
     currentUrl = '',
     data = [],
     dataType = '',
-    debug = false,
+    debug = true,
     expanded = {},
     firstLoad = true,
     shorts = [],
@@ -169,6 +169,9 @@ function warningMsg() {
     case 'clickbait':
       classType = 'Clickbait';
       break;
+    case 'caution':
+      classType = 'Caution';
+      break;
     case 'test':
       classType = 'Test';
       break;
@@ -176,7 +179,11 @@ function warningMsg() {
       classType = 'Classification Pending';
       break;
   }
-  warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
+  if (dataType === 'caution') {
+    warnMessage = '⚠️ Caution: Source may be reliable but contents require further verification.';
+  } else {
+    warnMessage = '💩 Warning: This may not be a reliable source. (' + classType +')';
+  }
   if (debug) {
     console.log('warnMessage: ' + warnMessage);
   }
@@ -186,8 +193,13 @@ function warningMsg() {
 function flagSite() {
   warningMsg();
   $('body').addClass('shift');
-  $('body').prepend('<div class="bs-alert"></div>');
-  $('.bs-alert').append('<p>' + warnMessage + '</p>');
+  if (dataType === 'caution') {
+    $('body').prepend('<div class="bs-alert warning"></div>');
+    $('.bs-alert').append('<p>' + warnMessage + '</p>');
+  } else {
+    $('body').prepend('<div class="bs-alert"></div>');
+    $('.bs-alert').append('<p>' + warnMessage + '</p>');
+  }
 }
 
 // get the hostname of a given link
@@ -272,18 +284,22 @@ function targetLinks() {
   });
 }
 
-// flag links
-function flagIt(badlinkWrapper) {
-  if (!badlinkWrapper.hasClass('bs-flag')) {
-    badlinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
-    badlinkWrapper.addClass('bs-flag');
-  }
-}
-
 // generate link warnings
 function linkWarning() {
   var badlinkWrapper = '';
   targetLinks();
+
+  // flag links
+  function flagIt(badlinkWrapper) {
+    if (!badlinkWrapper.hasClass('bs-flag')) {
+      if ($(this).attr('data-bs-type') === 'caution') {
+        badlinkWrapper.before('<div class="bs-alert-inline warning">' + warnMessage + '</div>');
+      } else {
+        badlinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
+      }
+      badlinkWrapper.addClass('bs-flag');
+    }
+  }
 
   $('a[data-is-bs="true"]').each(function() {
     if (debug) {

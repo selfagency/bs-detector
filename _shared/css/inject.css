@@ -20,6 +20,14 @@
   text-transform: uppercase;
 }
 
+.bs-alert.warning {
+  background: #ffff00;
+}
+
+.bs-alert.warning p {
+  color: #000;
+}
+
 body.shift {
   margin-top: 28px;
 }
@@ -32,6 +40,12 @@ body.shift {
   text-align: center;
   margin: 8px 0;
   padding: 4px;
+}
+
+.bs-alert-inline.warning {
+  background: rgba(255, 255, 00, .25);
+  border: 1px solid #ffff00;
+  color: #ffff00;
 }
 
 [class*="hint--"] {
