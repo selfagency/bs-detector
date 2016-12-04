@@ -290,7 +290,7 @@
   {"url": "newsopening.com", "type": ""},
   {"url": "newstarget.com", "type": ""},
   {"url": "newstarget.com", "type": "conspiracy"},
-  {"url": "newsthump.com", "type": ""},
+  {"url": "newsthump.com", "type": "satire"},
   {"url": "newstoad.net", "type": ""},
   {"url": "newswatch28.com", "type": "fake"},
   {"url": "newswatch33.com", "type": "fake"},
@@ -426,7 +426,7 @@
   {"url": "thenewamerican.com", "type": ""},
   {"url": "thenewsdoctors.com", "type": ""},
   {"url": "thenewsnerd.com", "type": ""},
-  {"url": "theonion.com", "type": ""},
+  {"url": "theonion.com", "type": "satire"},
   {"url": "theoxymoron.co.uk", "type": ""},
   {"url": "thepeoplescube.com", "type": ""},
   {"url": "thepoke.co.uk", "type": ""},
@@ -558,5 +558,6 @@
   {"url": "yournewswire.com", "type": ""},
   {"url": "zaytung.com", "type": ""},
   {"url": "zerohedge.com", "type": "conspiracy"},
+  {"url": "wtoe5news.com", "type": "fake"},
   {"url": "self.agency", "type": "test"}
 ]
