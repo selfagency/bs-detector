@@ -15,7 +15,7 @@ Domain classifications include:
 -   **Junk Science:** Sources that promote pseudoscience, metaphysics, naturalistic fallacies, and other scientifically dubious claims.
 -   **Hate Group:** Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.
 -   **Clickbait:** Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.
-    **Proceed With Caution:** Sources that may be reliable but whose contents require further verification.
+-   **Proceed With Caution:** Sources that may be reliable but whose contents require further verification.
 
 
 If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report [here](https://github.com/selfagency/bs-detector/issues/53).
@@ -42,6 +42,4 @@ Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonk
 
 ## Contributing
 
-We welcome pull requests and community collaboration. Before contributing, please review our [Code of Conduct](https://github.com/selfagency/bs-detector/blob/master/CODE_OF_CONDUCT.md). You can chat with other community members in realtime on Gitter [here](https://gitter.im/bs-detector/).
-
-If you are planning to contribute, please work off and submit pull requests to the `dev` branch, which is the most current build. `master` is intended for public releases only and is several commits behind  `dev`. Check out our [roadmap](https://github.com/selfagency/bs-detector/wiki/Product-Roadmap) to see what we intend to integrate in future releases and to decide whether you'd like to help with one of those tasks, as they might be duplicative of new functionality you wish to propose. We don't want to squander your time or enthusiasm, so we recommend proposing new functionality in an issue or on Gitter before building something out we might not end up using. It will also provide you with an opportunity to hear from other community members who might help flesh out your ideas.
+We welcome pull requests and community collaboration. See our [Github page](https://github.com/selfagency/bs-detector) for guidelines.
