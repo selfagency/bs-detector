@@ -166,6 +166,9 @@ function warningMsg() {
     case 'hate':
       classType = 'Hate Group';
       break;
+    case 'clickbait':
+      classType = 'Clickbait';
+      break;
     case 'test':
       classType = 'Test';
       break;

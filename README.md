@@ -14,6 +14,8 @@ Domain classifications include:
 -   **State News:** Sources in repressive states operating under government sanction.
 -   **Junk Science:** Sources that promote scientifically dubious claims.
 -   **Hate Group:** Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.
+-   **Clickbait:** Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching thumbnail pictures.
+
 
 If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report [here](https://github.com/selfagency/bs-detector/issues/53).
 
