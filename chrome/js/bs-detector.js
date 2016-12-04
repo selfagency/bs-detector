@@ -292,7 +292,7 @@ function linkWarning() {
   // flag links
   function flagIt(badlinkWrapper) {
     if (!badlinkWrapper.hasClass('bs-flag')) {
-      if ($(this).attr('data-bs-type') === 'caution') {
+      if (dataType === 'caution') {
         badlinkWrapper.before('<div class="bs-alert-inline warning">' + warnMessage + '</div>');
       } else {
         badlinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
@@ -302,11 +302,12 @@ function linkWarning() {
   }
 
   $('a[data-is-bs="true"]').each(function() {
-    if (debug) {
-      console.log('bs link: ' + this);
-    }
     dataType = $(this).attr('data-bs-type');
     warningMsg();
+    if (debug) {
+      console.log('bs link: ' + this);
+      console.log('dataType: ' + dataType);
+    }
 
     switch(siteId) {
       case 'facebook':

@@ -45,7 +45,7 @@ body.shift {
 .bs-alert-inline.warning {
   background: rgba(255, 255, 00, .25);
   border: 1px solid #ffff00;
-  color: #ffff00;
+  color: #000000;
 }
 
 [class*="hint--"] {
