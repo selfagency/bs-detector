@@ -35,7 +35,9 @@ gulp.task('firefox', function() {
 
 
 gulp.task('watch', function () {
-  gulp.watch(['./_shared/**/*', './chrome/**/*', './firefox/**/*'], ['build']);
+  gulp.watch(['./_shared/**/*'], ['shared']);
+  gulp.watch(['./chrome/**/*'], ['chrome']);
+  gulp.watch(['./firefox/**/*'], ['firefox']);
 });
 
 gulp.task('build', ['shared', 'chrome', 'firefox']);
