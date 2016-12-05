@@ -6,6 +6,7 @@ var bsId = [],
     dataType = '',
     debug = true,
     expanded = {},
+    flagState = 0,  // 0 initial, 1 open, -1 hidden
     firstLoad = true,
     shorts = [],
     shortUrls = [],
@@ -194,6 +195,10 @@ function warningMsg() {
 
 // flag entire site
 function flagSite() {
+  if(flagState != 0){
+    return;
+  }
+  flagState = 1;
   warningMsg();
   var navs = $('nav, #nav, #navigation, #navmenu');
 
@@ -217,6 +222,16 @@ function flagSite() {
     $('body').removeClass('bs-alert-shift');
     $('.bs-alert').remove();
   });
+}
+
+function showFlag(){
+  flagState = 1;
+  $('.bs-alert').show();
+}
+
+function hideFlag(){
+  flagState = -1;
+  $('.bs-alert').hide();
 }
 
 // get the hostname of a given link
@@ -454,3 +469,24 @@ function execute() {
 chrome.extension.sendMessage({}, function(response) {
     $(document).ready(execute);
 });
+
+
+// listen for messages but only in the top frame
+if(window.top === window){
+  chrome.extension.onMessage.addListener(
+    function(msg){
+      switch(msg.operation){
+        case 'flagSite':
+          flagSite();
+          break;
+        case 'toggleFlag':
+          if(flagState == 1){
+            hideFlag();
+          } else if(flagState == -1){
+            showFlag();
+          }
+          break;
+      }
+    }
+  );
+}
