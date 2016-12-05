@@ -53,24 +53,3 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       break;
   }
 });
-
-// listen for loading of hosts in the siteList
-chrome.webNavigation.onDOMContentLoaded.addListener(
-  function(e){
-    chrome.pageAction.show(e.tabId);
-    chrome.tabs.sendMessage(e.tabId, { operation: 'flagSite' });
-  },
-  { url: siteList.map(
-          function(x){
-            return {hostSuffix: x.url}
-          }
-         )
-  }
-);
-
-// toggle display of the warning UI when the pageAction is clicked
-chrome.pageAction.onClicked.addListener(
-  function(tab){
-    chrome.tabs.sendMessage(tab.id, {operation: 'toggleFlag'});
-  }
-);
