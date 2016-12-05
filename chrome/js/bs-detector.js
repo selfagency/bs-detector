@@ -11,6 +11,9 @@ var bsId = [],
     shortUrls = [],
     siteId = '',
     warnMessage = '',
+    mutationObserver = {},
+    observerConfig = {},
+    targetNodes = [],
     windowUrl = window.location.hostname;
 
 // asynchronous loading function
@@ -353,9 +356,9 @@ function linkWarning() {
 
 // execution script
 function execute() {
-  var mutationObserver = new MutationObserver(trigger);
-  var observerConfig = {};
-  var targetNodes = [];
+  mutationObserver = new MutationObserver(function(mutations){
+    trigger(mutations);
+  });
 
   if (firstLoad) {
     idSite();
@@ -367,7 +370,12 @@ function execute() {
 
   switch(siteId) {
     case 'facebook':
-      targetNodes  = [document.getElementById("contentArea"), document.getElementById("pagelet_timeline_main_column")];
+      console.log("execute case is facebook");
+      targetNodes  = [document.getElementById("mainContainer")];
+      testobject = document.getElementById("mainContainer");
+      console.dir(targetNodes);
+      $.each(targetNodes, function(id, node){
+      });
       observerConfig = {
         attributes: false,
         characterData: false,
@@ -393,6 +401,7 @@ function execute() {
   }
 
   function trigger(mutations) {
+    console.dir(mutations);
     if (debug) {
       console.log('targetNodes: ' + targetNodes);
     }
@@ -401,7 +410,7 @@ function execute() {
       mutationObserver.disconnect();
       linkWarning();
       $.each(targetNodes, function(id, node) {
-        if (node != null) {
+        if (node !== null) {
           mutationObserver.observe(node, observerConfig);
         }
       });
@@ -433,7 +442,7 @@ function execute() {
     }
     if (hasDesired) linkWarning();
     $.each(targetNodes, function(id, node) {
-      if (node != null) {
+      if (node !== null) {
         mutationObserver.observe(node, observerConfig);
       }
     });
