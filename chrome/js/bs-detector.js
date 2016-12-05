@@ -192,14 +192,28 @@ function warningMsg() {
 // flag entire site
 function flagSite() {
   warningMsg();
-  $('body').addClass('shift');
+  var navs = $('nav, #nav, #navigation, #navmenu');
+
+  if ($(navs)) {
+    $(navs).first().addClass('bs-alert-shift');
+  } else {
+    $('body').addClass('bs-alert-shift');
+  }
+
   if (dataType === 'caution') {
-    $('body').prepend('<div class="bs-alert warning"></div>');
-    $('.bs-alert').append('<p>' + warnMessage + '</p>');
+    $('body').prepend('<div class="bs-alert bs-warning"></div>');
   } else {
     $('body').prepend('<div class="bs-alert"></div>');
-    $('.bs-alert').append('<p>' + warnMessage + '</p>');
   }
+
+  $('.bs-alert').append('<div class="bs-alert-close">✕</div>');
+  $('.bs-alert').append('<p>' + warnMessage + '</p>');
+
+  $('.bs-alert-close').on('click', function() {
+    $(navs).first().removeClass('bs-alert-shift');
+    $('body').removeClass('bs-alert-shift');
+    $('.bs-alert').remove();
+  });
 }
 
 // get the hostname of a given link
