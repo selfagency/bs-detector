@@ -149,6 +149,9 @@ browser.runtime.sendMessage(null, {"operation": "executeMain"}, null, function(r
           case 'hate':
             classType = 'Hate Group';
             break;
+          case 'clickbait':
+            classType = 'Clickbait';
+            break;
           case 'test':
             classType = 'The Self Agency: Makers of the B.S. Detector';
             break;

@@ -11,6 +11,9 @@ var bsId = [],
     shortUrls = [],
     siteId = '',
     warnMessage = '',
+    mutationObserver = {},
+    observerConfig = {},
+    targetNodes = [],
     windowUrl = window.location.hostname;
 
 // asynchronous loading function
@@ -33,9 +36,25 @@ function isJson(str) {
 
 // strip urls down to hostname
 function cleanUrl(url) {
-  url = url.replace(/^(?:https?|ftp)\:\/\//i, '');
-  url = url.replace(/^www\./i, '');
-  url = url.replace(/\/.*/, '');
+
+  // convert facebook urls
+  if (siteId == 'facebook') {
+    var testLink = decodeURIComponent(url).substring(0, 30);
+    var thisUrl = '';
+    if (testLink == 'https://l.facebook.com/l.php?u=' || testLink == 'http://l.facebook.com/l.php?u=') {
+      thisUrl = decodeURIComponent(url).substring(30).split('&h=', 1);
+    }
+    // if (thisUrl !== '') {
+    //   $(url).attr('data-external', true);
+    //   $(url).attr('data-expanded-url', thisUrl);
+    // }
+    url = thisUrl;
+  }
+
+
+  url = url.toString().replace(/^(?:https?|ftp)\:\/\//i, '');
+  url = url.toString().replace(/^www\./i, '');
+  url = url.toString().replace(/\/.*/, '');
   return url;
 }
 
@@ -150,6 +169,12 @@ function warningMsg() {
     case 'hate':
       classType = 'Hate Group';
       break;
+    case 'clickbait':
+      classType = 'Clickbait';
+      break;
+    case 'caution':
+      classType = 'Caution';
+      break;
     case 'test':
       classType = 'Test';
       break;
@@ -157,7 +182,11 @@ function warningMsg() {
       classType = 'Classification Pending';
       break;
   }
-  warnMessage = '💩 This website is not a reliable news source. Reason: ' + classType;
+  if (dataType === 'caution') {
+    warnMessage = '⚠️ Caution: Source may be reliable but contents require further verification.';
+  } else {
+    warnMessage = '💩 Warning: This may not be a reliable source. (' + classType +')';
+  }
   if (debug) {
     console.log('warnMessage: ' + warnMessage);
   }
@@ -166,20 +195,39 @@ function warningMsg() {
 // flag entire site
 function flagSite() {
   warningMsg();
-  $('body').addClass('shift');
-  $('body').prepend('<div class="bs-alert"></div>');
+  var navs = $('nav, #nav, #navigation, #navmenu');
+
+  if ($(navs)) {
+    $(navs).first().addClass('bs-alert-shift');
+  } else {
+    $('body').addClass('bs-alert-shift');
+  }
+
+  if (dataType === 'caution') {
+    $('body').prepend('<div class="bs-alert bs-warning"></div>');
+  } else {
+    $('body').prepend('<div class="bs-alert"></div>');
+  }
+
+  $('.bs-alert').append('<div class="bs-alert-close">✕</div>');
   $('.bs-alert').append('<p>' + warnMessage + '</p>');
+
+  $('.bs-alert-close').on('click', function() {
+    $(navs).first().removeClass('bs-alert-shift');
+    $('body').removeClass('bs-alert-shift');
+    $('.bs-alert').remove();
+  });
 }
 
 // get the hostname of a given link
 function getHost(thisElement) {
   var thisUrl = '';
-  if ($(thisElement).attr('data-expanded-url') != null) {
+  if ($(thisElement).attr('data-expanded-url') !== null && $(thisElement).attr('data-expanded-url') !== undefined) {
     thisUrl = $(thisElement).attr('data-expanded-url');
   } else {
     thisUrl = $(thisElement).attr('href');
   }
-  if (thisUrl != null) {
+  if (thisUrl !== null && thisUrl !== undefined) {
     thisUrl = cleanUrl(thisUrl);
   }
   return thisUrl;
@@ -234,13 +282,14 @@ function targetLinks() {
     if ($(this).attr('data-is-bs') != 'true') {
       var urlHost = getHost(this);
       if (debug) {
-        console.log('urlHost: ' + urlHost);
       }
       // checkIfShort(urlHost, this);
 
       // check if link is in list of bad domains
       bsId = $.map(data, function(id, obj) {
-        if (urlHost == id.url || urlHost == 'www.' + id.url) return id;
+        if (urlHost == id.url || urlHost == 'www.' + id.url){
+          return id;
+        }
       });
 
       // if link is in bad domain list, tag it
@@ -252,25 +301,30 @@ function targetLinks() {
   });
 }
 
-// flag links
-function flagIt(badlinkWrapper) {
-  if (!badlinkWrapper.hasClass('bs-flag')) {
-    badlinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
-    badlinkWrapper.addClass('bs-flag');
-  }
-}
-
 // generate link warnings
 function linkWarning() {
   var badlinkWrapper = '';
   targetLinks();
 
-  $('a[data-is-bs="true"]').each(function() {
-    if (debug) {
-      console.log('bs link: ' + this);
+  // flag links
+  function flagIt(badlinkWrapper) {
+    if (!badlinkWrapper.hasClass('bs-flag')) {
+      if (dataType === 'caution') {
+        badlinkWrapper.before('<div class="bs-alert-inline warning">' + warnMessage + '</div>');
+      } else {
+        badlinkWrapper.before('<div class="bs-alert-inline">' + warnMessage + '</div>');
+      }
+      badlinkWrapper.addClass('bs-flag');
     }
+  }
+
+  $('a[data-is-bs="true"]').each(function() {
     dataType = $(this).attr('data-bs-type');
     warningMsg();
+    if (debug) {
+      console.log('bs link: ' + this);
+      console.log('dataType: ' + dataType);
+    }
 
     switch(siteId) {
       case 'facebook':
@@ -302,9 +356,9 @@ function linkWarning() {
 
 // execution script
 function execute() {
-  var mutationObserver = new MutationObserver(trigger);
-  var observerConfig = {};
-  var targetNodes = [];
+  mutationObserver = new MutationObserver(function(mutations){
+    trigger(mutations);
+  });
 
   if (firstLoad) {
     idSite();
@@ -316,7 +370,11 @@ function execute() {
 
   switch(siteId) {
     case 'facebook':
-      targetNodes  = [document.getElementById("contentArea"), document.getElementById("pagelet_timeline_main_column")];
+      targetNodes  = [document.getElementById("mainContainer")];
+      testobject = document.getElementById("mainContainer");
+      console.dir(targetNodes);
+      $.each(targetNodes, function(id, node){
+      });
       observerConfig = {
         attributes: false,
         characterData: false,
@@ -342,6 +400,7 @@ function execute() {
   }
 
   function trigger(mutations) {
+    console.dir(mutations);
     if (debug) {
       console.log('targetNodes: ' + targetNodes);
     }
@@ -350,7 +409,7 @@ function execute() {
       mutationObserver.disconnect();
       linkWarning();
       $.each(targetNodes, function(id, node) {
-        if (node != null) {
+        if (node !== null) {
           mutationObserver.observe(node, observerConfig);
         }
       });
@@ -382,7 +441,7 @@ function execute() {
     }
     if (hasDesired) linkWarning();
     $.each(targetNodes, function(id, node) {
-      if (node != null) {
+      if (node !== null) {
         mutationObserver.observe(node, observerConfig);
       }
     });

@@ -1,0 +1,26 @@
+{
+  "name": "bs-detector",
+  "version": "0.0.1",
+  "description": "B.S. Detector warns you about unreliable news sites.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/selfagency/bs-detector.git"
+  },
+  "keywords": [
+    "browser",
+    "extension"
+  ],
+  "author": "B.S. Detector",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/selfagency/bs-detector/issues"
+  },
+  "homepage": "https://github.com/selfagency/bs-detector#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
