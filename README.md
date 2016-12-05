@@ -17,7 +17,7 @@ Domain classifications include:
 -   **Junk Science:** Sources that promote pseudoscience, metaphysics, naturalistic fallacies, and other scientifically dubious claims.
 -   **Hate Group:** Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.
 -   **Clickbait:** Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.
-    **Proceed With Caution:** Sources that may be reliable but whose contents require further verification.
+-   **Proceed With Caution:** Sources that may be reliable but whose contents require further verification.
 
 If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report [here](https://github.com/selfagency/bs-detector/issues/53).
 
