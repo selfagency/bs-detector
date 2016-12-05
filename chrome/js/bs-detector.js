@@ -370,7 +370,6 @@ function execute() {
 
   switch(siteId) {
     case 'facebook':
-      console.log("execute case is facebook");
       targetNodes  = [document.getElementById("mainContainer")];
       testobject = document.getElementById("mainContainer");
       console.dir(targetNodes);
