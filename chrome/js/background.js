@@ -22,6 +22,22 @@ function xhReq(url, callback) {
 
 xhReq(chrome.extension.getURL("/data/data.json"), function(file){
   siteList = JSON.parse(file);
+  // listen for loading of hosts in the siteList as soon as its populated
+  chrome.webNavigation.onDOMContentLoaded.addListener(
+    function(e){
+      if(e.frameId == 0){
+        chrome.pageAction.show(e.tabId);
+        chrome.tabs.sendMessage(e.tabId, { operation: 'flagSite' });
+      }
+    },
+    {
+      url: siteList.map(
+            function(x){
+              return {hostSuffix: x.url}
+            }
+           )
+    }
+  );
 });
 
 function addExpanded(response) {
@@ -53,3 +69,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       break;
   }
 });
+
+// toggle display of the warning UI when the pageAction is clicked
+chrome.pageAction.onClicked.addListener(
+  function(tab){
+    chrome.tabs.sendMessage(tab.id, {operation: 'toggleFlag'});
+  }
+);
