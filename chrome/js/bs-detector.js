@@ -74,6 +74,7 @@ function idSite() {
 
     if (self === top) {
         switch(currentUrl) {
+        case 'www.facebook.com':
         case 'facebook.com':
             siteId = 'facebook';
             break;
