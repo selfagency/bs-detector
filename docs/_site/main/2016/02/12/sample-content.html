@@ -12,6 +12,7 @@
 </head>
 
   <body>
+    <div id="fb-root"></div>
     <section class="page-header">
   <h1 class="project-name">B.S. 💩 Detector</h1>
   <h2 class="project-tagline">A browser extension that alerts users to unreliable news sources.</h2>
@@ -19,11 +20,18 @@
   <a href="#firefox" class="btn">Firefox</a>
   <a href="#other" class="btn">Safari & Edge</a>
   <a href="http://github.com/selfagency/bs-detector" class="btn">View on GitHub</a>
-  <a href="http://github.com/selfagency/bs-detector/issues" class="btn">Submit a Bug</a>
+  <a href="http://github.com/selfagency/bs-detector/issues" class="btn">Report a Bug</a>
 </section>
 
 
     <section class="main-content">
+
+      <div class="social">
+        <div class="social-button"><a class="github-button" href="https://github.com/selfagency/bs-detector" data-icon="octicon-star" data-count-href="/selfagency/bs-detector/stargazers" data-count-api="/repos/selfagency/bs-detector#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star selfagency/bs-detector on GitHub">Star</a></div>
+        <div class="social-button"><a href="https://twitter.com/bsdetectorapp" class="twitter-follow-button" data-show-count="false">Follow @bsdetectorapp</a></div>
+        <div class="social-button"><div class="fb-like" data-href="https://facebook.com/bsdetectorapp" data-width="200px" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div></div>
+      </div>
+      <div style="clear: both;"></div>
 
       <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory - edit this post and re-build (or run with the <code class="highlighter-rouge">-w</code> switch) to see your changes!
 To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention: YYYY-MM-DD-name-of-post.ext.</p>
@@ -48,6 +56,21 @@ To add new posts, simply add a file in the <code class="highlighter-rouge">_post
 
     </section>
 
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1840692609544868";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'bs-detector/Lobby'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

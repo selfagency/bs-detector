@@ -12,6 +12,7 @@
 </head>
 
   <body>
+    <div id="fb-root"></div>
     <section class="page-header">
   <h1 class="project-name">B.S. 💩 Detector</h1>
   <h2 class="project-tagline">A browser extension that alerts users to unreliable news sources.</h2>
@@ -19,11 +20,18 @@
   <a href="#firefox" class="btn">Firefox</a>
   <a href="#other" class="btn">Safari & Edge</a>
   <a href="http://github.com/selfagency/bs-detector" class="btn">View on GitHub</a>
-  <a href="http://github.com/selfagency/bs-detector/issues" class="btn">Submit a Bug</a>
+  <a href="http://github.com/selfagency/bs-detector/issues" class="btn">Report a Bug</a>
 </section>
 
 
     <section class="main-content">
+
+      <div class="social">
+        <div class="social-button"><a class="github-button" href="https://github.com/selfagency/bs-detector" data-icon="octicon-star" data-count-href="/selfagency/bs-detector/stargazers" data-count-api="/repos/selfagency/bs-detector#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star selfagency/bs-detector on GitHub">Star</a></div>
+        <div class="social-button"><a href="https://twitter.com/bsdetectorapp" class="twitter-follow-button" data-show-count="false">Follow @bsdetectorapp</a></div>
+        <div class="social-button"><div class="fb-like" data-href="https://facebook.com/bsdetectorapp" data-width="200px" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div></div>
+      </div>
+      <div style="clear: both;"></div>
 
       <div id="home">
   
@@ -42,15 +50,17 @@
   <li><strong>Conspiracy Theory:</strong> Sources that are well-known promoters of kooky conspiracy theories.</li>
   <li><strong>Rumor Mill:</strong> Sources that traffic in rumors, innuendo, and unverified claims.</li>
   <li><strong>State News:</strong> Sources in repressive states operating under government sanction.</li>
-  <li><strong>Junk Science:</strong> Sources that promote scientifically dubious claims.</li>
+  <li><strong>Junk Science:</strong> Sources that promote pseudoscience, metaphysics, naturalistic fallacies, and other scientifically dubious claims.</li>
   <li><strong>Hate Group:</strong> Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.</li>
+  <li><strong>Clickbait:</strong> Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.</li>
+  <li><strong>Proceed With Caution:</strong> Sources that may be reliable but whose contents require further verification.</li>
 </ul>
 
 <p>If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report <a href="https://github.com/selfagency/bs-detector/issues/53">here</a>.</p>
 
 <hr />
 
-<h2 id="-installation">🛠 Installation</h2>
+<h2 id="installation">Installation</h2>
 <p><a name="chrome"></a></p>
 
 <h3 id="chrome-and-chrome-based-browsers">Chrome and Chrome-based browsers</h3>
@@ -68,9 +78,9 @@
 
 <hr />
 
-<h2 id="-contributing">🤝 Contributing</h2>
+<h2 id="contributing">Contributing</h2>
 
-<p>We welcome pull requests and community collaboration. Before contributing, please review our <a href="https://github.com/selfagency/bs-detector/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a>. You can chat with other community members in realtime on Gitter <a href="https://gitter.im/bs-detector/">here</a>.</p>
+<p>We welcome pull requests and community collaboration. See our <a href="https://github.com/selfagency/bs-detector">Github page</a> for guidelines.</p>
 
 </div>
 
@@ -83,6 +93,21 @@
 
     </section>
 
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1840692609544868";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+      ((window.gitter = {}).chat = {}).options = {
+        room: 'bs-detector/Lobby'
+      };
+    </script>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
