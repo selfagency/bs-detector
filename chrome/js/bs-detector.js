@@ -1,6 +1,6 @@
 // declare variables
-var bsId = [],
-    currentSite = [],
+var bsId = null,
+    currentSite = null,
     currentUrl = '',
     data = [],
     dataType = '',
@@ -73,38 +73,41 @@ function idSite() {
     console.log('currentUrl: ' + currentUrl);
   }
 
-  if (self === top) {
-    currentSite = $.map(data, function(id, obj) {
-      if (currentUrl === id.url || currentUrl === 'www.' + id.url) return id;
-    });
-    if (debug) {
-      console.log('currentSite: ' + currentSite[0]);
-    }
-
-    if (currentSite.length > 0 && (currentUrl == currentSite[0].url || currentUrl == 'www.' + currentSite[0].url)) {
-      siteId = 'badlink';
-      dataType = currentSite[0].type;
-    } else {
-      switch(currentUrl) {
+    if (self === top) {
+        switch(currentUrl) {
+        case 'www.facebook.com':
         case 'facebook.com':
-          siteId = 'facebook';
-          break;
+            siteId = 'facebook';
+            break;
         case 'twitter.com':
-          siteId = 'twitter';
-          break;
-        case currentSite:
-          siteId = 'badlink';
-          break;
+            siteId = 'twitter';
+            break;
         default:
-          siteId = 'none';
-          break;
-      }
+            siteId = 'none';
+            // Try to find the site in data
+            currentSite = data[ currentUrl ];
+            if (typeof(currentSite) === 'undefined') {
+                // Maybe with 'www.' prefix?
+                currentSite = data[ "www." + currentUrl ];
+                if (typeof(currentSite) === 'undefined') {
+                    // Maybe with regex? (TBD)
+                    // For now, consider it not in the list..
+                    currentSite = null;
+                }
+            }
+            if (currentSite) {
+                siteId = 'badlink';
+                dataType = currentSite.type;
+            }
+            break;
+        }
     }
 
     if (debug) {
-      console.log('siteId: ' + siteId);
+        console.log('currentUrl: ' + currentUrl);
+        console.log('currentSite: ' + currentSite);
+        console.log('siteId: ' + siteId);
     }
-  }
 }
 
 // expand short urls and append to anchor tags
@@ -296,21 +299,15 @@ function targetLinks() {
     }
     if ($(this).attr('data-is-bs') != 'true') {
       var urlHost = getHost(this);
-      if (debug) {
-      }
       // checkIfShort(urlHost, this);
 
       // check if link is in list of bad domains
-      bsId = $.map(data, function(id, obj) {
-        if (urlHost == id.url || urlHost == 'www.' + id.url){
-          return id;
-        }
-      });
+      bsId = data[ urlHost ];
 
       // if link is in bad domain list, tag it
-      if (bsId[0]) {
+      if (typeof(bsId) !== 'undefined') {
         $(this).attr('data-is-bs', true);
-        $(this).attr('data-bs-type', bsId[0].type);
+        $(this).attr('data-bs-type', bsId.type);
       }
     }
   });
