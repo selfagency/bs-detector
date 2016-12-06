@@ -9,7 +9,7 @@ var bsId = null,
     currentUrl = '',
     data = [],
     dataType = '',
-    debug = true,
+    debug = false,
     expanded = {},
     flagState = 0,  // 0 initial, 1 open, -1 hidden
     firstLoad = true,
@@ -42,7 +42,6 @@ function isJson(str) {
 
 // strip urls down to hostname
 function cleanUrl(url) {
-
   // convert facebook urls
   if (siteId == 'facebook') {
     var testLink = decodeURIComponent(url).substring(0, 30);
@@ -50,13 +49,8 @@ function cleanUrl(url) {
     if (testLink == 'https://l.facebook.com/l.php?u=' || testLink == 'http://l.facebook.com/l.php?u=') {
       thisUrl = decodeURIComponent(url).substring(30).split('&h=', 1);
     }
-    // if (thisUrl !== '') {
-    //   $(url).attr('data-external', true);
-    //   $(url).attr('data-expanded-url', thisUrl);
-    // }
     url = thisUrl;
   }
-
 
   url = url.toString().replace(/^(?:https?|ftp)\:\/\//i, '');
   url = url.toString().replace(/^www\./i, '');
@@ -68,9 +62,6 @@ function cleanUrl(url) {
 function idSite() {
   // currentSite looks for the currentUrl (window.location.hostname) in the JSON data file
   currentUrl = cleanUrl(windowUrl);
-  if (debug) {
-    console.log('currentUrl: ' + currentUrl);
-  }
 
     if (self === top) {
         switch(currentUrl) {
@@ -104,8 +95,9 @@ function idSite() {
 
     if (debug) {
         console.log('currentUrl: ' + currentUrl);
-        console.log('currentSite: ' + currentSite);
+        console.dir(currentSite);
         console.log('siteId: ' + siteId);
+        console.log('dataType: ' + dataType);
     }
 }
 
@@ -356,6 +348,7 @@ function linkWarning() {
         break;
       case 'badlink':
       case 'none':
+        break;
       default:
         // tagIt();
         break;
@@ -383,7 +376,7 @@ function execute() {
     case 'facebook':
       targetNodes  = [document.getElementById("mainContainer")];
       testobject = document.getElementById("mainContainer");
-      console.dir(targetNodes);
+      // console.dir(targetNodes);
       $.each(targetNodes, function(id, node){
       });
       observerConfig = {
@@ -394,7 +387,7 @@ function execute() {
       };
       break;
     case 'twitter':
-      targetNodes = [document.getElementById("content-main")];
+      targetNodes = [document.getElementsByClassName("content-main")];
       observerConfig = {
         attributes: true,
         characterData: false,
@@ -403,7 +396,9 @@ function execute() {
       };
       break;
     case 'badSite':
+      break;
     case 'none':
+      break;
     default:
       targetNodes = null;
       observerConfig = {};
@@ -411,7 +406,7 @@ function execute() {
   }
 
   function trigger(mutations) {
-    console.dir(mutations);
+    // console.dir(mutations);
     if (debug) {
       console.log('targetNodes: ' + targetNodes);
     }
@@ -450,7 +445,7 @@ function execute() {
           break;
       }
     }
-    if (hasDesired) linkWarning();
+    if (hasDesired) targetLinks(); linkWarning();
     $.each(targetNodes, function(id, node) {
       if (node !== null) {
         mutationObserver.observe(node, observerConfig);
@@ -475,6 +470,7 @@ if(window.top === window){
     function(msg){
       switch(msg.operation){
         case 'flagSite':
+          dataType = msg.type;
           flagSite();
           break;
         case 'toggleFlag':
