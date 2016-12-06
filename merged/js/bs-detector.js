@@ -9,7 +9,7 @@ var bsId = null,
     currentUrl = '',
     data = [],
     dataType = '',
-    debug = true,
+    debug = false,
     expanded = {},
     flagState = 0,  // 0 initial, 1 open, -1 hidden
     firstLoad = true,
@@ -348,6 +348,7 @@ function linkWarning() {
         break;
       case 'badlink':
       case 'none':
+        break;
       default:
         // tagIt();
         break;
@@ -375,7 +376,7 @@ function execute() {
     case 'facebook':
       targetNodes  = [document.getElementById("mainContainer")];
       testobject = document.getElementById("mainContainer");
-      console.dir(targetNodes);
+      // console.dir(targetNodes);
       $.each(targetNodes, function(id, node){
       });
       observerConfig = {
@@ -395,7 +396,9 @@ function execute() {
       };
       break;
     case 'badSite':
+      break;
     case 'none':
+      break;
     default:
       targetNodes = null;
       observerConfig = {};
@@ -403,7 +406,7 @@ function execute() {
   }
 
   function trigger(mutations) {
-    console.dir(mutations);
+    // console.dir(mutations);
     if (debug) {
       console.log('targetNodes: ' + targetNodes);
     }
@@ -442,7 +445,7 @@ function execute() {
           break;
       }
     }
-    if (hasDesired) linkWarning();
+    if (hasDesired) targetLinks(); linkWarning();
     $.each(targetNodes, function(id, node) {
       if (node !== null) {
         mutationObserver.observe(node, observerConfig);
