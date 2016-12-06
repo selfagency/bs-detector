@@ -14,7 +14,8 @@ var gulp = require('gulp');
 gulp.task('shared', function() {
   gulp.src(['./_shared/**/*'])
     .pipe(gulp.dest('./build/chrome'))
-    .pipe(gulp.dest('./build/firefox'));
+    .pipe(gulp.dest('./build/firefox'))
+    .pipe(gulp.dest('./build/merged'));
 });
 
 /**
@@ -33,12 +34,20 @@ gulp.task('firefox', function() {
     .pipe(gulp.dest('./build/firefox'));
 });
 
+/**
+ * @task {merged} - Some files for the merged extension are unique, so we need to copy them separately
+ */
+gulp.task('merged', function() {
+  gulp.src(['./merged/**/*'])
+    .pipe(gulp.dest('./build/merged'));
+});
 
 gulp.task('watch', function () {
   gulp.watch(['./_shared/**/*'], ['shared']);
   gulp.watch(['./chrome/**/*'], ['chrome']);
   gulp.watch(['./firefox/**/*'], ['firefox']);
+  gulp.watch(['./merged/**/*'], ['merged']);
 });
 
-gulp.task('build', ['shared', 'chrome', 'firefox']);
+gulp.task('build', ['shared', 'chrome', 'firefox', 'merged']);
 gulp.task('default', ['build']);
