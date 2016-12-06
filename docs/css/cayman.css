@@ -246,3 +246,13 @@ a {
   max-width: 487px;
   width: 100%
 }
+
+.social {
+  float: right;
+  margin-bottom: 20px;
+}
+
+.social-button {
+  float: left;
+  margin-left: 10px;
+}

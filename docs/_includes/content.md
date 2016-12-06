@@ -1,8 +1,10 @@
+**We've been nominated for a Golden Kitty from Product Hunt for Chrome Extension of the Year! [Vote here!](https://www.producthunt.com/@goldenkittymeow/collections/2016-chrome-extension-of-the-year)**
+
 **B.S. Detector** is a rejoinder to Mark Zuckerberg's dubious claims that Facebook is unable to substantively address the proliferation of fake news on its platform. A browser extension for both Chrome and Mozilla-based browsers, B.S. Detector searches all links on a given webpage for references to unreliable sources, checking against a manually compiled list of domains. It then provides visual warnings about the presence of questionable links or the browsing of questionable websites:
 
 ![bs-detector-alert](/images/alert.png){:class="bs-detector-img"}
 
-The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/master/chrome/data/data.json).
+The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/selfagency/bs-detector/tree/dev/_shared/data).
 
 Domain classifications include:
 
@@ -17,11 +19,12 @@ Domain classifications include:
 -   **Clickbait:** Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.
 -   **Proceed With Caution:** Sources that may be reliable but whose contents require further verification.
 
+
 If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report [here](https://github.com/selfagency/bs-detector/issues/53).
 
 ---
 
-## 🛠 Installation
+## Installation
 <a name="chrome"></a>
 
 ### Chrome and Chrome-based browsers
@@ -39,6 +42,6 @@ Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonk
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-We welcome pull requests and community collaboration. Before contributing, please review our [Code of Conduct](https://github.com/selfagency/bs-detector/blob/master/CODE_OF_CONDUCT.md). You can chat with other community members in realtime on Gitter [here](https://gitter.im/bs-detector/).
+We welcome pull requests and community collaboration. See our [Github page](https://github.com/selfagency/bs-detector) for guidelines.
