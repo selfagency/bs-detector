@@ -47,7 +47,6 @@
   "wertyzreport.cz":                           {"language": "cz", "type": "", "notes": ""},
   "withform.cz":                               {"language": "cz", "type": "", "notes": ""},
   "zemejas.cz":                                {"language": "cz", "type": "", "notes": ""},
-
   "bento.de":                                  {"language": "de", "type": "clickbait", "notes": ""},
   "brigitte.de":                               {"language": "de", "type": "clickbait", "notes": ""},
   "bunte.de":                                  {"language": "de", "type": "clickbait", "notes": ""},
@@ -75,7 +74,6 @@
   "web.de":                                    {"language": "de", "type": "clickbait", "notes": ""},
   "welt.de":                                   {"language": "de", "type": "clickbait", "notes": ""},
   "wunderweib.de":                             {"language": "de", "type": "clickbait", "notes": ""},
-
   "100percentfedup.com":                       {"language": "en", "type": "bias", "notes": ""},
   "21stcenturywire.com":                       {"language": "en", "type": "conspiracy", "notes": ""},
   "24extremeworld.com":                        {"language": "en", "type": "fake", "notes": ""},
@@ -623,7 +621,6 @@
   "zerohedge.com":                             {"language": "en", "type": "conspiracy", "notes": ""},
   "wtoe5news.com":                             {"language": "en", "type": "fake", "notes": ""},
   "self.agency":                               {"language": "en", "type": "test", "notes": ""},
-
   "24matin.ch":                                {"language": "fr", "type": "satire", "notes": ""},
   "agenceinfolibre.fr":                        {"language": "fr", "type": "conspiracy", "notes": ""},
   "bilboquet-magazine.fr":                     {"language": "fr", "type": "satire", "notes": ""},
@@ -655,7 +652,6 @@
   "pooble.fr":                                 {"language": "fr", "type": "satire", "notes": ""},
   "radiocockpit.fr":                           {"language": "fr", "type": "satire", "notes": ""},
   "theoriedugenre.fr":                         {"language": "fr", "type": "fake", "notes": ""},
-
   "accademiadellaliberta.blogspot.it":         {"language": "it", "type": "conspiracy", "notes": ""},
   "aidaa-animaliambiente.blogspot.it":         {"language": "it", "type": "bias", "notes": ""},
   "albainternazionale.blogspot.it":            {"language": "it", "type": "bias", "notes": ""},
@@ -685,11 +681,8 @@
   "ilbazarinformazione.blogspot.it":           {"language": "it", "type": "bias", "notes": ""},
   "ilcorrieredellanotte.it":                   {"language": "it", "type": "fake", "notes": ""},
   "ilfarosulmondo.it":                         {"language": "it", "type": "bias", "notes": ""},
-  "ilfattoquotidaino.it":                      {"language": "it", "type": "satire", "notes": ""},
-  "ilfattoquotidiano.it":                      {"language": "it", "type": "satire", "notes": ""},
   "ilgiornale.it":                             {"language": "it", "type": "bias", "notes": ""},
   "ilmattoquotidiano.it":                      {"language": "it", "type": "fake", "notes": ""},
-  "ilmessaggero.it":                           {"language": "it", "type": "satire", "notes": ""},
   "ilmeteo.it":                                {"language": "it", "type": "junksci", "notes": ""},
   "ilnavigatorecurioso.it":                    {"language": "it", "type": "conspiracy", "notes": ""},
   "ilnord.it":                                 {"language": "it", "type": "bias", "notes": ""},
@@ -752,11 +745,8 @@
   "vnews24.it":                                {"language": "it", "type": "fake", "notes": ""},
   "webitalia360.com":                          {"language": "it", "type": "bias", "notes": ""},
   "wwwblogdicristian.blogspot.it":             {"language": "it", "type": "conspiracy", "notes": ""},
-
   "freeondarevolution.blogspot.lt":            {"language": "lt", "type": "conspiracy", "notes": ""},
-
   "speld.nl":                                  {"language": "nl", "type": "", "notes": ""},
-
   "caplimpede.ro":                             {"language": "ro", "type": "", "notes": ""},
   "cocoon.ro":                                 {"language": "ro", "type": "", "notes": ""},
   "comisarul.ro":                              {"language": "ro", "type": "", "notes": ""},
@@ -774,7 +764,6 @@
   "stiri-extreme.ro":                          {"language": "ro", "type": "", "notes": ""},
   "stirinefiltrate.ro":                        {"language": "ro", "type": "", "notes": ""},
   "stiripesurse.ro":                           {"language": "ro", "type": "", "notes": ""},
-
   "cestacloveka.sk":                           {"language": "sk", "type": "", "notes": ""},
   "dolezite.sk":                               {"language": "sk", "type": "", "notes": ""},
   "domacaliecba.sk":                           {"language": "sk", "type": "", "notes": ""},
@@ -790,7 +779,6 @@
   "radynadzlato.sk":                           {"language": "sk", "type": "", "notes": ""},
   "resso.sk":                                  {"language": "sk", "type": "", "notes": ""},
   "slovenskeslovo.sk":                         {"language": "sk", "type": "", "notes": ""},
-
   "1eclaireur.wordpress.com":                  {"language": "", "type": "conspiracy", "notes": ""},
   "2012un-nouveau-paradigme.com":              {"language": "", "type": "conspiracy", "notes": ""},
   "24heuresactu.com":                          {"language": "", "type": "fake", "notes": ""},
