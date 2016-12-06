@@ -1,16 +1,13 @@
-/**
- * Build/output browser extensions from a shared library.
- * To build the default, simple run ```gulp build``` or ```gulp```.
- * TODO: We can probably browserify and do some linting here
- */
-
 'use strict';
 
 var gulp = require('gulp');
+var gulpCopy = require('gulp-copy');
+var rename = require("gulp-rename");
+var jsonMinify = require('gulp-json-minify');
+var minify = require('gulp-minify');
+var cleanCSS = require('gulp-clean-css');
+var pump = require('pump');
 
-/**
- * @task {shared} - Copy the files from the _shared folder to destination builds
- */
 gulp.task('shared', function() {
   gulp.src(['./_shared/**/*'])
     .pipe(gulp.dest('./build/chrome'))
@@ -18,29 +15,44 @@ gulp.task('shared', function() {
     .pipe(gulp.dest('./build/merged'));
 });
 
-/**
- * @task {chrome} - Some files for the chrome extension are unique, so we need to copy them separately
- */
 gulp.task('chrome', function() {
   gulp.src(['./chrome/**/*'])
     .pipe(gulp.dest('./build/chrome'));
 });
 
-/**
- * @task {firefox} - Some files for the firefox extension are unique, so we need to copy them separately
- */
 gulp.task('firefox', function() {
   gulp.src(['./firefox/**/*'])
     .pipe(gulp.dest('./build/firefox'));
 });
 
-/**
- * @task {merged} - Some files for the merged extension are unique, so we need to copy them separately
- */
 gulp.task('merged', function() {
   gulp.src(['./merged/**/*'])
     .pipe(gulp.dest('./build/merged'));
 });
+
+gulp.task('minify_json', function() {
+  gulp.src(['./build/**/*.json'])
+    .pipe(jsonMinify())
+    .pipe(gulp.dest('./build'))
+});
+
+gulp.task('minify_js', function(cb) {
+  gulp.src(['./build/**/*.js'])
+    .pipe(minify({
+      ext: {
+        src:'.js',
+        min:'.js'
+      },
+      ignoreFiles: ['.min.js']
+    }))
+    .pipe(gulp.dest('./build'))
+})
+
+gulp.task('minify_css', function() {
+  gulp.src(['./build/**/*.css'])
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('./build'))
+})
 
 gulp.task('watch', function () {
   gulp.watch(['./_shared/**/*'], ['shared']);
@@ -49,5 +61,6 @@ gulp.task('watch', function () {
   gulp.watch(['./merged/**/*'], ['merged']);
 });
 
-gulp.task('build', ['shared', 'chrome', 'firefox', 'merged']);
+gulp.task('minifier', ['minify_json', 'minify_css']);
+gulp.task('build', ['shared', 'chrome', 'firefox', 'merged', 'minifier']);
 gulp.task('default', ['build']);
