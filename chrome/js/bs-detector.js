@@ -37,7 +37,6 @@ function isJson(str) {
 
 // strip urls down to hostname
 function cleanUrl(url) {
-
   // convert facebook urls
   if (siteId == 'facebook') {
     var testLink = decodeURIComponent(url).substring(0, 30);
@@ -45,13 +44,8 @@ function cleanUrl(url) {
     if (testLink == 'https://l.facebook.com/l.php?u=' || testLink == 'http://l.facebook.com/l.php?u=') {
       thisUrl = decodeURIComponent(url).substring(30).split('&h=', 1);
     }
-    // if (thisUrl !== '') {
-    //   $(url).attr('data-external', true);
-    //   $(url).attr('data-expanded-url', thisUrl);
-    // }
     url = thisUrl;
   }
-
 
   url = url.toString().replace(/^(?:https?|ftp)\:\/\//i, '');
   url = url.toString().replace(/^www\./i, '');
@@ -69,9 +63,6 @@ chrome.runtime.sendMessage(null, {"operation": "passData"}, null, function(state
 function idSite() {
   // currentSite looks for the currentUrl (window.location.hostname) in the JSON data file
   currentUrl = cleanUrl(windowUrl);
-  if (debug) {
-    console.log('currentUrl: ' + currentUrl);
-  }
 
     if (self === top) {
         switch(currentUrl) {
@@ -105,8 +96,9 @@ function idSite() {
 
     if (debug) {
         console.log('currentUrl: ' + currentUrl);
-        console.log('currentSite: ' + currentSite);
+        console.dir(currentSite);
         console.log('siteId: ' + siteId);
+        console.log('dataType: ' + dataType);
     }
 }
 
@@ -474,6 +466,7 @@ if(window.top === window){
     function(msg){
       switch(msg.operation){
         case 'flagSite':
+          dataType = msg.type;
           flagSite();
           break;
         case 'toggleFlag':
