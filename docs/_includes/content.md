@@ -37,7 +37,7 @@ If there are any sites you recommend adding or removing, or if you object to you
 <a name="other"></a>
 
 ### Other browsers
-Support for Safari and Edge is on our roadmap. For now, you can use an older version of the B.S. Detector as a browser script. Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonkey.net/?ext=dhdg&browser=safari), [Edge](https://tampermonkey.net/?ext=dhdg&browser=edge), or any other available browser, then install the browser script [here](https://github.com/selfagency/bs-detector/raw/master/greasemonkey/bs-detector.user.js).
+Support for Safari and Edge is on our roadmap. For now, you can use an older version of the B.S. Detector as a browser script. Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonkey.net/?ext=dhdg&browser=safari), [Edge](https://tampermonkey.net/?ext=dhdg&browser=edge), or any other available browser, then install the browser script [here](https://github.com/selfagency/bs-detector/blob/dev/browserscript/bs-detector.user.js).
 
 ---
 
