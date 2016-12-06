@@ -6,7 +6,7 @@ var firstLoad = true;
 var currentUrl = window.location.hostname;
 var shorts = [];
 var siteId = '';
-var currentSite = [];
+var currentSite = null;
 var data = [];
 var dataType = '';
 var toExpand = [];
@@ -59,26 +59,30 @@ browser.runtime.sendMessage(null, {"operation": "executeMain"}, null, function(r
       function idSite() {
         // currentSite looks for the currentUrl (window.location.hostname) in the JSON data file
         if (self === top) {
-          currentSite = $.map(data, function(id, obj) {
-            if (currentUrl === id.url || currentUrl === 'www.' + id.url) return id;
-          });
-
-          if (currentSite.length > 0 && (currentUrl == currentSite[0].url || currentUrl == 'www.' + currentSite[0].url)) {
-            siteId = 'badlink';
-            dataType = currentSite[0].type;
-          } else {
             switch(currentUrl) {
-              case 'www.facebook.com':
+            case 'www.facebook.com':
+            case 'facebook.com':
                 siteId = 'facebook';
                 break;
-              case 'twitter.com':
+            case 'twitter.com':
                 siteId = 'facebook';
                 break;
-              case currentSite:
-                siteId = 'badlink';
-                break;
-              default:
+            default:
                 siteId = 'none';
+                currentSite = data[ currentUrl ];
+                if (typeof(currentSite) === 'undefined') {
+                    // Maybe with 'www.' prefix?
+                    currentSite = data[ "www." + currentUrl ];
+                    if (typeof(currentSite) === 'undefined') {
+                        // Maybe with regex? (TBD)
+                        // For now, consider it not in the list..
+                        currentSite = null;
+                    }
+                }
+                if (currentSite) {
+                    siteId = 'badlink';
+                    dataType = currentSite.type;
+                }
                 break;
             }
           }
@@ -149,6 +153,9 @@ browser.runtime.sendMessage(null, {"operation": "executeMain"}, null, function(r
           case 'hate':
             classType = 'Hate Group';
             break;
+          case 'clickbait':
+            classType = 'Clickbait';
+            break;
           case 'test':
             classType = 'The Self Agency: Makers of the B.S. Detector';
             break;
@@ -191,7 +198,7 @@ browser.runtime.sendMessage(null, {"operation": "executeMain"}, null, function(r
           switch(siteId) {
             case 'badlink':
               $(badLink).each(function() {
-                if ($(this).attr('is-bs') != 'true' && $(this).attr('href').indexOf(currentSite[0].url) < 0) {
+                if ($(this).attr('is-bs') != 'true' && $(this).attr('href').indexOf(currentUrl) < 0) {
                   $(this).prepend('💩 ');
                   $(this).addClass("hint--error hint--large hint--bottom");
                   $(this).attr('aria-label', warnMessage);

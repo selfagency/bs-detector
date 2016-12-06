@@ -1,3 +1,8 @@
+// If we don't have a browser object, check for chrome.
+if (typeof chrome === "undefined" && typeof browser !== "undefined") {
+  chrome = browser;
+}
+
 var siteList = [];
     shorts = ["✩.ws", "➡.ws", "1url.com", "adf.ly", "bc.vc", "bit.do", "bit.ly",
               "buzurl.com", "cur.lv", "cutt.us", "db.tt", "goo.gl", "ht.ly",
@@ -7,7 +12,6 @@ var siteList = [];
               "x.co", "zip.net"];
     toExpand = [];
     expanded = [];
-    dataType = '';
 
 function xhReq(url, callback) {
   var xhr = new XMLHttpRequest();
@@ -38,10 +42,10 @@ xhReq(chrome.extension.getURL("/data/data.json"), function(file){
       function(e){
         if(e.frameId == 0){
           chrome.pageAction.show(e.tabId);
-          chrome.tabs.sendMessage(e.tabId, {operation: 'flagSite', type: type});
+          chrome.tabs.sendMessage(e.tabId, { operation: 'flagSite' });
         }
       },
-      { url: domainList, type: domainList.type }
+      { url: domainList }
     );
   }
 });

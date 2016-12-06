@@ -1,0 +1,21 @@
+# EditorConfig http://editorconfig.org
+# see http://editorconfig.org/#download for plugins for your editor
+
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+indent_style = space
+indent_size = 2
+
+# ignore third party
+[node_modules/**.js]
+indent_size = N/A
+indent_style = N/A

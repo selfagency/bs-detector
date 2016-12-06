@@ -136,6 +136,8 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+*.pem
+
 
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
@@ -232,3 +234,5 @@ dist/
 # Grunt usually preprocesses files such as coffeescript, compass... inside the .tmp directory
 .tmp/
 
+# webstorm IDE
+.idea

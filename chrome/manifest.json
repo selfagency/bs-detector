@@ -5,6 +5,7 @@
   "default_locale": "en",
   "description": "Warns users about unreliable news sources.",
   "homepage_url": "https://github.com/selfagency/bs-detector",
+  "permissions": ["webNavigation"],
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -18,12 +19,15 @@
   },
   "content_scripts": [ {
      "css": [ "css/hint.min.css", "css/inject.css"],
-     "js": [ "js/jquery-3.1.1.slim.min.js", "js/inject.js" ],
+     "js": [ "js/jquery-3.1.1.slim.min.js", "js/bs-detector.js" ],
      "matches": [ "*://*/*" ],
      "all_frames": true,
      "run_at": "document_end"
   } ],
   "web_accessible_resources": [
     "data/data.json"
-  ]
+  ],
+  "page_action": {
+    "default_title": "B.S. Detector"
+  }
 }

@@ -3,9 +3,10 @@
   display: block;
   height: 28px;
   left: 0;
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100vw;
+  z-index: 999;
 }
 
 .bs-alert p {
@@ -20,8 +21,29 @@
   text-transform: uppercase;
 }
 
-body.shift {
-  margin-top: 28px;
+.bs-alert.bs-warning {
+  background: #ffff00;
+}
+
+.bs-alert.bs-warning p {
+  color: #000;
+}
+
+.bs-alert-close {
+  color: #fff;
+  cursor: pointer;
+  float: right;
+  margin-right: 6px;
+  padding: 6px;
+}
+
+.bs-warning .bs-alert-close {
+  color: #000;
+  padding: 0 6px;
+}
+
+.bs-alert-shift {
+  padding-top: 28px;
 }
 
 .bs-alert-inline {
@@ -32,6 +54,12 @@ body.shift {
   text-align: center;
   margin: 8px 0;
   padding: 4px;
+}
+
+.bs-alert-inline.bs-warning {
+  background: rgba(255, 255, 00, .25);
+  border: 1px solid #ffff00;
+  color: #000000;
 }
 
 [class*="hint--"] {
