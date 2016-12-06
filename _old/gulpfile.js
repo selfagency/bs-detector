@@ -8,9 +8,26 @@ var minify = require('gulp-minify');
 var cleanCSS = require('gulp-clean-css');
 var pump = require('pump');
 
-gulp.task('ext', function() {
-  gulp.src(['./ext/**/*'])
-    .pipe(gulp.dest('./build'));
+gulp.task('shared', function() {
+  gulp.src(['./_shared/**/*'])
+    .pipe(gulp.dest('./build/chrome'))
+    .pipe(gulp.dest('./build/firefox'))
+    .pipe(gulp.dest('./build/merged'));
+});
+
+gulp.task('chrome', function() {
+  gulp.src(['./chrome/**/*'])
+    .pipe(gulp.dest('./build/chrome'));
+});
+
+gulp.task('firefox', function() {
+  gulp.src(['./firefox/**/*'])
+    .pipe(gulp.dest('./build/firefox'));
+});
+
+gulp.task('merged', function() {
+  gulp.src(['./merged/**/*'])
+    .pipe(gulp.dest('./build/merged'));
 });
 
 gulp.task('minify_json', function() {
@@ -38,9 +55,12 @@ gulp.task('minify_css', function() {
 })
 
 gulp.task('watch', function () {
-  gulp.watch(['./ext/**/*'], ['ext']);
+  gulp.watch(['./_shared/**/*'], ['shared']);
+  gulp.watch(['./chrome/**/*'], ['chrome']);
+  gulp.watch(['./firefox/**/*'], ['firefox']);
+  gulp.watch(['./merged/**/*'], ['merged']);
 });
 
 gulp.task('minifier', ['minify_json', 'minify_css']);
-gulp.task('build', ['ext', 'minifier']);
+gulp.task('build', ['shared', 'chrome', 'firefox', 'merged', 'minifier']);
 gulp.task('default', ['build']);
