@@ -377,7 +377,7 @@ function execute() {
     case 'facebook':
       targetNodes  = [document.getElementById("mainContainer")];
       testobject = document.getElementById("mainContainer");
-      console.dir(targetNodes);
+      // console.dir(targetNodes);
       $.each(targetNodes, function(id, node){
       });
       observerConfig = {
@@ -407,7 +407,7 @@ function execute() {
   }
 
   function trigger(mutations) {
-    console.dir(mutations);
+    // console.dir(mutations);
     if (debug) {
       console.log('targetNodes: ' + targetNodes);
     }
