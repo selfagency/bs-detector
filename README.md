@@ -8,7 +8,7 @@
 
 ![bs-detector-alert](http://bsdetector.tech/images/alert.png)
 
-The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/selfagency/bs-detector/tree/dev/_shared/data).
+The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web to test the proof-of-concept. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/dev/ext/data/data.json).
 
 Domain classifications include:
 
