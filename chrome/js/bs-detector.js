@@ -383,7 +383,7 @@ function execute() {
       };
       break;
     case 'twitter':
-      targetNodes = [document.getElementById("content-main")];
+      targetNodes = [document.getElementsByClassName("content-main")];
       observerConfig = {
         attributes: true,
         characterData: false,
