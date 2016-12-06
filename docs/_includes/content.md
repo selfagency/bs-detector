@@ -1,10 +1,12 @@
+[![GitHub release](https://img.shields.io/github/release/selfagency/bs-detector.svg)](https://github.com/selfagency/bs-detector/releases) [![Chrome downloads](https://img.shields.io/chrome-web-store/d/dlcgkekjiopopabcifhebmphmfmdbjod.svg)](https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/) [![Firefox downloads](https://img.shields.io/amo/d/bsdetector.svg)](https://addons.mozilla.org/en-US/firefox/addon/bsdetector/) [![GitHub contributors](https://img.shields.io/github/contributors/selfagency/bs-detector.svg)](https://github.com/selfagency/bs-detector/graphs/contributors) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/bs-detector) [![GitHub stars](https://img.shields.io/github/stars/selfagency/bs-detector.svg?style=social&label=Star)](https://github.com/selfagency/bs-detector/subscription) [![Twitter Follow](https://img.shields.io/twitter/follow/bsdetectorapp.svg?style=social&label=Follow)](https://twitter.com/bsdetectorapp)
+
 **We've been nominated for a Golden Kitty from Product Hunt for Chrome Extension of the Year! [Vote here!](https://www.producthunt.com/@goldenkittymeow/collections/2016-chrome-extension-of-the-year)**
 
 **B.S. Detector** is a rejoinder to Mark Zuckerberg's dubious claims that Facebook is unable to substantively address the proliferation of fake news on its platform. A browser extension for both Chrome and Mozilla-based browsers, B.S. Detector searches all links on a given webpage for references to unreliable sources, checking against a manually compiled list of domains. It then provides visual warnings about the presence of questionable links or the browsing of questionable websites:
 
 ![bs-detector-alert](/images/alert.png){:class="bs-detector-img"}
 
-The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/selfagency/bs-detector/tree/dev/_shared/data).
+The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web to test the proof-of-concept. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/dev/ext/data/data.json).
 
 Domain classifications include:
 
@@ -19,7 +21,6 @@ Domain classifications include:
 -   **Clickbait:** Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.
 -   **Proceed With Caution:** Sources that may be reliable but whose contents require further verification.
 
-
 If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report [here](https://github.com/selfagency/bs-detector/issues/53).
 
 ---
@@ -33,12 +34,12 @@ If there are any sites you recommend adding or removing, or if you object to you
 <a name="firefox"></a>
 
 ### Firefox and Mozilla-based browsers
-Installation via the Firefox Add-ons directory coming soon. For now, download a .zip [here](https://github.com/selfagency/bs-detector/releases) and follow [these instructions](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Temporary_Installation_in_Firefox) to load the add-on.
+[Click here](https://addons.mozilla.org/en-US/firefox/addon/bsdetector/) to go to the Firefox Add-ons Directory and click 'Add to Firefox.'
 
 <a name="other"></a>
 
 ### Other browsers
-Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonkey.net/?ext=dhdg&browser=safari), [Edge](https://tampermonkey.net/?ext=dhdg&browser=edge), or any other available browser, then install the Greasemonkey script [here](https://github.com/selfagency/bs-detector/raw/master/greasemonkey/bs-detector.user.js).
+Support for Safari and Edge is on our roadmap. For now, you can use an older version of the B.S. Detector as a browser script. Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonkey.net/?ext=dhdg&browser=safari), [Edge](https://tampermonkey.net/?ext=dhdg&browser=edge), or any other available browser, then install the browser script [here](https://github.com/selfagency/bs-detector/blob/dev/browserscript/bs-detector.user.js).
 
 ---
 
