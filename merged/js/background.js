@@ -12,6 +12,7 @@ var siteList = [];
               "x.co", "zip.net"];
     toExpand = [];
     expanded = [];
+    dataType = '';
 
 function xhReq(url, callback) {
   var xhr = new XMLHttpRequest();
@@ -42,10 +43,10 @@ xhReq(chrome.extension.getURL("/data/data.json"), function(file){
       function(e){
         if(e.frameId == 0){
           chrome.pageAction.show(e.tabId);
-          chrome.tabs.sendMessage(e.tabId, { operation: 'flagSite' });
+          chrome.tabs.sendMessage(e.tabId, {operation: 'flagSite', type: type});
         }
       },
-      { url: domainList }
+      { url: domainList, type: domainList.type }
     );
   }
 });
