@@ -525,31 +525,31 @@ BSDetector.prototype = {
         this.targetLinks();
 
         $('a[data-is-bs="true"]').each(function () {
-            this.dataType = $(this).attr('data-bs-type');
-            this.warningMsg();
+            bsd.dataType = $(this).attr('data-bs-type');
+            bsd.warningMsg();
 
-            this.debug('bs link: ' + this);
-            this.debug('dataType: ' + this.dataType);
+            bsd.debug('bs link: ' + this);
+            bsd.debug('dataType: ' + bsd.dataType);
 
-            switch (this.siteId) {
+            switch (bsd.siteId) {
             case 'facebook':
                 if ($(this).parents('._1dwg').length >= 0) {
-                    this.flagIt($(this).closest('.mtm'));
+                    bsd.flagIt($(this).closest('.mtm'));
                 }
                 if ($(this).parents('.UFICommentContent').length >= 0) {
-                    this.flagIt($(this).closest('.UFICommentBody'));
+                    bsd.flagIt($(this).closest('.UFICommentBody'));
                 }
                 break;
             case 'twitter':
                 if ($(this).parents('.tweet').length >= 0) {
-                    this.flagIt($(this).closest('.js-tweet-text-container'));
+                    bsd.flagIt($(this).closest('.js-tweet-text-container'));
                 }
                 break;
             case 'badlink':
             case 'none':
                 break;
             default:
-                // this.tagIt();
+                // bsd.tagIt();
                 break;
             }
         });
