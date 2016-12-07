@@ -126,9 +126,7 @@ BSDetector.prototype = {
             url = thisUrl;
         }
 
-        url = url.toString().replace(/^(?:https?|ftp)\:\/\//i, '');
-        url = url.toString().replace(/^www\./i, '');
-        url = url.toString().replace(/\/.*/, '');
+        url = url2Domain(url);
         return url;
     },
 
@@ -740,7 +738,7 @@ if (window.top === window) {
         case 'toggleFlag':
             if (bsd.flagState === 1) {
                 bsd.hideFlag();
-            } else if (this.flagState === -1) {
+            } else if (bsd.flagState === -1) {
                 bsd.showFlag();
             }
             break;

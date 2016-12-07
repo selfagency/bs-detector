@@ -17,13 +17,14 @@
   },
   "background": {
     "scripts": [
+      "js/utils.js",
       "js/background.js"
     ],
     "persistent": true
   },
   "content_scripts": [ {
      "css": [ "css/hint.min.css", "css/inject.css" ],
-     "js": [ "js/jquery-3.1.1.slim.min.js", "js/bs-detector.js" ],
+     "js": [ "js/utils.js","js/jquery-3.1.1.slim.min.js", "js/bs-detector.js" ],
      "matches": [ "*://*/*" ],
      "all_frames": true,
      "run_at": "document_end"
