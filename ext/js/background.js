@@ -95,12 +95,16 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
 
     if (domainList.length > 0) {
         chrome.webNavigation.onDOMContentLoaded.addListener(function (e) {
+            var domain;
             if (e.frameId === 0) {
                 chrome.pageAction.show(e.tabId);
-                chrome.tabs.sendMessage(e.tabId, {
-                    operation: 'flagSite',
-                    type: domainList.type
-                });
+                domain = url2Domain(e.url);
+                if(domain){
+                  chrome.tabs.sendMessage(e.tabId, {
+                      operation: 'flagSite',
+                      type: siteList[domain].type
+                  });
+                }
             }
         }, {
             url: domainList,
