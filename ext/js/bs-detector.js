@@ -29,7 +29,7 @@ function BSDetector() {
     this.currentUrl = '';
     this.data = [];
     this.dataType = '';
-    this.debugActive = true;
+    this.debugActive = false;
     this.expandLinks = null;
     this.expanded = {};
     this.flagState = 0; // 0 initial, 1 open, -1 hidden
@@ -125,7 +125,6 @@ BSDetector.prototype = {
             testLink = '',
             thisUrl = '';
 
-        // convert facebook urls
         if (this.siteId === 'facebook') {
             testLink = decodeURIComponent(url).substring(0, 30);
 
@@ -136,8 +135,7 @@ BSDetector.prototype = {
             url = thisUrl;
         }
 
-        url = url2Domain(url);
-        return url;
+        return url2Domain(url);
     },
 
 
@@ -184,10 +182,10 @@ BSDetector.prototype = {
             }
         }
 
-        this.debug('currentUrl: ' + this.currentUrl);
-        this.debug(this.currentSite);
-        this.debug('siteId: ' + this.siteId);
-        this.debug('dataType: ' + this.dataType);
+        this.debug('this.currentUrl: ' + this.currentUrl);
+        this.debug('this.currentSite: ' + this.currentSite);
+        this.debug('this.siteId: ' + this.siteId);
+        this.debug('this.dataType: ' + this.dataType);
     },
 
 
@@ -224,13 +222,13 @@ BSDetector.prototype = {
 
         if (this.toExpand) {
 
-            this.debug('url array: ' + this.toExpand);
+            this.debug('this.toExpand[]: ' + this.toExpand);
 
             chrome.runtime.sendMessage(null, {
                 'operation': 'expandLinks',
                 'shortLinks': this.toExpand.toString()
             }, null, function (response) {
-                this.debug('processLinks: ' + response);
+                this.debug('Expanded Links: ' + response);
 
                 if (this.isJson(response)) {
                     this.expanded = JSON.parse(response);
@@ -238,8 +236,8 @@ BSDetector.prototype = {
                         $('a[href="' + value.requestedURL + '"]').attr('longurl', value.resolvedURL);
                     });
                 } else {
-                    this.debug('BS Detector could not expand shortened link');
-                    this.debug(response);
+                    this.debug('Could not expand shortened link');
+                    this.debug('Response: ' + response);
                 }
             });
         }
@@ -304,7 +302,7 @@ BSDetector.prototype = {
             this.warnMessage = '💩 Warning: This may not be a reliable source. (' + classType + ')';
         }
 
-        this.debug('warnMessage: ' + this.warnMessage);
+        this.debug('this.warnMessage: ' + this.warnMessage);
     },
 
 
@@ -318,12 +316,14 @@ BSDetector.prototype = {
 
         'use strict';
 
+        var navs = $('nav, #nav, #navigation, #navmenu');
+
         if (this.flagState !== 0) {
             return;
         }
+
         this.flagState = 1;
         this.warningMsg();
-        var navs = $('nav, #nav, #navigation, #navmenu');
 
         if ($(navs)) {
             $(navs).first().addClass('bs-alert-shift');
@@ -408,30 +408,6 @@ BSDetector.prototype = {
 
 
     /**
-     * @description Check if short link and if so, add to array
-     *
-     * @method checkIfShort
-     * @param {string} theHost
-     * @param {string} currentElement
-     */
-    checkIfShort: function (theHost, currentElement) {
-
-        'use strict';
-
-        var isShort = $.map(this.shorts, function (url) {
-            if (theHost === url || theHost === 'www.' + url) {
-                return true;
-            }
-        });
-
-        if (isShort === 'true') {
-            this.shortUrls.push($(currentElement).attr('href'));
-        }
-    },
-
-
-
-    /**
      * @description Target links
      *
      * @method targetLinks
@@ -447,8 +423,6 @@ BSDetector.prototype = {
                 a = new RegExp('/' + window.location.host + '/'),
                 testLink = '',
                 thisUrl = '';
-
-            //this.debug('target link: ' + $(this));
 
             // exclude links that have the same hostname
             if (!a.test(bsd.href)) {
@@ -474,11 +448,8 @@ BSDetector.prototype = {
 
             var urlHost = '';
 
-            //this.debug('external link: ' + this);
-
             if ($(this).attr('data-is-bs') !== 'true') {
                 urlHost = bsd.getHost($(this));
-                // checkIfShort(urlHost, this);
 
                 // check if link is in list of bad domains
                 bsd.bsId = bsd.data[urlHost];
@@ -505,11 +476,13 @@ BSDetector.prototype = {
         'use strict';
 
         if (!$badlinkWrapper.hasClass('bs-flag')) {
+
             if (this.dataType === 'caution') {
                 $badlinkWrapper.before('<div class="bs-alert-inline warning">' + this.warnMessage + '</div>');
             } else {
                 $badlinkWrapper.before('<div class="bs-alert-inline">' + this.warnMessage + '</div>');
             }
+
             $badlinkWrapper.addClass('bs-flag');
         }
     },
@@ -532,8 +505,8 @@ BSDetector.prototype = {
             bsd.dataType = $(this).attr('data-bs-type');
             bsd.warningMsg();
 
-            bsd.debug('bs link: ' + this);
-            bsd.debug('dataType: ' + bsd.dataType);
+            bsd.debug('Current warning link: ' + this);
+            bsd.debug('bsd.dataType: ' + bsd.dataType);
 
             switch (bsd.siteId) {
             case 'facebook':
@@ -553,7 +526,6 @@ BSDetector.prototype = {
             case 'none':
                 break;
             default:
-                // bsd.tagIt();
                 break;
             }
         });
@@ -579,8 +551,7 @@ BSDetector.prototype = {
             indexInner = 0,
             nodes = null;
 
-        // this.debug(mutations);
-        this.debug('targetNodes: ' + this.targetNodes);
+        this.debug('this.targetNodes: ' + this.targetNodes);
 
         if (arguments.length === 0) {
             this.mutationObserver.disconnect();
@@ -591,7 +562,9 @@ BSDetector.prototype = {
                     bsd.mutationObserver.observe(node, bsd.observerConfig);
                 }
             });
+
             return;
+
         } else {
             indexOuter = mutations.length;
         }
@@ -651,17 +624,17 @@ BSDetector.prototype = {
 
         if (this.firstLoad === true) {
             this.identifySite();
+
             if (this.siteId === 'badlink') {
                 this.flagSite();
             }
+
             this.firstLoad = false;
         }
 
         switch (this.siteId) {
         case 'facebook':
             this.targetNodes = [document.getElementById('mainContainer')];
-            this.debug(this.targetNodes);
-            $.each(this.targetNodes, function (id, node) {});
             this.observerConfig = {
                 attributes: false,
                 characterData: false,
@@ -688,6 +661,8 @@ BSDetector.prototype = {
             break;
         }
 
+        this.debug('this.targetNodes: ' + this.targetNodes);
+
         this.triggerMutation();
     }
 };
@@ -709,9 +684,6 @@ var bsd = new BSDetector();
 chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
 
     'use strict';
-bsd.debug('ret passData');
-bsd.debug(state.sites);
-bsd.debug(state.shorteners);
 
     bsd.data = state.sites;
     bsd.shorts = state.shorteners;
