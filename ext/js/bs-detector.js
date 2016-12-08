@@ -14,6 +14,12 @@ if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
 }
 
 
+
+/**
+ * @description Class constructor with variable initialisation
+ *
+ * @method BSDetector
+ */
 function BSDetector() {
 
     'use strict';
@@ -46,7 +52,7 @@ BSDetector.prototype = {
 
 
     /**
-     * @description Log debug messages, if the flag is set
+     * @description Log debug messages, if the debug flag is set
      *
      * @method debug
      * @param {string}
@@ -65,7 +71,8 @@ BSDetector.prototype = {
      * @description Asynchronous loading function
      *
      * @method asynch
-     * @param {string}
+     * @param {string} thisFunc
+     * @param {function} callback
      */
     asynch: function (thisFunc, callback) {
 
@@ -82,10 +89,11 @@ BSDetector.prototype = {
 
 
     /**
-     * @description JSON validation function
+     * @description Check if a string is valid JSON
      *
      * @method isJson
-     * @param {string}
+     * @param {string} string
+     * @param {boolean}
      */
     isJson: function (string) {
 
@@ -105,8 +113,9 @@ BSDetector.prototype = {
     /**
      * @description Strip urls down to hostname
      *
-     * @method
-     * @param {string}
+     * @method cleanUrl
+     * @param {string} url
+     * @return {string}
      */
     cleanUrl: function (url) {
 
@@ -123,6 +132,7 @@ BSDetector.prototype = {
             if (testLink === 'https://l.facebook.com/l.php?u=' || testLink === 'http://l.facebook.com/l.php?u=') {
                 thisUrl = decodeURIComponent(url).substring(30).split('&h=', 1);
             }
+
             url = thisUrl;
         }
 
@@ -136,7 +146,6 @@ BSDetector.prototype = {
      * @description Identify current site
      *
      * @method identifySite
-     * @param {string}
      */
     identifySite: function () {
 
@@ -186,8 +195,7 @@ BSDetector.prototype = {
     /**
      * @description Expand short urls and append to anchor tags
      *
-     * @method
-     * @param {string}
+     * @method getLinks
      */
     getLinks: function () {
 
@@ -206,10 +214,9 @@ BSDetector.prototype = {
 
 
     /*
-     * @description
+     * @description Expanding short urls
      *
-     * @method
-     * @param {string}
+     * @method processLinks
      */
     processLinks: function () {
 
@@ -243,8 +250,7 @@ BSDetector.prototype = {
     /**
      * @description Generate warning message for a given url
      *
-     * @method
-     * @param {string}
+     * @method warningMsg
      */
     warningMsg: function () {
 
@@ -306,8 +312,7 @@ BSDetector.prototype = {
     /**
      * @description Flag entire site
      *
-     * @method
-     * @param {string}
+     * @method flagSite
      */
     flagSite: function () {
 
@@ -345,10 +350,9 @@ BSDetector.prototype = {
 
 
     /**
-     * @description
+     * @description Make flags visible
      *
-     * @method
-     * @param {string}
+     * @method showFlag
      */
     showFlag: function () {
 
@@ -361,10 +365,9 @@ BSDetector.prototype = {
 
 
     /**
-     * @description
+     * @description Make flags invisible
      *
-     * @method
-     * @param {string}
+     * @method hideFlag
      */
     hideFlag: function () {
 
@@ -377,10 +380,11 @@ BSDetector.prototype = {
 
 
     /**
-     * @description Get the hostname of a given link
+     * @description Get the hostname of a given element's link
      *
-     * @method
-     * @param {string}
+     * @method getHost
+     * @param {object} $element
+     * @return {string}
      */
     getHost: function ($element) {
 
@@ -406,8 +410,9 @@ BSDetector.prototype = {
     /**
      * @description Check if short link and if so, add to array
      *
-     * @method
-     * @param {string}
+     * @method checkIfShort
+     * @param {string} theHost
+     * @param {string} currentElement
      */
     checkIfShort: function (theHost, currentElement) {
 
@@ -429,15 +434,14 @@ BSDetector.prototype = {
     /**
      * @description Target links
      *
-     * @method
-     * @param {string}
+     * @method targetLinks
      */
     targetLinks: function () {
 
         'use strict';
 
         // find and label external links
-        $('a[href]:not([href^="#"]),a[data-expanded-url]').each(function () {
+        $('a[href]:not([href^="#"]), a[data-expanded-url]').each(function () {
 
             var
                 a = new RegExp('/' + window.location.host + '/'),
@@ -493,8 +497,8 @@ BSDetector.prototype = {
     /**
      * @description Flag links
      *
-     * @method
-     * @param {string}
+     * @method flagIt
+     * @param {object} $badlinkWrapper
      */
     flagIt: function ($badlinkWrapper) {
 
@@ -515,7 +519,7 @@ BSDetector.prototype = {
     /**
      * @description
      *
-     * @method
+     * @method linkWarning
      * @param {string}
      */
     linkWarning: function () {
@@ -560,10 +564,10 @@ BSDetector.prototype = {
 
 
     /**
-     * @description
+     * @description On changes on a site, trigger link targeting and flagging
      *
-     * @method
-     * @param {string}
+     * @method triggerMutation
+     * @param {object} mutations
      */
     triggerMutation: function (mutations) {
 
@@ -635,8 +639,7 @@ BSDetector.prototype = {
     /**
      * @description Main execution script
      *
-     * @method
-     * @param {string}
+     * @method execute
      */
     execute: function () {
 
@@ -695,9 +698,13 @@ var bsd = new BSDetector();
 
 /**
  * @description Grab data from background and execute extension
+ * @link https://developer.chrome.com/extensions/runtime#method-sendMessage
  *
- * @method
- * @param {string}
+ * @method chrome.runtime.sendMessage
+ * @param {string} extensionId
+ * @param {mixed} message
+ * @param {object} options
+ * @param {function} responseCallback
  */
 chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
 
@@ -721,9 +728,10 @@ bsd.debug(state.shorteners);
 
 /**
  * @description Listen for messages but only in the top frame
+ * @link https://developer.chrome.com/extensions/runtime#event-onMessage
  *
- * @method
- * @param {string}
+ * @method chrome.runtime.onMessage.addListener
+ * @param {function}
  */
 if (window.top === window) {
     chrome.runtime.onMessage.addListener(function (message) {
