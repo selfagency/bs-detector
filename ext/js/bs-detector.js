@@ -689,22 +689,28 @@ BSDetector.prototype = {
     }
 };
 
-
-var bsd = new BSDetector();
-
-
 /**
- * @description Grab data from background and execute extension
+ * @description Scan the current frame's links, but only if its the top frame or twitter
  *
  * @method
  * @param {string}
  */
-chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
+if(window === window.top || url2Domain(window.location.hostname) == 'twitter.com'){
+  var bsd = new BSDetector();
+
+
+  /**
+    * @description Grab data from background and execute extension
+    *
+    * @method
+    * @param {string}
+    */
+  chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
 
     'use strict';
-bsd.debug('ret passData');
-bsd.debug(state.sites);
-bsd.debug(state.shorteners);
+    bsd.debug('ret passData');
+    bsd.debug(state.sites);
+    bsd.debug(state.shorteners);
 
     bsd.data = state.sites;
     bsd.shorts = state.shorteners;
@@ -712,11 +718,11 @@ bsd.debug(state.shorteners);
     // Data loaded, start execution.
     $(document).ready(function () {
 
-        bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
-        bsd.execute();
+      bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
+      bsd.execute();
     });
-});
-
+  });
+}
 
 
 /**
