@@ -1,6 +1,6 @@
 # B.S. 💩 Detector
 
-[![GitHub release](https://img.shields.io/github/release/selfagency/bs-detector.svg)](https://github.com/selfagency/bs-detector/releases) [![Chrome downloads](https://img.shields.io/chrome-web-store/d/dlcgkekjiopopabcifhebmphmfmdbjod.svg)](https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/) [![Firefox downloads](https://img.shields.io/amo/d/bsdetector.svg)](https://addons.mozilla.org/en-US/firefox/addon/bsdetector/) [![GitHub contributors](https://img.shields.io/github/contributors/selfagency/bs-detector.svg)](https://github.com/selfagency/bs-detector/graphs/contributors) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/bs-detector) [![Twitter Follow](https://img.shields.io/twitter/follow/bsdetectorapp.svg?style=social&label=Follow)](https://twitter.com/bsdetectorapp)
+[![GitHub release](https://img.shields.io/github/release/bs-detector/bs-detector.svg)](https://github.com/bs-detector/bs-detector/releases) [![Chrome downloads](https://img.shields.io/chrome-web-store/d/dlcgkekjiopopabcifhebmphmfmdbjod.svg)](https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/) [![Firefox downloads](https://img.shields.io/amo/d/bsdetector.svg)](https://addons.mozilla.org/en-US/firefox/addon/bsdetector/) [![GitHub contributors](https://img.shields.io/github/contributors/bs-detector/bs-detector.svg)](https://github.com/bs-detector/bs-detector/graphs/contributors) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/bs-detector) [![Twitter Follow](https://img.shields.io/twitter/follow/bsdetectorapp.svg?style=social&label=Follow)](https://twitter.com/bsdetectorapp)
 
 **We've been nominated for a Golden Kitty from Product Hunt for Chrome Extension of the Year! [Vote here!](https://www.producthunt.com/@goldenkittymeow/collections/2016-chrome-extension-of-the-year)**
 
@@ -8,7 +8,7 @@
 
 ![bs-detector-alert](http://bsdetector.tech/images/alert.png)
 
-The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web to test the proof-of-concept. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/selfagency/bs-detector/blob/dev/ext/data/data.json).
+The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web to test the proof-of-concept. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/bs-detector/bs-detector/blob/dev/ext/data/data.json).
 
 Domain classifications include:
 
@@ -23,7 +23,7 @@ Domain classifications include:
 -   **Clickbait:** Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.
 -   **Proceed With Caution:** Sources that may be reliable but whose contents require further verification.
 
-If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report [here](https://github.com/selfagency/bs-detector/issues/53).
+If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report [here](https://github.com/bs-detector/bs-detector/issues/53).
 
 ---
 
@@ -41,14 +41,14 @@ If there are any sites you recommend adding or removing, or if you object to you
 <a name="other"></a>
 
 ### Other browsers
-Support for Safari and Edge is on our roadmap. For now, you can use an older version of the B.S. Detector as a browser script. Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonkey.net/?ext=dhdg&browser=safari), [Edge](https://tampermonkey.net/?ext=dhdg&browser=edge), or any other available browser, then install the browser script [here](https://github.com/selfagency/bs-detector/blob/dev/browserscript/bs-detector.user.js).
+Support for Safari and Edge is on our roadmap. For now, you can use an older version of the B.S. Detector as a browser script. Install [Tampermonkey](https://tampermonkey.net) for [Safari](https://tampermonkey.net/?ext=dhdg&browser=safari), [Edge](https://tampermonkey.net/?ext=dhdg&browser=edge), or any other available browser, then install the browser script [here](https://github.com/bs-detector/bs-detector/blob/dev/browserscript/bs-detector.user.js).
 
 ---
 
 ## Contributing
 
-We welcome pull requests and community collaboration. Before contributing, please review our [Code of Conduct](https://github.com/selfagency/bs-detector/blob/master/CODE_OF_CONDUCT.md). You can chat with other community members in realtime on Gitter [here](https://gitter.im/bs-detector/).
+We welcome pull requests and community collaboration. Before contributing, please review our [Code of Conduct](https://github.com/bs-detector/bs-detector/blob/master/CODE_OF_CONDUCT.md). You can chat with other community members in realtime on Gitter [here](https://gitter.im/bs-detector/).
 
-Check out our [roadmap](https://github.com/selfagency/bs-detector/projects) to see what we intend to integrate in future releases and to decide whether you'd like to help with one of those tasks, as they might be duplicative of new functionality you wish to propose. We don't want to squander your time or enthusiasm, so we recommend proposing new functionality in an issue or on Gitter before building something out we might not end up using. It will also provide you with an opportunity to hear from other community members who might help flesh out your ideas.
+Check out our [roadmap](https://github.com/bs-detector/bs-detector/projects) to see what we intend to integrate in future releases and to decide whether you'd like to help with one of those tasks, as they might be duplicative of new functionality you wish to propose. We don't want to squander your time or enthusiasm, so we recommend proposing new functionality in an issue or on Gitter before building something out we might not end up using. It will also provide you with an opportunity to hear from other community members who might help flesh out your ideas.
 
 If you are planning to contribute, please work off and submit pull requests to the `dev` branch, which is the most current build. `master` is intended for public releases only and is usually several commits behind `dev`. Edit resources in `ext` and use `gulp build` to compile manually. Use `gulp watch` to compile automatically on file changes. The compiled, unpackaged extension will be in the `build` folder, which you can then load in your browser.
