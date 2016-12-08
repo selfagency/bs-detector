@@ -51,12 +51,12 @@ BSDetector.prototype = {
      * @method debug
      * @param {string}
      */
-    debug: function (message) {
+    debug: function () {
 
         'use strict';
 
         if (this.debugActive === true) {
-            console.debug('[B.S. 💩 Detector] ' + message);
+            console.debug.apply(null,['[B.S. 💩 Detector] '].concat(arguments));
         }
     },
 
@@ -175,10 +175,10 @@ BSDetector.prototype = {
             }
         }
 
-        this.debug('currentUrl: ' + this.currentUrl);
+        this.debug('currentUrl: ', this.currentUrl);
         this.debug(this.currentSite);
-        this.debug('siteId: ' + this.siteId);
-        this.debug('dataType: ' + this.dataType);
+        this.debug('siteId: ', this.siteId);
+        this.debug('dataType: ', this.dataType);
     },
 
 
@@ -217,13 +217,13 @@ BSDetector.prototype = {
 
         if (this.toExpand) {
 
-            this.debug('url array: ' + this.toExpand);
+            this.debug('url array: ',  this.toExpand);
 
             chrome.runtime.sendMessage(null, {
                 'operation': 'expandLinks',
                 'shortLinks': this.toExpand.toString()
             }, null, function (response) {
-                this.debug('processLinks: ' + response);
+                this.debug('processLinks: ', response);
 
                 if (this.isJson(response)) {
                     this.expanded = JSON.parse(response);
@@ -298,7 +298,7 @@ BSDetector.prototype = {
             this.warnMessage = '💩 Warning: This may not be a reliable source. (' + classType + ')';
         }
 
-        this.debug('warnMessage: ' + this.warnMessage);
+        this.debug('warnMessage: ', this.warnMessage);
     },
 
 
@@ -528,8 +528,8 @@ BSDetector.prototype = {
             this.dataType = $(this).attr('data-bs-type');
             this.warningMsg();
 
-            this.debug('bs link: ' + this);
-            this.debug('dataType: ' + this.dataType);
+            this.debug('bs link: ', this);
+            this.debug('dataType: ', this.dataType);
 
             switch (this.siteId) {
             case 'facebook':
@@ -576,7 +576,7 @@ BSDetector.prototype = {
             nodes = null;
 
         // this.debug(mutations);
-        this.debug('targetNodes: ' + this.targetNodes);
+        this.debug('targetNodes: ', this.targetNodes);
 
         if (arguments.length === 0) {
             this.mutationObserver.disconnect();
