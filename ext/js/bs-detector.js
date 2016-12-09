@@ -29,7 +29,7 @@ function BSDetector() {
     this.currentUrl = '';
     this.data = [];
     this.dataType = '';
-    this.debugActive = false;
+    this.debugActive = true;
     this.expandLinks = null;
     this.expanded = {};
     this.flagState = 0; // 0 initial, 1 open, -1 hidden
@@ -57,12 +57,12 @@ BSDetector.prototype = {
      * @method debug
      * @param {string}
      */
-    debug: function (message) {
+    debug: function () {
 
         'use strict';
 
         if (this.debugActive === true) {
-            console.debug('[B.S. 💩 Detector] ' + message);
+            console.debug.apply(null,['[B.S. 💩 Detector] '].concat(arguments));
         }
     },
 
@@ -182,10 +182,11 @@ BSDetector.prototype = {
             }
         }
 
-        this.debug('this.currentUrl: ' + this.currentUrl);
-        this.debug('this.currentSite: ' + this.currentSite);
-        this.debug('this.siteId: ' + this.siteId);
-        this.debug('this.dataType: ' + this.dataType);
+        this.debug('this.currentUrl: ', this.currentUrl);
+        this.debug('this.currentSite: ', this.currentSite);
+        this.debug('this.siteId: ', this.siteId);
+        this.debug('this.dataType: ', this.dataType);
+
     },
 
 
@@ -222,13 +223,13 @@ BSDetector.prototype = {
 
         if (this.toExpand) {
 
-            this.debug('this.toExpand[]: ' + this.toExpand);
+            this.debug('this.toExpand[]: ', this.toExpand);
 
             chrome.runtime.sendMessage(null, {
                 'operation': 'expandLinks',
                 'shortLinks': this.toExpand.toString()
             }, null, function (response) {
-                this.debug('Expanded Links: ' + response);
+                this.debug('Expanded Links: ', response);
 
                 if (this.isJson(response)) {
                     this.expanded = JSON.parse(response);
@@ -302,7 +303,7 @@ BSDetector.prototype = {
             this.warnMessage = '💩 Warning: This may not be a reliable source. (' + classType + ')';
         }
 
-        this.debug('this.warnMessage: ' + this.warnMessage);
+        this.debug('this.warnMessage: ', this.warnMessage);
     },
 
 
@@ -420,12 +421,12 @@ BSDetector.prototype = {
         $('a[href]:not([href^="#"]), a[data-expanded-url]').each(function () {
 
             var
-                a = new RegExp('/' + window.location.host + '/'),
+                a = new RegExp( window.location.host ),
                 testLink = '',
                 thisUrl = '';
 
             // exclude links that have the same hostname
-            if (!a.test(bsd.href)) {
+            if (!a.test(this.href)) {
                 $(this).attr('data-external', true);
             }
 
@@ -505,8 +506,8 @@ BSDetector.prototype = {
             bsd.dataType = $(this).attr('data-bs-type');
             bsd.warningMsg();
 
-            bsd.debug('Current warning link: ' + this);
-            bsd.debug('bsd.dataType: ' + bsd.dataType);
+            bsd.debug('Current warning link: ', this);
+            bsd.debug('bsd.dataType: ', bsd.dataType);
 
             switch (bsd.siteId) {
             case 'facebook':
@@ -551,7 +552,7 @@ BSDetector.prototype = {
             indexInner = 0,
             nodes = null;
 
-        this.debug('this.targetNodes: ' + this.targetNodes);
+        this.debug('this.targetNodes: ', this.targetNodes);
 
         if (arguments.length === 0) {
             this.mutationObserver.disconnect();
@@ -661,15 +662,11 @@ BSDetector.prototype = {
             break;
         }
 
-        this.debug('this.targetNodes: ' + this.targetNodes);
+        this.debug('this.targetNodes: ', this.targetNodes);
 
         this.triggerMutation();
     }
 };
-
-
-var bsd = new BSDetector();
-
 
 /**
  * @description Grab data from background and execute extension
@@ -681,7 +678,17 @@ var bsd = new BSDetector();
  * @param {object} options
  * @param {function} responseCallback
  */
-chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
+if(window === window.top || url2Domain(window.location.hostname) == 'twitter.com'){
+  var bsd = new BSDetector();
+
+
+  /**
+    * @description Grab data from background and execute extension
+    *
+    * @method
+    * @param {string}
+    */
+  chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
 
     'use strict';
 
@@ -691,11 +698,11 @@ chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (stat
     // Data loaded, start execution.
     $(document).ready(function () {
 
-        bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
-        bsd.execute();
+      bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
+      bsd.execute();
     });
-});
-
+  });
+}
 
 
 /**
