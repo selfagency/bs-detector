@@ -468,10 +468,10 @@ BSDetector.prototype = {
     /**
      * @description Flag links
      *
-     * @method flagIt
+     * @method flagPost
      * @param {object} $badlinkWrapper
      */
-    flagIt: function ($badlinkWrapper) {
+    flagPost: function ($badlinkWrapper) {
 
         'use strict';
 
@@ -492,10 +492,10 @@ BSDetector.prototype = {
     /**
      * @description
      *
-     * @method linkWarning
+     * @method setAlertOnPosts
      * @param {string}
      */
-    linkWarning: function () {
+    setAlertOnPosts: function () {
 
         'use strict';
 
@@ -511,15 +511,15 @@ BSDetector.prototype = {
             switch (bsd.siteId) {
             case 'facebook':
                 if ($(this).parents('._1dwg').length >= 0) {
-                    bsd.flagIt($(this).closest('.mtm'));
+                    bsd.flagPost($(this).closest('.mtm'));
                 }
                 if ($(this).parents('.UFICommentContent').length >= 0) {
-                    bsd.flagIt($(this).closest('.UFICommentBody'));
+                    bsd.flagPost($(this).closest('.UFICommentBody'));
                 }
                 break;
             case 'twitter':
                 if ($(this).parents('.tweet').length >= 0) {
-                    bsd.flagIt($(this).closest('.js-tweet-text-container'));
+                    bsd.flagPost($(this).closest('.js-tweet-text-container'));
                 }
                 break;
             case 'badlink':
@@ -555,7 +555,7 @@ BSDetector.prototype = {
 
         if (arguments.length === 0) {
             this.mutationObserver.disconnect();
-            this.linkWarning();
+            this.setAlertOnPosts();
 
             $.each(this.targetNodes, function (id, node) {
                 if (node !== null) {
@@ -596,7 +596,7 @@ BSDetector.prototype = {
 
         if (hasDesired) {
             this.targetLinks();
-            this.linkWarning();
+            this.setAlertOnPosts();
         }
 
 
