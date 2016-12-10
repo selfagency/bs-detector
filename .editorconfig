@@ -15,6 +15,10 @@ insert_final_newline = true
 indent_style = space
 indent_size = 2
 
+[*.js]
+indent_style = space
+indent_size = 4
+
 # ignore third party
 [node_modules/**.js]
 indent_size = N/A

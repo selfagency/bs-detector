@@ -16,40 +16,20 @@ if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
 var
     siteList = [],
     shorts = [
-        '✩.ws',
-        '➡.ws',
-        '1url.com',
-        'adf.ly',
-        'bc.vc',
         'bit.do',
         'bit.ly',
-        'buzurl.com',
-        'cur.lv',
         'cutt.us',
-        'db.tt',
         'goo.gl',
         'ht.ly',
         'is.gd',
-        'ity.im',
-        'j.mp',
-        'lnkd.in',
         'ow.ly',
         'po.st',
-        'q.gs',
-        'qr.ae',
-        'qr.net',
-        'scrnch.me',
-        't.co',
         'tinyurl.com',
         'tr.im',
         'trib.al',
-        'tweez.me',
-        'u.bb',
         'u.to',
         'v.gd',
-        'vzturl.com',
-        'x.co',
-        'zip.net'
+        'x.co'
     ],
     toExpand = [],
     expanded = [];
@@ -99,11 +79,13 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
             if (e.frameId === 0) {
                 chrome.pageAction.show(e.tabId);
                 domain = url2Domain(e.url);
-                if(domain){
+                if(domain && siteList[domain]){
                   chrome.tabs.sendMessage(e.tabId, {
                       operation: 'flagSite',
                       type: siteList[domain].type
                   });
+                } else {
+                  console.debug('no data found for domain', domain, e);
                 }
             }
         }, {

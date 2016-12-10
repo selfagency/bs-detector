@@ -14,6 +14,12 @@ if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
 }
 
 
+
+/**
+ * @description Class constructor with variable initialisation
+ *
+ * @method BSDetector
+ */
 function BSDetector() {
 
     'use strict';
@@ -23,7 +29,7 @@ function BSDetector() {
     this.currentUrl = '';
     this.data = [];
     this.dataType = '';
-    this.debugActive = true;
+    this.debugActive = false;
     this.expandLinks = null;
     this.expanded = {};
     this.flagState = 0; // 0 initial, 1 open, -1 hidden
@@ -33,9 +39,11 @@ function BSDetector() {
     this.siteId = '';
     this.warnMessage = '';
     this.mutationObserver = {};
-    this.observerConfig = {};
-    this.targetNodes = [];
     this.windowUrl = window.location.hostname;
+    this.observerRoot = null;
+    this.observerFilter = null;
+    this.ownHostRegExp = new RegExp( window.location.host );
+    this.lfbRegExp = new RegExp( /^https?:\/\/l\.facebook\.com\/l\.php\?u=([^&]+)/);
 }
 
 
@@ -46,17 +54,17 @@ BSDetector.prototype = {
 
 
     /**
-     * @description Log debug messages, if the flag is set
+     * @description Log debug messages, if the debug flag is set
      *
      * @method debug
      * @param {string}
      */
-    debug: function (message) {
+    debug: function () {
 
         'use strict';
 
         if (this.debugActive === true) {
-            console.debug('[B.S. 💩 Detector] ' + message);
+            console.debug.apply(null,['[B.S. 💩 Detector] '].concat(arguments));
         }
     },
 
@@ -65,7 +73,8 @@ BSDetector.prototype = {
      * @description Asynchronous loading function
      *
      * @method asynch
-     * @param {string}
+     * @param {string} thisFunc
+     * @param {function} callback
      */
     asynch: function (thisFunc, callback) {
 
@@ -82,10 +91,11 @@ BSDetector.prototype = {
 
 
     /**
-     * @description JSON validation function
+     * @description Check if a string is valid JSON
      *
      * @method isJson
-     * @param {string}
+     * @param {string} string
+     * @param {boolean}
      */
     isJson: function (string) {
 
@@ -105,8 +115,9 @@ BSDetector.prototype = {
     /**
      * @description Strip urls down to hostname
      *
-     * @method
-     * @param {string}
+     * @method cleanUrl
+     * @param {string} url
+     * @return {string}
      */
     cleanUrl: function (url) {
 
@@ -116,18 +127,17 @@ BSDetector.prototype = {
             testLink = '',
             thisUrl = '';
 
-        // convert facebook urls
         if (this.siteId === 'facebook') {
             testLink = decodeURIComponent(url).substring(0, 30);
 
             if (testLink === 'https://l.facebook.com/l.php?u=' || testLink === 'http://l.facebook.com/l.php?u=') {
                 thisUrl = decodeURIComponent(url).substring(30).split('&h=', 1);
+                url = thisUrl;
             }
-            url = thisUrl;
+
         }
 
-        url = url2Domain(url);
-        return url;
+        return url2Domain(url);
     },
 
 
@@ -136,7 +146,6 @@ BSDetector.prototype = {
      * @description Identify current site
      *
      * @method identifySite
-     * @param {string}
      */
     identifySite: function () {
 
@@ -175,10 +184,11 @@ BSDetector.prototype = {
             }
         }
 
-        this.debug('currentUrl: ' + this.currentUrl);
-        this.debug(this.currentSite);
-        this.debug('siteId: ' + this.siteId);
-        this.debug('dataType: ' + this.dataType);
+        this.debug('this.currentUrl: ', this.currentUrl);
+        this.debug('this.currentSite: ', this.currentSite);
+        this.debug('this.siteId: ', this.siteId);
+        this.debug('this.dataType: ', this.dataType);
+
     },
 
 
@@ -186,8 +196,7 @@ BSDetector.prototype = {
     /**
      * @description Expand short urls and append to anchor tags
      *
-     * @method
-     * @param {string}
+     * @method getLinks
      */
     getLinks: function () {
 
@@ -206,10 +215,9 @@ BSDetector.prototype = {
 
 
     /*
-     * @description
+     * @description Expanding short urls
      *
-     * @method
-     * @param {string}
+     * @method processLinks
      */
     processLinks: function () {
 
@@ -217,13 +225,13 @@ BSDetector.prototype = {
 
         if (this.toExpand) {
 
-            this.debug('url array: ' + this.toExpand);
+            this.debug('this.toExpand[]: ', this.toExpand);
 
             chrome.runtime.sendMessage(null, {
                 'operation': 'expandLinks',
                 'shortLinks': this.toExpand.toString()
             }, null, function (response) {
-                this.debug('processLinks: ' + response);
+                this.debug('Expanded Links: ', response);
 
                 if (this.isJson(response)) {
                     this.expanded = JSON.parse(response);
@@ -231,8 +239,8 @@ BSDetector.prototype = {
                         $('a[href="' + value.requestedURL + '"]').attr('longurl', value.resolvedURL);
                     });
                 } else {
-                    this.debug('BS Detector could not expand shortened link');
-                    this.debug(response);
+                    this.debug('Could not expand shortened link');
+                    this.debug('Response: ' + response);
                 }
             });
         }
@@ -243,8 +251,7 @@ BSDetector.prototype = {
     /**
      * @description Generate warning message for a given url
      *
-     * @method
-     * @param {string}
+     * @method warningMsg
      */
     warningMsg: function () {
 
@@ -295,10 +302,10 @@ BSDetector.prototype = {
         if (this.dataType === 'caution') {
             this.warnMessage = '⚠️ Caution: Source may be reliable but contents require further verification.';
         } else {
-            this.warnMessage = '💩 Warning: This may not be a reliable source. (' + classType + ')';
+            this.warnMessage = '⚠️ Warning: This may not be a reliable source. (' + classType + ')';
         }
 
-        this.debug('warnMessage: ' + this.warnMessage);
+        this.debug('this.warnMessage: ', this.warnMessage);
     },
 
 
@@ -306,19 +313,20 @@ BSDetector.prototype = {
     /**
      * @description Flag entire site
      *
-     * @method
-     * @param {string}
+     * @method flagSite
      */
     flagSite: function () {
 
         'use strict';
 
+        var navs = $('nav, #nav, #navigation, #navmenu');
+
         if (this.flagState !== 0) {
             return;
         }
+
         this.flagState = 1;
         this.warningMsg();
-        var navs = $('nav, #nav, #navigation, #navmenu');
 
         if ($(navs)) {
             $(navs).first().addClass('bs-alert-shift');
@@ -327,13 +335,13 @@ BSDetector.prototype = {
         }
 
         if (this.dataType === 'caution') {
-            $('body').prepend('<div class="bs-alert bs-warning"></div>');
+            $('body').prepend('<div class="bs-alert bs-caution"></div>');
         } else {
             $('body').prepend('<div class="bs-alert"></div>');
         }
 
         $('.bs-alert').append('<div class="bs-alert-close">✕</div>');
-        $('.bs-alert').append('<p>' + this.warnMessage + '</p>');
+        $('.bs-alert').append('<span>' + this.warnMessage + '</span>');
 
         $('.bs-alert-close').on('click', function () {
             $(navs).first().removeClass('bs-alert-shift');
@@ -345,10 +353,9 @@ BSDetector.prototype = {
 
 
     /**
-     * @description
+     * @description Make flags visible
      *
-     * @method
-     * @param {string}
+     * @method showFlag
      */
     showFlag: function () {
 
@@ -361,10 +368,9 @@ BSDetector.prototype = {
 
 
     /**
-     * @description
+     * @description Make flags invisible
      *
-     * @method
-     * @param {string}
+     * @method hideFlag
      */
     hideFlag: function () {
 
@@ -377,23 +383,22 @@ BSDetector.prototype = {
 
 
     /**
-     * @description Get the hostname of a given link
+     * @description Get the hostname of a given element's link
      *
-     * @method
-     * @param {string}
+     * @method getHost
+     * @param {object} $element
+     * @return {string}
      */
     getHost: function ($element) {
 
         'use strict';
 
         var thisUrl = '';
-
         if ($element.attr('data-expanded-url') !== null && $element.attr('data-expanded-url') !== undefined) {
             thisUrl = $element.attr('data-expanded-url');
         } else {
             thisUrl = $element.attr('href');
         }
-
         if (thisUrl !== null && thisUrl !== undefined) {
             thisUrl = this.cleanUrl(thisUrl);
         }
@@ -404,59 +409,33 @@ BSDetector.prototype = {
 
 
     /**
-     * @description Check if short link and if so, add to array
-     *
-     * @method
-     * @param {string}
-     */
-    checkIfShort: function (theHost, currentElement) {
-
-        'use strict';
-
-        var isShort = $.map(this.shorts, function (url) {
-            if (theHost === url || theHost === 'www.' + url) {
-                return true;
-            }
-        });
-
-        if (isShort === 'true') {
-            this.shortUrls.push($(currentElement).attr('href'));
-        }
-    },
-
-
-
-    /**
      * @description Target links
      *
-     * @method
-     * @param {string}
+     * @method targetLinks
      */
     targetLinks: function () {
 
         'use strict';
 
         // find and label external links
-        $('a[href]:not([href^="#"]),a[data-expanded-url]').each(function () {
+        $('a[href]:not([href^="#"]), a[data-expanded-url]').each(function () {
 
             var
-                a = new RegExp('/' + window.location.host + '/'),
                 testLink = '',
-                thisUrl = '';
-
-            //this.debug('target link: ' + $(this));
+                thisUrl = '',
+                matches = null;
 
             // exclude links that have the same hostname
-            if (!a.test(bsd.href)) {
+            if (!bsd.ownHostRegExp.test(this.href)) {
                 $(this).attr('data-external', true);
             }
 
             // convert facebook urls
             if (bsd.siteId === 'facebook') {
-                testLink = decodeURIComponent($(this)).substring(0, 30);
 
-                if (testLink === 'https://l.facebook.com/l.php?u=') {
-                    thisUrl = decodeURIComponent($(this)).substring(30).split('&h=', 1);
+                testLink = decodeURIComponent(this.href);
+                if(matches = bsd.lfbRegExp.exec(this.href)){
+                    thisUrl = decodeURIComponent(matches[1]);
                 }
                 if (thisUrl !== '') {
                     $(this).attr('data-external', true);
@@ -467,15 +446,11 @@ BSDetector.prototype = {
 
         // process external links
         $('a[data-external="true"]').each(function () {
-
             var urlHost = '';
 
-            //this.debug('external link: ' + this);
-
             if ($(this).attr('data-is-bs') !== 'true') {
-                urlHost = bsd.getHost($(this));
-                // checkIfShort(urlHost, this);
 
+                urlHost = bsd.getHost($(this));
                 // check if link is in list of bad domains
                 bsd.bsId = bsd.data[urlHost];
 
@@ -493,19 +468,21 @@ BSDetector.prototype = {
     /**
      * @description Flag links
      *
-     * @method
-     * @param {string}
+     * @method flagPost
+     * @param {object} $badlinkWrapper
      */
-    flagIt: function ($badlinkWrapper) {
+    flagPost: function ($badlinkWrapper) {
 
         'use strict';
 
         if (!$badlinkWrapper.hasClass('bs-flag')) {
+
             if (this.dataType === 'caution') {
                 $badlinkWrapper.before('<div class="bs-alert-inline warning">' + this.warnMessage + '</div>');
             } else {
                 $badlinkWrapper.before('<div class="bs-alert-inline">' + this.warnMessage + '</div>');
             }
+
             $badlinkWrapper.addClass('bs-flag');
         }
     },
@@ -515,41 +492,40 @@ BSDetector.prototype = {
     /**
      * @description
      *
-     * @method
+     * @method setAlertOnPosts
      * @param {string}
      */
-    linkWarning: function () {
+    setAlertOnPosts: function () {
 
         'use strict';
 
-        this.targetLinks();
+        bsd.targetLinks();
 
         $('a[data-is-bs="true"]').each(function () {
-            this.dataType = $(this).attr('data-bs-type');
-            this.warningMsg();
+            bsd.dataType = $(this).attr('data-bs-type');
+            bsd.warningMsg();
 
-            this.debug('bs link: ' + this);
-            this.debug('dataType: ' + this.dataType);
+            bsd.debug('Current warning link: ', this);
+            bsd.debug('bsd.dataType: ', bsd.dataType);
 
-            switch (this.siteId) {
+            switch (bsd.siteId) {
             case 'facebook':
                 if ($(this).parents('._1dwg').length >= 0) {
-                    this.flagIt($(this).closest('.mtm'));
+                    bsd.flagPost($(this).closest('.mtm'));
                 }
                 if ($(this).parents('.UFICommentContent').length >= 0) {
-                    this.flagIt($(this).closest('.UFICommentBody'));
+                    bsd.flagPost($(this).closest('.UFICommentBody'));
                 }
                 break;
             case 'twitter':
                 if ($(this).parents('.tweet').length >= 0) {
-                    this.flagIt($(this).closest('.js-tweet-text-container'));
+                    bsd.flagPost($(this).closest('.js-tweet-text-container'));
                 }
                 break;
             case 'badlink':
             case 'none':
                 break;
             default:
-                // this.tagIt();
                 break;
             }
         });
@@ -557,154 +533,113 @@ BSDetector.prototype = {
         this.firstLoad = false;
     },
 
-
-
     /**
-     * @description
+     * @description Main run this after a mutation
      *
-     * @method
-     * @param {string}
+     * @method observerCallback
      */
-    triggerMutation: function (mutations) {
+    observerCallback: function(){
 
-        'use strict';
+      'use strict';
 
-        var
-            hasDesired = false,
-            indexOuter = 0,
-            indexInner = 0,
-            nodes = null;
-
-        // this.debug(mutations);
-        this.debug('targetNodes: ' + this.targetNodes);
-
-        if (arguments.length === 0) {
-            this.mutationObserver.disconnect();
-            this.linkWarning();
-
-            $.each(this.targetNodes, function (id, node) {
-                if (node !== null) {
-                    bsd.mutationObserver.observe(node, bsd.observerConfig);
-                }
-            });
-            return;
-        } else {
-            indexOuter = mutations.length;
-        }
-
-        this.mutationObserver.disconnect();
-
-        nloop: while (indexOuter--) {
-            switch (mutations[indexOuter].type) {
-            case 'childList':
-                nodes = mutations[indexOuter].addedNodes;
-                indexInner = nodes.length;
-                while (indexInner--) {
-                    if (nodes[indexInner].nodeName.toLowerCase() === 'a') {
-                        hasDesired = true;
-                        break nloop;
-                    }
-                }
-                break;
-            case 'attributes':
-                if (mutations[indexOuter].target.nodeName.toLowerCase() === 'a' && mutations[indexOuter].attributeName.toLowerCase() === 'href') {
-                    hasDesired = true;
-                    break nloop;
-                }
-                break;
-            default:
-                break;
-            }
-        }
-
-        if (hasDesired) {
-            this.targetLinks();
-            this.linkWarning();
-        }
-
-
-        $.each(this.targetNodes, function (id, node) {
-            if (node !== null) {
-                bsd.mutationObserver.observe(node, bsd.observerConfig);
-            }
-        });
+      bsd.debug('observerCallback');
+      bsd.observerRoot.mutationSummary("disconnect");
+      bsd.observerExec();
     },
 
+    /**
+     * @description Scan for posts, turn on the observer, and scan again for more changes
+     *
+     * @method observerExec
+     */
+    observerExec: function(){
 
+      'use strict';
+
+      bsd.debug('observerExec');
+      this.setAlertOnPosts();
+      window.setTimeout(this.observe,500);
+      window.setTimeout(this.setAlertOnPosts,1000);
+    },
+
+    /**
+     * @description Turn on the mutation observer
+     *
+     * @method observe
+     */
+    observe: function(){
+
+      'use strict';
+
+      bsd.debug('observe',bsd.observerCallback,bsd.observerFilter, bsd.observerRoot);
+      bsd.observerRoot.mutationSummary("connect", bsd.observerCallback, bsd.observerFilter);
+    },
 
     /**
      * @description Main execution script
      *
-     * @method
-     * @param {string}
+     * @method execute
      */
     execute: function () {
 
         'use strict';
 
-        this.mutationObserver = new MutationObserver(function (mutations) {
-            bsd.triggerMutation(mutations);
-        });
-
         if (this.firstLoad === true) {
             this.identifySite();
+
             if (this.siteId === 'badlink') {
                 this.flagSite();
             }
+
             this.firstLoad = false;
         }
 
         switch (this.siteId) {
         case 'facebook':
-            this.targetNodes = [document.getElementById('mainContainer')];
-            this.debug(this.targetNodes);
-            $.each(this.targetNodes, function (id, node) {});
-            this.observerConfig = {
-                attributes: false,
-                characterData: false,
-                childList: true,
-                subtree: true
-            };
+            this.observerRoot = $("body");
+            this.observerFilter = [{ element:"div" }];
             break;
         case 'twitter':
-            this.targetNodes = [document.getElementsByClassName('content-main')];
-            this.observerConfig = {
-                attributes: true,
-                characterData: false,
-                childList: true,
-                subtree: true
-            };
+            this.observerRoot = $("div#page-container");
+            this.observerFilter = [{ element:"div" }];
             break;
         case 'badSite':
             break;
         case 'none':
-            break;
         default:
-            this.targetNodes = null;
-            this.observerConfig = {};
+            this.observerRoot = $("body");
+            this.observerFilter = [{ element:"div" }];
             break;
         }
 
-        this.triggerMutation();
+        this.observerExec();
+
     }
 };
 
-
-var bsd = new BSDetector();
-
-
 /**
  * @description Grab data from background and execute extension
+ * @link https://developer.chrome.com/extensions/runtime#method-sendMessage
  *
- * @method
- * @param {string}
+ * @method chrome.runtime.sendMessage
+ * @param {string} extensionId
+ * @param {mixed} message
+ * @param {object} options
+ * @param {function} responseCallback
  */
-chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
+if(window === window.top || url2Domain(window.location.hostname) == 'twitter.com'){
+  var bsd = new BSDetector();
+
+
+  /**
+    * @description Grab data from background and execute extension
+    *
+    * @method
+    * @param {string}
+    */
+  chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
 
     'use strict';
-bsd.debug('ret passData');
-bsd.debug(state.sites);
-bsd.debug(state.shorteners);
 
     bsd.data = state.sites;
     bsd.shorts = state.shorteners;
@@ -712,18 +647,19 @@ bsd.debug(state.shorteners);
     // Data loaded, start execution.
     $(document).ready(function () {
 
-        bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
-        bsd.execute();
+      bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
+      bsd.execute();
     });
-});
-
+  });
+}
 
 
 /**
  * @description Listen for messages but only in the top frame
+ * @link https://developer.chrome.com/extensions/runtime#event-onMessage
  *
- * @method
- * @param {string}
+ * @method chrome.runtime.onMessage.addListener
+ * @param {function}
  */
 if (window.top === window) {
     chrome.runtime.onMessage.addListener(function (message) {
