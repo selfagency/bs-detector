@@ -29,7 +29,7 @@ function BSDetector() {
     this.currentUrl = '';
     this.data = [];
     this.dataType = '';
-    this.debugActive = true;
+    this.debugActive = false;
     this.expandLinks = null;
     this.expanded = {};
     this.flagState = 0; // 0 initial, 1 open, -1 hidden
@@ -39,9 +39,11 @@ function BSDetector() {
     this.siteId = '';
     this.warnMessage = '';
     this.mutationObserver = {};
-    this.observerConfig = {};
-    this.targetNodes = [];
     this.windowUrl = window.location.hostname;
+    this.observerRoot = null;
+    this.observerFilter = null;
+    this.ownHostRegExp = new RegExp( window.location.host );
+    this.lfbRegExp = new RegExp( /^https?:\/\/l\.facebook\.com\/l\.php\?u=([^&]+)/);
 }
 
 
@@ -130,9 +132,9 @@ BSDetector.prototype = {
 
             if (testLink === 'https://l.facebook.com/l.php?u=' || testLink === 'http://l.facebook.com/l.php?u=') {
                 thisUrl = decodeURIComponent(url).substring(30).split('&h=', 1);
+                url = thisUrl;
             }
 
-            url = thisUrl;
         }
 
         return url2Domain(url);
@@ -392,13 +394,11 @@ BSDetector.prototype = {
         'use strict';
 
         var thisUrl = '';
-
         if ($element.attr('data-expanded-url') !== null && $element.attr('data-expanded-url') !== undefined) {
             thisUrl = $element.attr('data-expanded-url');
         } else {
             thisUrl = $element.attr('href');
         }
-
         if (thisUrl !== null && thisUrl !== undefined) {
             thisUrl = this.cleanUrl(thisUrl);
         }
@@ -421,21 +421,21 @@ BSDetector.prototype = {
         $('a[href]:not([href^="#"]), a[data-expanded-url]').each(function () {
 
             var
-                a = new RegExp( window.location.host ),
                 testLink = '',
-                thisUrl = '';
+                thisUrl = '',
+                matches = null;
 
             // exclude links that have the same hostname
-            if (!a.test(this.href)) {
+            if (!bsd.ownHostRegExp.test(this.href)) {
                 $(this).attr('data-external', true);
             }
 
             // convert facebook urls
             if (bsd.siteId === 'facebook') {
-                testLink = decodeURIComponent($(this)).substring(0, 30);
 
-                if (testLink === 'https://l.facebook.com/l.php?u=') {
-                    thisUrl = decodeURIComponent($(this)).substring(30).split('&h=', 1);
+                testLink = decodeURIComponent(this.href);
+                if(matches = bsd.lfbRegExp.exec(this.href)){
+                    thisUrl = decodeURIComponent(matches[1]);
                 }
                 if (thisUrl !== '') {
                     $(this).attr('data-external', true);
@@ -446,12 +446,11 @@ BSDetector.prototype = {
 
         // process external links
         $('a[data-external="true"]').each(function () {
-
             var urlHost = '';
 
             if ($(this).attr('data-is-bs') !== 'true') {
-                urlHost = bsd.getHost($(this));
 
+                urlHost = bsd.getHost($(this));
                 // check if link is in list of bad domains
                 bsd.bsId = bsd.data[urlHost];
 
@@ -500,7 +499,7 @@ BSDetector.prototype = {
 
         'use strict';
 
-        this.targetLinks();
+        bsd.targetLinks();
 
         $('a[data-is-bs="true"]').each(function () {
             bsd.dataType = $(this).attr('data-bs-type');
@@ -534,81 +533,47 @@ BSDetector.prototype = {
         this.firstLoad = false;
     },
 
-
-
     /**
-     * @description On changes on a site, trigger link targeting and flagging
+     * @description Main run this after a mutation
      *
-     * @method triggerMutation
-     * @param {object} mutations
+     * @method observerCallback
      */
-    triggerMutation: function (mutations) {
+    observerCallback: function(){
 
-        'use strict';
+      'use strict';
 
-        var
-            hasDesired = false,
-            indexOuter = 0,
-            indexInner = 0,
-            nodes = null;
-
-        this.debug('this.targetNodes: ', this.targetNodes);
-
-        if (arguments.length === 0) {
-            this.mutationObserver.disconnect();
-            this.setAlertOnPosts();
-
-            $.each(this.targetNodes, function (id, node) {
-                if (node !== null) {
-                    bsd.mutationObserver.observe(node, bsd.observerConfig);
-                }
-            });
-
-            return;
-
-        } else {
-            indexOuter = mutations.length;
-        }
-
-        this.mutationObserver.disconnect();
-
-        nloop: while (indexOuter--) {
-            switch (mutations[indexOuter].type) {
-            case 'childList':
-                nodes = mutations[indexOuter].addedNodes;
-                indexInner = nodes.length;
-                while (indexInner--) {
-                    if (nodes[indexInner].nodeName.toLowerCase() === 'a') {
-                        hasDesired = true;
-                        break nloop;
-                    }
-                }
-                break;
-            case 'attributes':
-                if (mutations[indexOuter].target.nodeName.toLowerCase() === 'a' && mutations[indexOuter].attributeName.toLowerCase() === 'href') {
-                    hasDesired = true;
-                    break nloop;
-                }
-                break;
-            default:
-                break;
-            }
-        }
-
-        if (hasDesired) {
-            this.targetLinks();
-            this.setAlertOnPosts();
-        }
-
-
-        $.each(this.targetNodes, function (id, node) {
-            if (node !== null) {
-                bsd.mutationObserver.observe(node, bsd.observerConfig);
-            }
-        });
+      bsd.debug('observerCallback');
+      bsd.observerRoot.mutationSummary("disconnect");
+      bsd.observerExec();
     },
 
+    /**
+     * @description Scan for posts, turn on the observer, and scan again for more changes
+     *
+     * @method observerExec
+     */
+    observerExec: function(){
 
+      'use strict';
+
+      bsd.debug('observerExec');
+      this.setAlertOnPosts();
+      window.setTimeout(this.observe,500);
+      window.setTimeout(this.setAlertOnPosts,1000);
+    },
+
+    /**
+     * @description Turn on the mutation observer
+     *
+     * @method observe
+     */
+    observe: function(){
+
+      'use strict';
+
+      bsd.debug('observe',bsd.observerCallback,bsd.observerFilter, bsd.observerRoot);
+      bsd.observerRoot.mutationSummary("connect", bsd.observerCallback, bsd.observerFilter);
+    },
 
     /**
      * @description Main execution script
@@ -618,10 +583,6 @@ BSDetector.prototype = {
     execute: function () {
 
         'use strict';
-
-        this.mutationObserver = new MutationObserver(function (mutations) {
-            bsd.triggerMutation(mutations);
-        });
 
         if (this.firstLoad === true) {
             this.identifySite();
@@ -635,36 +596,24 @@ BSDetector.prototype = {
 
         switch (this.siteId) {
         case 'facebook':
-            this.targetNodes = [document.getElementById('mainContainer')];
-            this.observerConfig = {
-                attributes: false,
-                characterData: false,
-                childList: true,
-                subtree: true
-            };
+            this.observerRoot = $("body");
+            this.observerFilter = [{ element:"div" }];
             break;
         case 'twitter':
-            this.targetNodes = [document.getElementsByClassName('content-main')];
-            this.observerConfig = {
-                attributes: true,
-                characterData: false,
-                childList: true,
-                subtree: true
-            };
+            this.observerRoot = $("div#page-container");
+            this.observerFilter = [{ element:"div" }];
             break;
         case 'badSite':
             break;
         case 'none':
-            break;
         default:
-            this.targetNodes = null;
-            this.observerConfig = {};
+            this.observerRoot = $("body");
+            this.observerFilter = [{ element:"div" }];
             break;
         }
 
-        this.debug('this.targetNodes: ', this.targetNodes);
+        this.observerExec();
 
-        this.triggerMutation();
     }
 };
 
