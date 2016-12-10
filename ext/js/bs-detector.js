@@ -302,7 +302,7 @@ BSDetector.prototype = {
         if (this.dataType === 'caution') {
             this.warnMessage = '⚠️ Caution: Source may be reliable but contents require further verification.';
         } else {
-            this.warnMessage = '💩 Warning: This may not be a reliable source. (' + classType + ')';
+            this.warnMessage = '⚠️ Warning: This may not be a reliable source. (' + classType + ')';
         }
 
         this.debug('this.warnMessage: ', this.warnMessage);
@@ -335,13 +335,13 @@ BSDetector.prototype = {
         }
 
         if (this.dataType === 'caution') {
-            $('body').prepend('<div class="bs-alert bs-warning"></div>');
+            $('body').prepend('<div class="bs-alert bs-caution"></div>');
         } else {
             $('body').prepend('<div class="bs-alert"></div>');
         }
 
         $('.bs-alert').append('<div class="bs-alert-close">✕</div>');
-        $('.bs-alert').append('<p>' + this.warnMessage + '</p>');
+        $('.bs-alert').append('<span>' + this.warnMessage + '</span>');
 
         $('.bs-alert-close').on('click', function () {
             $(navs).first().removeClass('bs-alert-shift');

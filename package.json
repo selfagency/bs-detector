@@ -21,12 +21,11 @@
   },
   "homepage": "https://github.com/selfagency/bs-detector#readme",
   "devDependencies": {
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.13",
-    "gulp-copy": "^1.0.0",
     "gulp-json-minify": "^1.0.5",
     "gulp-minify": "0.0.14",
-    "gulp-rename": "^1.2.2",
     "pump": "^1.0.1"
   }
 }

@@ -1,23 +1,24 @@
 .bs-alert {
   background: #ff0000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   display: block;
   height: 28px;
   left: 0;
+  margin: 0;
+  overflow: hidden;
   position: fixed;
+  text-align: center;
   top: 0;
   width: 100vw;
-  z-index: 999;
+  z-index: 2147483647;
 }
 
-.bs-alert p {
+.bs-alert span {
   color: #fff;
-  display: block;
   font-family: 'Arial', 'Helvetica', sans-serif;
   font-size: 14px;
   font-weight: bold;
   line-height: 2em;
-  margin: 0;
-  text-align: center;
   text-transform: uppercase;
 }
 
@@ -25,16 +26,19 @@
   background: #ffff00;
 }
 
-.bs-alert.bs-warning p {
+.bs-alert.bs-caution span {
   color: #000;
 }
 
 .bs-alert-close {
   color: #fff;
+  display: inline-block;
   cursor: pointer;
   float: right;
-  margin-right: 6px;
-  padding: 6px;
+  height: 28px;
+  line-height: 1.5em;
+  margin: 2px 6px 0;
+  padding: 0 6px;
 }
 
 .bs-warning .bs-alert-close {
@@ -56,11 +60,8 @@
   padding: 4px;
 }
 
-.bs-alert-inline.bs-warning {
+.bs-alert-inline.bs-caution {
   background: rgba(255, 255, 00, .25);
   border: 1px solid #ffff00;
   color: #000000;
-}
-
-[class*="hint--"] {
 }
