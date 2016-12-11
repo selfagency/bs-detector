@@ -23,8 +23,14 @@
     "persistent": true
   },
   "content_scripts": [ {
-     "css": [ "css/hint.min.css", "css/inject.css" ],
-     "js": [ "js/utils.js","js/jquery-3.1.1.slim.min.js", "js/bs-detector.js" ],
+     "css": [ "css/bs-detector.css" ],
+     "js": [
+       "js/utils.js",
+       "js/lib/jquery-3.1.1.slim.min.js",
+       "js/lib/mutation-summary.js",
+       "js/lib/jquery.mutation-summary.js",
+       "js/bs-detector.js"
+     ],
      "matches": [ "*://*/*" ],
      "all_frames": true,
      "run_at": "document_end"
