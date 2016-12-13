@@ -1,5 +1,6 @@
+
 /*!
- * B.S. Detector v0.2.7 (http://bsdetector.tech)
+ * B.S. Detector v0.3.0 (http://bsdetector.tech)
  * Copyright 2016 The B.S. Detector Authors (https://github.com/selfagency/bs-detector/graphs/contributors)
  * Licensed under LGPL-3.0 (https://github.com/selfagency/bs-detector/blob/master/LICENSE)
  */
@@ -9,6 +10,7 @@
 
 var DATA_HISTORY = 'https://github.com/bs-detector/opensources/commits/master/notCredible/notCredible.json';
 var JSON_DATA = 'https://raw.githubusercontent.com/bs-detector/opensources/master/notCredible/notCredible.json';
+
 // If we don't have a browser object, check for chrome.
 if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
     chrome = browser;
@@ -17,40 +19,20 @@ if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
 var
     siteList = [],
     shorts = [
-        '✩.ws',
-        '➡.ws',
-        '1url.com',
-        'adf.ly',
-        'bc.vc',
         'bit.do',
         'bit.ly',
-        'buzurl.com',
-        'cur.lv',
         'cutt.us',
-        'db.tt',
         'goo.gl',
         'ht.ly',
         'is.gd',
-        'ity.im',
-        'j.mp',
-        'lnkd.in',
         'ow.ly',
         'po.st',
-        'q.gs',
-        'qr.ae',
-        'qr.net',
-        'scrnch.me',
-        't.co',
         'tinyurl.com',
         'tr.im',
         'trib.al',
-        'tweez.me',
-        'u.bb',
         'u.to',
         'v.gd',
-        'vzturl.com',
-        'x.co',
-        'zip.net'
+        'x.co'
     ],
     toExpand = [],
     expanded = [];
@@ -79,22 +61,6 @@ function getCommitDate(url, callback) {
     gcd.send(null);
 }
 
-function xhReq(url, callback) {
-
-    'use strict';
-
-    var xhr = new XMLHttpRequest();
-    xhr.overrideMimeType('application/json');
-    xhr.open('GET', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            //console.log(url+xhr.getResponseHeader("Last-Modified"));
-            callback(xhr.responseText);
-        }
-    };
-    xhr.send(null);
-}
-
 getCommitDate(DATA_HISTORY, function (file) {
     'use strict';
     var parser = new DOMParser()
@@ -115,7 +81,6 @@ getCommitDate(DATA_HISTORY, function (file) {
                 'use strict';
 
                 siteList = JSON.parse(file);
-                storeData(siteList); // Store the data to the local storage.
 
                 // listen for loading of hosts in the siteList as soon as its populated
                 var
@@ -126,33 +91,51 @@ getCommitDate(DATA_HISTORY, function (file) {
                 for (domain in siteList) {
                     if (domainRE.test(domain)) {
                         domainList.push({
-                        hostSuffix: domain.toLocaleLowerCase()
-                    });
+                            hostSuffix: domain.toLocaleLowerCase()
+                        });
+                    }
                 }
-            }
 
             if (domainList.length > 0) {
                 chrome.webNavigation.onDOMContentLoaded.addListener(function (e) {
+                    var domain;
                     if (e.frameId === 0) {
                         chrome.pageAction.show(e.tabId);
-                        chrome.tabs.sendMessage(e.tabId, {
-                            operation: 'flagSite',
-                            type: domainList.type
-                        });
+                        domain = url2Domain(e.url);
+                        if(domain && siteList[domain]){
+                            chrome.tabs.sendMessage(e.tabId, {
+                                operation: 'flagSite',
+                                type: siteList[domain].type
+                            });
+                        } else {
+                            console.debug('no data found for domain', domain, e);
+                        }
                     }
                 }, {
-                    url: domainList,
-                    type: domainList.type
+                        url: domainList,
+                        type: domainList.type
                     });
                 }
             });
-            storeDateTime(datetime);
+            storeDateTime(datetime);  
         }
     }
 });
 
+function xhReq(url, callback) {
 
+    'use strict';
 
+    var xhr = new XMLHttpRequest();
+    xhr.overrideMimeType('application/json');
+    xhr.open('GET', url, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            callback(xhr.responseText);
+        }
+    };
+    xhr.send(null);
+}
 
 function addExpanded(response) {
 
@@ -406,3 +389,4 @@ function getDateTime() {
     }
     return datetime
 }
+
