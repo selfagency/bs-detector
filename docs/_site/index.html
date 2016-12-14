@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 
-  <head>
+<head>
   <meta charset="UTF-8">
   <title>B.S. Detector - Browser extension to identify fake news sites</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,112 +12,141 @@
 </head>
 
 
-  <body>
-    <div id="fb-root"></div>
-    <section class="page-header">
-  <h1 class="project-name">B.S. 💩 Detector</h1>
-  <h2 class="project-tagline">A browser extension that alerts users to unreliable news sources.</h2>
-  <a href="#chrome" class="btn">Chrome & Opera</a>
-  <a href="#firefox" class="btn">Firefox</a>
-  <a href="#other" class="btn">Safari & Edge</a>
-  <a href="http://github.com/selfagency/bs-detector" class="btn">View on GitHub</a>
-  <a href="http://github.com/selfagency/bs-detector/issues" class="btn">Report a Bug</a>
-</section>
+<body>
+  <div id="fb-root"></div>
+  <section class="page-header">
+    <h1 class="project-name">B.S. 💩 Detector</h1>
+    <h2 class="project-tagline">A browser extension that alerts users to unreliable news sources.</h2>
+    <a href="#chrome" class="btn">Chrome & Opera</a>
+    <a href="#firefox" class="btn">Firefox</a>
+    <a href="#other" class="btn">Safari & Edge</a>
+    <a href="http://github.com/selfagency/bs-detector" class="btn">View on GitHub</a>
+    <a href="http://github.com/selfagency/bs-detector/issues" class="btn">Report a Bug</a>
+  </section>
 
 
-    <section class="main-content">
+  <section class="main-content">
 
-      <div id="home">
+    <div id="home">
 
-  <p><a href="https://github.com/selfagency/bs-detector/releases"><img src="https://img.shields.io/github/release/selfagency/bs-detector.svg" alt="GitHub release" /></a> <a href="https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/"><img src="https://img.shields.io/chrome-web-store/d/dlcgkekjiopopabcifhebmphmfmdbjod.svg" alt="Chrome downloads" /></a> <a href="https://addons.mozilla.org/en-US/firefox/addon/bsdetector/"><img src="https://img.shields.io/amo/d/bsdetector.svg" alt="Firefox downloads" /></a> <a href="https://github.com/selfagency/bs-detector/graphs/contributors"><img src="https://img.shields.io/github/contributors/selfagency/bs-detector.svg" alt="GitHub contributors" /></a> <a href="https://gitter.im/bs-detector"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg" alt="Gitter" /></a> <a href="https://github.com/selfagency/bs-detector/subscription"><img src="https://img.shields.io/github/stars/selfagency/bs-detector.svg?style=social&amp;label=Star" alt="GitHub stars" /></a> <a href="https://twitter.com/bsdetectorapp"><img src="https://img.shields.io/twitter/follow/bsdetectorapp.svg?style=social&amp;label=Follow" alt="Twitter Follow" /></a></p>
+      <p>
+        <a href="https://github.com/selfagency/bs-detector/releases"><img src="https://img.shields.io/github/release/selfagency/bs-detector.svg" alt="GitHub release" /></a>
+        <a href="https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/"><img src="https://img.shields.io/chrome-web-store/d/dlcgkekjiopopabcifhebmphmfmdbjod.svg" alt="Chrome downloads" /></a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/bsdetector/"><img src="https://img.shields.io/amo/d/bsdetector.svg" alt="Firefox downloads" /></a>
+        <a href="https://github.com/selfagency/bs-detector/graphs/contributors"><img src="https://img.shields.io/github/contributors/selfagency/bs-detector.svg" alt="GitHub contributors" /></a>
+        <a href="https://gitter.im/bs-detector"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg" alt="Gitter" /></a>
+        <a href="https://github.com/selfagency/bs-detector/subscription"><img src="https://img.shields.io/github/stars/selfagency/bs-detector.svg?style=social&amp;label=Star" alt="GitHub stars" /></a>
+        <a href="https://twitter.com/bsdetectorapp"><img src="https://img.shields.io/twitter/follow/bsdetectorapp.svg?style=social&amp;label=Follow" alt="Twitter Follow" /></a>
+      </p>
 
-<p><strong>We’ve been nominated for a Golden Kitty from Product Hunt for Chrome Extension of the Year! <a href="https://www.producthunt.com/@goldenkittymeow/collections/2016-chrome-extension-of-the-year">Vote here!</a></strong></p>
+      <p><strong>We’ve been nominated for a Golden Kitty from Product Hunt for Chrome Extension of the Year! <a href="https://www.producthunt.com/@goldenkittymeow/collections/2016-chrome-extension-of-the-year">Vote here!</a></strong></p>
 
-<p>B.S. Detector partners with OpenSources to obtain its source information.</p>
+      <p>B.S. Detector partners with OpenSources to obtain its source information.</p>
 
-<p><strong>Help us by submitting source classifications for review at <a href="http://www.opensources.co/">OpenSources.co</a>.</strong></p>
+      <p><strong>Help us by submitting source classifications for review at <a href="http://www.opensources.co/">OpenSources.co</a>.</strong></p>
 
-<p><strong>B.S. Detector</strong> is a rejoinder to Mark Zuckerberg’s dubious claims that Facebook is unable to substantively address the proliferation of fake news on its platform. A browser extension for both Chrome and Mozilla-based browsers, B.S. Detector searches all links on a given webpage for references to unreliable sources, checking against a manually compiled list of domains. It then provides visual warnings about the presence of questionable links or the browsing of questionable websites:</p>
+      <p><strong>B.S. Detector</strong> is a rejoinder to Mark Zuckerberg’s dubious claims that Facebook is unable to substantively address the proliferation of fake news on its platform. A browser extension for both Chrome and Mozilla-based browsers, B.S.
+        Detector searches all links on a given webpage for references to unreliable sources, checking against a manually compiled list of domains. It then provides visual warnings about the presence of questionable links or the browsing of questionable
+        websites:</p>
 
-<p><img src="/images/alert.png" alt="bs-detector-alert" class="bs-detector-img" /></p>
+      <p><img src="/images/alert.png" alt="bs-detector-alert" class="bs-detector-img" /></p>
 
-<p>The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web to test the proof-of-concept. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list <a href="https://github.com/selfagency/bs-detector/blob/dev/ext/data/data.json">here</a>.</p>
+      <p>The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web to test the proof-of-concept. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains.
+        We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list <a href="https://github.com/selfagency/bs-detector/blob/dev/ext/data/data.json">here</a>.</p>
 
-<p>Domain classifications include:</p>
+      <p>Domain classifications include:</p>
 
-<ul>
-  <li><strong>Fake News:</strong> Sources that fabricate stories out of whole cloth with the intent of pranking the public.</li>
-  <li><strong>Satire:</strong> Sources that provide humorous commentary on current events in the form of fake news.</li>
-  <li><strong>Extreme Bias:</strong> Sources that traffic in political propaganda and gross distortions of fact.</li>
-  <li><strong>Conspiracy Theory:</strong> Sources that are well-known promoters of kooky conspiracy theories.</li>
-  <li><strong>Rumor Mill:</strong> Sources that traffic in rumors, innuendo, and unverified claims.</li>
-  <li><strong>State News:</strong> Sources in repressive states operating under government sanction.</li>
-  <li><strong>Junk Science:</strong> Sources that promote pseudoscience, metaphysics, naturalistic fallacies, and other scientifically dubious claims.</li>
-  <li><strong>Hate Group:</strong> Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.</li>
-  <li><strong>Clickbait:</strong> Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.</li>
-  <li><strong>Proceed With Caution:</strong> Sources that may be reliable but whose contents require further verification.</li>
-</ul>
+      <ul>
+        <li><strong>Fake News:</strong> Sources that fabricate stories out of whole cloth with the intent of pranking the public.</li>
+        <li><strong>Satire:</strong> Sources that provide humorous commentary on current events in the form of fake news.</li>
+        <li><strong>Extreme Bias:</strong> Sources that traffic in political propaganda and gross distortions of fact.</li>
+        <li><strong>Conspiracy Theory:</strong> Sources that are well-known promoters of kooky conspiracy theories.</li>
+        <li><strong>Rumor Mill:</strong> Sources that traffic in rumors, innuendo, and unverified claims.</li>
+        <li><strong>State News:</strong> Sources in repressive states operating under government sanction.</li>
+        <li><strong>Junk Science:</strong> Sources that promote pseudoscience, metaphysics, naturalistic fallacies, and other scientifically dubious claims.</li>
+        <li><strong>Hate Group:</strong> Sources that actively promote racism, misogyny, homophobia, and other forms of discrimination.</li>
+        <li><strong>Clickbait:</strong> Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.</li>
+        <li><strong>Proceed With Caution:</strong> Sources that may be reliable but whose contents require further verification.</li>
+      </ul>
 
-<p>If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report <a href="https://github.com/selfagency/bs-detector/issues/53">here</a>.</p>
+      <p>If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report <a href="https://github.com/selfagency/bs-detector/issues/53">here</a>.</p>
 
-<hr />
+      <hr />
 
-<h2 id="installation">Installation</h2>
-<p><a name="chrome"></a></p>
+      <h2 id="installation">Installation</h2>
+      <p>
+        <a name="chrome"></a>
+      </p>
 
-<h3 id="chrome-and-chrome-based-browsers">Chrome and Chrome-based browsers</h3>
-<p><a href="https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/">Click here</a> to go to the Chrome Web Store and click ‘Install.’ The plugin is compatible with all Chromium browsers, including Opera (with the <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">Chrome Extension extension</a>).</p>
+      <h3 id="chrome-and-chrome-based-browsers">Chrome and Chrome-based browsers</h3>
+      <p><a href="https://chrome.google.com/webstore/detail/dlcgkekjiopopabcifhebmphmfmdbjod/">Click here</a> to go to the Chrome Web Store and click ‘Install.’ The plugin is compatible with all Chromium browsers, including Opera (with the <a href="https://addons.opera.com/en/extensions/details/download-chrome-extension-9/">Chrome Extension extension</a>).</p>
 
-<p><a name="firefox"></a></p>
+      <p>
+        <a name="firefox"></a>
+      </p>
 
-<h3 id="firefox-and-mozilla-based-browsers">Firefox and Mozilla-based browsers</h3>
-<p><a href="https://addons.mozilla.org/en-US/firefox/addon/bsdetector/">Click here</a> to go to the Firefox Add-ons Directory and click ‘Add to Firefox.’</p>
+      <h3 id="firefox-and-mozilla-based-browsers">Firefox and Mozilla-based browsers</h3>
+      <p><a href="https://addons.mozilla.org/en-US/firefox/addon/bsdetector/">Click here</a> to go to the Firefox Add-ons Directory and click ‘Add to Firefox.’</p>
 
-<p><a name="other"></a></p>
+      <p>
+        <a name="other"></a>
+      </p>
 
-<h3 id="other-browsers">Other browsers</h3>
-<p>Support for Safari and Edge is on our roadmap. For now, you can use an older version of the B.S. Detector as a browser script. Install <a href="https://tampermonkey.net">Tampermonkey</a> for <a href="https://tampermonkey.net/?ext=dhdg&amp;browser=safari">Safari</a>, <a href="https://tampermonkey.net/?ext=dhdg&amp;browser=edge">Edge</a>, or any other available browser, then install the browser script <a href="https://github.com/selfagency/bs-detector/blob/dev/browserscript/bs-detector.user.js">here</a>.</p>
+      <h3 id="other-browsers">Other browsers</h3>
+      <p>Support for Safari and Edge is on our roadmap. For now, you can use an older version of the B.S. Detector as a browser script. Install <a href="https://tampermonkey.net">Tampermonkey</a> for <a href="https://tampermonkey.net/?ext=dhdg&amp;browser=safari">Safari</a>,
+        <a href="https://tampermonkey.net/?ext=dhdg&amp;browser=edge">Edge</a>, or any other available browser, then install the browser script <a href="https://github.com/selfagency/bs-detector/blob/dev/browserscript/bs-detector.user.js">here</a>.</p>
 
-<hr />
+      <hr />
 
-<h2 id="contributing">Contributing</h2>
+      <h2 id="contributing">Contributing</h2>
 
-<p>We welcome pull requests and community collaboration. See our <a href="https://github.com/selfagency/bs-detector">Github page</a> for guidelines.</p>
+      <p>We welcome pull requests and community collaboration. See our <a href="https://github.com/selfagency/bs-detector">Github page</a> for guidelines.</p>
 
-</div>
-
-
-      <footer class="site-footer">
-  <span class="site-footer-owner"><a href="http://localhost:4000">B.S. 💩 Detector</a> is maintained by <a href="https://self.agency">The Self Agency, LLC</a>.</span>
-  <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/pietromenna/jekyll-cayman-theme">Cayman theme</a> by <a href="http://github.com/jasonlong">Jason Long</a>.</span>
-</footer>
+    </div>
 
 
-    </section>
+    <footer class="site-footer">
+      <span class="site-footer-owner"><a href="http://localhost:4000">B.S. 💩 Detector</a> is maintained by <a href="https://self.agency">The Self Agency, LLC</a>.</span>
+      <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/pietromenna/jekyll-cayman-theme">Cayman theme</a> by <a href="http://github.com/jasonlong">Jason Long</a>.</span>
+    </footer>
 
-    <script>(function(d, s, id) {
+
+  </section>
+
+  <script>
+    (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
+      js = d.createElement(s);
+      js.id = id;
       js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1840692609544868";
       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script>
-      ((window.gitter = {}).chat = {}).options = {
-        room: 'bs-detector/Lobby'
-      };
-    </script>
-    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script>
+    ((window.gitter = {}).chat = {}).options = {
+      room: 'bs-detector/Lobby'
+    };
+  </script>
+  <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-      ga('create', 'UA-88251868-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-  </body>
+    ga('create', 'UA-88251868-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+
 </html>
