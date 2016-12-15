@@ -739,11 +739,6 @@
     "type" : "conspiracy",
     "notes" : ""
   },
-  "fusion.net" : {
-    "language" : "en",
-    "type" : "satire",
-    "notes" : ""
-  },
   "geoengineeringwatch.org" : {
     "language" : "en",
     "type" : "junksci",
@@ -1092,11 +1087,6 @@
   "redflagnews.com" : {
     "language" : "en",
     "type" : "bias",
-    "notes" : ""
-  },
-  "redstate.com" : {
-    "language" : "en",
-    "type" : "clickbait",
     "notes" : ""
   },
   "reductress.com" : {
