@@ -8,9 +8,9 @@
 
 ![bs-detector-alert](http://bsdetector.tech/images/alert.png)
 
-The list of domains powering the B.S. Detector was somewhat indiscriminately compiled from various sources around the web to test the proof-of-concept. We are actively reviewing this dataset, categorizing entries, and removing misidentified domains. We thus cannot guarantee complete accuracy of our data at the moment. You can view the complete list [here](https://github.com/bs-detector/bs-detector/blob/dev/ext/data/data.json).
+The B.S. Detector is powered by [OpenSources](http://opensources.co), a professionally curated list of unreliable or otherwise questionable sources. We no longer maintain our own dataset. Neither the B.S. Detector nor the Self Agency LLC assume liability for the accuracy of OpenSources' data. To suggest or dispute a site's inclusion, [file an issue with OpenSources](https://github.com/bigmclargehuge/opensources).
 
-Domain classifications include:
+Example domain classifications (in flux) include:
 
 -   **Fake News:** Sources that fabricate stories out of whole cloth with the intent of pranking the public.
 -   **Satire:** Sources that provide humorous commentary on current events in the form of fake news.
@@ -23,8 +23,6 @@ Domain classifications include:
 -   **Clickbait:** Sources that are aimed at generating online advertising revenue and rely on sensationalist headlines or eye-catching pictures.
 -   **Proceed With Caution:** Sources that may be reliable but whose contents require further verification.
 
-If there are any sites you recommend adding or removing, or if you object to your site being listed, you can file a report [here](https://github.com/bs-detector/bs-detector/issues/53).
-
 ---
 
 ## Installation
@@ -36,7 +34,7 @@ If there are any sites you recommend adding or removing, or if you object to you
 <a name="firefox"></a>
 
 ### Firefox and Mozilla-based browsers
-[Click here](https://addons.mozilla.org/en-US/firefox/addon/bsdetector/) to go to the Firefox Add-ons Directory and click 'Add to Firefox.'
+[Click here](https://addons.mozilla.org/en-US/firefox/addon/bsdetector/) to go to the Firefox Add-ons Directory and click 'Add to Firefox.' **Note:** We are still awaiting the approval of the B.S. Detector by the Firefox Add-ons directory.
 
 <a name="other"></a>
 
