@@ -31,7 +31,7 @@ function url2Domain(url) {
  * @param {string} url The external URL.
  * @param {callback} callback The callback on successful response.
  */
-function xhReq(url, success) {
+function xhReq(url, success, failure) {
 
     'use strict';
 
@@ -39,8 +39,14 @@ function xhReq(url, success) {
     xhr.overrideMimeType('application/json');
     xhr.open('GET', url, true);
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            success(xhr.responseText);
+        // Once done loading.
+        if (xhr.readyState === 4) {
+            // Call the right feedback based on response.
+            if (xhr.status === 200) {
+                success(xhr.responseText);
+            } else {
+                failure(xhr.responseText);
+            }
         }
     };
     xhr.send(null);
