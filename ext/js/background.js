@@ -18,46 +18,30 @@ if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
 
 
 /**
- * @description Add an expanded URL response to the expanded object.
- * @method addExpanded
- * @param {string} response The response to add.
- */
-function addExpanded(response) {
-
-    'use strict';
-
-    expanded.push(response);
-}
-
-
-
-/**
- * @description Expand a given link.
- * @method expandLink
- * @param {string} index The DOM object
- * @param {string} url The url to expand.
- */
- function expandLink(url) {
-
-    'use strict';
-
-    var expandThis = 'https://unshorten.me/json/' + encodeURIComponent(url);
-    xhReq(expandThis, addExpanded);
-}
-
-
-
-/**
  * @description Expand a given set of links.
  * @method expandLinks
  * @param {string} request The set of links to expand.
+ * @return {promise} A Deferred promise to allow sending after all links processed.
  */
  function expandLinks(request) {
 
     'use strict';
 
-    toExpand = request.shortLinks.split(',');
-    $.each(expandLink);
+    var defer = new $.Deferred();
+    var links = request.shortLinks.split(',');
+    // Loop over each link to expand it.
+    $.each(links, function (index, url) {
+        var expandThis = 'https://unshorten.me/json/' + encodeURIComponent(url);
+        // Make the AJAX call to expand, and handle response after.
+        xhReq(expandThis, function (response) {
+            expanded.push(response);
+            // Is that the last link?
+            if ((index + 1) >= links.length) {
+                defer.resolve();
+            }
+        });
+    });
+    return defer.promise();
 }
 
 var
@@ -84,7 +68,7 @@ var
 
 
 /**
- * @description Make the JSON call to expand a link.
+ * @description Make the JSON call to gather data on load.
  * @method xhReq
  * @param {string} url The external URL.
  * @param {callback} callback The callback on successful response.
@@ -115,7 +99,7 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
             if (e.frameId === 0) {
                 chrome.pageAction.show(e.tabId);
                 domain = url2Domain(e.url);
-                if(domain && siteList[domain]) {
+                if (domain && siteList[domain]) {
                   chrome.tabs.sendMessage(e.tabId, {
                       operation: 'flagSite',
                       type: siteList[domain].type
@@ -143,19 +127,24 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     'use strict';
 
     switch (request.operation) {
-    case 'passData':
-        sendResponse({
-            sites: siteList,
-            shorteners: shorts
-        });
+        case 'passData':
+            sendResponse({
+                sites: siteList,
+                shorteners: shorts
+            });
         break;
-    case 'expandLink':
-        expandLinks(request);
-        sendResponse({
-            expandedLinks: expanded
-        });
+        case 'expandLinks':
+            // Call link expanding, returning only
+            // once all the links have been completed.
+            expandLinks(request).done(function () {
+                sendResponse({
+                    expandedLinks: expanded
+                });
+            });
         break;
     }
+    // Support asynchronous response.
+    return true;
 });
 
 
