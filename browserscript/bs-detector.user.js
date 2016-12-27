@@ -2,12 +2,12 @@
 // @name            B.S. Detector
 // @namespace       bs-detector
 // @description     Warns users about unreliable news sources.
-// @source_code     https://github.com/selfagency/bs-detector
+// @source_code     https://github.com/bs-detector/bs-detector
 // @version         0.2.3
 // @grant           GM_xmlhttpRequest
-// @updateURL       https://github.com/selfagency/bs-detector/raw/master/greasemonkey/bs-detector.user.js
-// @downloadURL     https://github.com/selfagency/bs-detector/raw/master/greasemonkey/bs-detector.user.js
-// @require         https://raw.githubusercontent.com/selfagency/bs-detector/master/chrome/js/jquery-3.1.1.slim.min.js
+// @updateURL       https://github.com/bs-detector/bs-detector/raw/master/browserscript/bs-detector.user.js
+// @downloadURL     https://github.com/bs-detector/bs-detector/raw/master/browserscript/bs-detector.user.js
+// @require         https://raw.githubusercontent.com/bs-detector/bs-detector/master/ext/js/lib/jquery-3.1.1.slim.min.js
 // ==/UserScript==
 
 // Account for possible jquery conflicts.
@@ -20,11 +20,10 @@ $(document).ready(function() {
 
   // Constant configurations.
   // JSON Data file, whatever is latest from github.
-  var JSON_URL = '//raw.githubusercontent.com/selfagency/bs-detector/master/chrome/data/data.json';
+  var JSON_URL = '//raw.githubusercontent.com/bs-detector/bs-detector/master/ext/data/data.json';
   var UNSHORTEN_URL = '//unshorten.me/json/';
   var CSS_FILES = [
-    '//github.com/selfagency/bs-detector/raw/master/chrome/css/hint.min.css',
-    '//github.com/selfagency/bs-detector/raw/master/chrome/css/inject.css'
+    '//github.com/bs-detector/bs-detector/raw/master/ext/css/bs-detector.css'
   ];
 
   // Short URLs to use.
