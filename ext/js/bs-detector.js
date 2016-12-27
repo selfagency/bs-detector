@@ -337,13 +337,13 @@ BSDetector.prototype = {
         }
 
         if (this.dataType === 'caution') {
-            $('body').prepend('<div class="bs-alert bs-caution"></div>');
+            $('body').prepend($('<div class="bs-alert bs-caution">'));
         } else {
-            $('body').prepend('<div class="bs-alert"></div>');
+            $('body').prepend($('<div class="bs-alert">'));
         }
 
-        $('.bs-alert').append('<div class="bs-alert-close">✕</div>');
-        $('.bs-alert').append('<span>' + this.warnMessage + '</span>');
+        $('.bs-alert').append($('<div class="bs-alert-close">').text('✕'));
+        $('.bs-alert').append($('<span class="bs-alert-span">').text(this.warnMessage));
 
         $('.bs-alert-close').on('click', function () {
             $(navs).first().removeClass('bs-alert-shift');
@@ -480,9 +480,9 @@ BSDetector.prototype = {
         if (!$badlinkWrapper.hasClass('bs-flag')) {
 
             if (this.dataType === 'caution') {
-                $badlinkWrapper.before('<div class="bs-alert-inline warning">' + this.warnMessage + '</div>');
+                $badlinkWrapper.before($('<div class="bs-alert-inline warning">').text(this.warnMessage));
             } else {
-                $badlinkWrapper.before('<div class="bs-alert-inline">' + this.warnMessage + '</div>');
+                $badlinkWrapper.before($('<div class="bs-alert-inline">').text(this.warnMessage));
             }
 
             $badlinkWrapper.addClass('bs-flag');
