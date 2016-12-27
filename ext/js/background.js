@@ -109,8 +109,7 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
                 }
             }
         }, {
-            url: domainList,
-            type: domainList.type
+            url: domainList
         });
     }
 });
