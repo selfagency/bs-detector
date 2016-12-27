@@ -115,7 +115,7 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
             if (e.frameId === 0) {
                 chrome.pageAction.show(e.tabId);
                 domain = url2Domain(e.url);
-                if(domain && siteList[domain]){
+                if(domain && siteList[domain]) {
                   chrome.tabs.sendMessage(e.tabId, {
                       operation: 'flagSite',
                       type: siteList[domain].type
