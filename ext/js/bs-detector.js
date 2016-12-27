@@ -209,7 +209,7 @@ BSDetector.prototype = {
             var matches = shorts.some(function(shortener) {
                 return a.hostname.endsWith(shortener);
             });
-            return $.unique(matches);
+            return $.uniqueSort(matches);
         })
         .each(function(index, a) {
             bsd.toExpand.push(a.href);
