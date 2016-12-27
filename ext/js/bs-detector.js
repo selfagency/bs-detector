@@ -204,13 +204,15 @@ BSDetector.prototype = {
 
         'use strict';
 
-        $.each(this.shorts, function () {
-            var
-                shortLink = 'a[href*="' + $(this) + '"]';
-
-            $(shortLink).each(function () {
-                bsd.toExpand.push($(this).attr('href'));
+        var shorts = this.shorts;
+        var selectors = $('a[href]').filter(function(index, a) {
+            var matches = shorts.some(function(shortener) {
+                return a.hostname.endsWith(shortener);
             });
+            return $.unique(matches);
+        })
+        .each(function(index, a) {
+            bsd.toExpand.push(a.href);
         });
     },
 
@@ -436,7 +438,7 @@ BSDetector.prototype = {
             if (bsd.siteId === 'facebook') {
 
                 testLink = decodeURIComponent(this.href);
-                if(matches = bsd.lfbRegExp.exec(this.href)){
+                if(matches = bsd.lfbRegExp.exec(this.href)) {
                     thisUrl = decodeURIComponent(matches[1]);
                 }
                 if (thisUrl !== '') {
@@ -540,7 +542,7 @@ BSDetector.prototype = {
      *
      * @method observerCallback
      */
-    observerCallback: function(){
+    observerCallback: function() {
 
       'use strict';
 
@@ -554,7 +556,7 @@ BSDetector.prototype = {
      *
      * @method observerExec
      */
-    observerExec: function(){
+    observerExec: function() {
 
       'use strict';
 
@@ -569,7 +571,7 @@ BSDetector.prototype = {
      *
      * @method observe
      */
-    observe: function(){
+    observe: function() {
 
       'use strict';
 
@@ -629,7 +631,7 @@ BSDetector.prototype = {
  * @param {object} options
  * @param {function} responseCallback
  */
-if(window === window.top || url2Domain(window.location.hostname) == 'twitter.com'){
+if(window === window.top || url2Domain(window.location.hostname) == 'twitter.com') {
   var bsd = new BSDetector();
 
 
