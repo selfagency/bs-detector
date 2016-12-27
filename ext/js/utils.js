@@ -42,10 +42,11 @@ function xhReq(url, success, failure) {
         // Once done loading.
         if (xhr.readyState === 4) {
             // Call the right feedback based on response.
-            if (xhr.status === 200) {
+            if (xhr.status === 200 && success) {
                 success(xhr.responseText);
-            } else {
-                failure(xhr.responseText);
+            } else if (failure) {
+                    failure(xhr.responseText);
+                }
             }
         }
     };
