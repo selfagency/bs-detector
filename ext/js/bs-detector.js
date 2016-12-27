@@ -8,7 +8,9 @@
 /*jslint browser: true */
 
 
-// If we don't have a browser object, check for chrome.
+/**
+ * If we don't have a chrome object, check for browser and rename.
+ */
 if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
     chrome = browser;
 }

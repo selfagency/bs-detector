@@ -5,12 +5,59 @@
  */
 
 /* global chrome,browser,JSON,$*/
-/*jslint browser: true */
+/* jslint browser: true */
 
 
-// If we don't have a browser object, check for chrome.
+/**
+ * If we don't have a chrome object, check for browser and rename.
+ */
 if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
     chrome = browser;
+}
+
+
+
+/**
+ * @description Add an expanded URL response to the expanded object.
+ * @method addExpanded
+ * @param {string} response The response to add.
+ */
+function addExpanded(response) {
+
+    'use strict';
+
+    expanded.push(response);
+}
+
+
+
+/**
+ * @description Expand a given link.
+ * @method expandLink
+ * @param {string} index The DOM object
+ * @param {string} url The url to expand.
+ */
+ function expandLink(url) {
+
+    'use strict';
+
+    var expandThis = 'https://unshorten.me/json/' + encodeURIComponent(url);
+    xhReq(expandThis, addExpanded);
+}
+
+
+
+/**
+ * @description Expand a given set of links.
+ * @method expandLinks
+ * @param {string} request The set of links to expand.
+ */
+ function expandLinks(request) {
+
+    'use strict';
+
+    toExpand = request.shortLinks.split(',');
+    $.each(expandLink);
 }
 
 var
@@ -36,23 +83,12 @@ var
 
 
 
-function xhReq(url, callback) {
-
-    'use strict';
-
-    var xhr = new XMLHttpRequest();
-    xhr.overrideMimeType('application/json');
-    xhr.open('GET', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            callback(xhr.responseText);
-        }
-    };
-    xhr.send(null);
-}
-
-
-
+/**
+ * @description Make the JSON call to expand a link.
+ * @method xhReq
+ * @param {string} url The external URL.
+ * @param {callback} callback The callback on successful response.
+ */
 xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
 
     'use strict';
@@ -97,39 +133,11 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
 
 
 
-function addExpanded(response) {
-
-    'use strict';
-
-    expanded.push(response);
-    // console.log('api response: ' + response);
-}
-
-
-
-function expandLink(index, url) {
-
-    'use strict';
-
-    // console.log('url to expand: ' + url);
-    var expandThis = 'https://unshorten.me/json/' + encodeURIComponent(url);
-    // console.log('api call: ' + expandThis)
-    xhReq(expandThis, addExpanded);
-}
-
-
-
-function expandLinks(request) {
-
-    'use strict';
-
-    toExpand = request.shortLinks.split(',');
-    // console.log('incoming data: ' + toExpand);
-    $.each(toExpand, expandLink);
-}
-
-
-
+/**
+ * @description Add listeners to be called from bs-detector.js.
+ * @method chrome.runtime.onMessage.addListener
+ * @param {function}
+ */
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     'use strict';
@@ -152,8 +160,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 
 
-// toggle display of the warning UI when the pageAction is clicked
-chrome.pageAction.onClicked.addListener(function (tab) {
+/**
+ * @description Toggle display of the warning UI when the pageAction is clicked.
+ * @method chrome.pageAction.onClicked.addListener
+ * @param {function}
+ */
+ chrome.pageAction.onClicked.addListener(function (tab) {
 
     'use strict';
 
