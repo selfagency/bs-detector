@@ -45,10 +45,9 @@ function xhReq(url, success, failure) {
             if (xhr.status === 200 && success) {
                 success(xhr.responseText);
             } else if (failure) {
-                    failure(xhr.responseText);
-                }
+                failure(xhr.responseText);
             }
         }
-    };
+    }
     xhr.send(null);
 }
