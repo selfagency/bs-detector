@@ -205,13 +205,13 @@ BSDetector.prototype = {
         'use strict';
 
         var shorts = this.shorts;
-        var selectors = $('a[href]').filter(function(index, a) {
-            var matches = shorts.some(function(shortener) {
+        var selectors = $('a[href]').filter(function (index, a) {
+            var matches = shorts.some(function (shortener) {
                 return a.hostname.endsWith(shortener);
             });
             return $.uniqueSort(matches);
         })
-        .each(function(index, a) {
+        .each(function (index, a) {
             bsd.toExpand.push(a.href);
         });
     },
@@ -542,7 +542,7 @@ BSDetector.prototype = {
      *
      * @method observerCallback
      */
-    observerCallback: function() {
+    observerCallback: function () {
 
       'use strict';
 
@@ -556,7 +556,7 @@ BSDetector.prototype = {
      *
      * @method observerExec
      */
-    observerExec: function() {
+    observerExec: function () {
 
       'use strict';
 
@@ -571,7 +571,7 @@ BSDetector.prototype = {
      *
      * @method observe
      */
-    observe: function() {
+    observe: function () {
 
       'use strict';
 
