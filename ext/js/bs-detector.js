@@ -438,7 +438,7 @@ BSDetector.prototype = {
             if (bsd.siteId === 'facebook') {
 
                 testLink = decodeURIComponent(this.href);
-                if(matches = bsd.lfbRegExp.exec(this.href)) {
+                if (matches = bsd.lfbRegExp.exec(this.href)) {
                     thisUrl = decodeURIComponent(matches[1]);
                 }
                 if (thisUrl !== '') {
@@ -631,31 +631,32 @@ BSDetector.prototype = {
  * @param {object} options
  * @param {function} responseCallback
  */
-if(window === window.top || url2Domain(window.location.hostname) == 'twitter.com') {
-  var bsd = new BSDetector();
+if (window === window.top || url2Domain(window.location.hostname) == 'twitter.com') {
+    var bsd = new BSDetector();
 
 
-  /**
-    * @description Grab data from background and execute extension
-    *
-    * @method
-    * @param {string}
-    */
-  chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
+    /**
+     * @description Grab data from background and execute extension
+     *
+     * @method
+     * @param {string}
+     */
+    chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
 
-    'use strict';
+        'use strict';
 
-    bsd.data = state.sites;
-    bsd.shorts = state.shorteners;
+        bsd.data = state.sites;
+        bsd.shorts = state.shorteners;
 
-    // Data loaded, start execution.
-    $(document).ready(function () {
+        // Data loaded, start execution.
+        $(document).ready(function () {
 
-      bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
-      bsd.execute();
+            bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
+            bsd.execute();
+        });
     });
-  });
 }
+
 
 
 /**
