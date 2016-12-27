@@ -645,15 +645,17 @@ if (window === window.top || url2Domain(window.location.hostname) == 'twitter.co
 
         'use strict';
 
-        bsd.data = state.sites;
-        bsd.shorts = state.shorteners;
+        // If we're ready, start loading data.
+        if (state != 'undefined' && state.sites != 'undefined' && state.shorteners != 'undefined') {
+            bsd.data = state.sites;
+            bsd.shorts = state.shorteners;
 
-        // Data loaded, start execution.
-        $(document).ready(function () {
-
-            bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
-            bsd.execute();
-        });
+            // Data loaded, start execution.
+            $(document).ready(function () {
+                bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
+                bsd.execute();
+            });
+        }
     });
 }
 
