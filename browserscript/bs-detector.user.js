@@ -10,106 +10,32 @@
 // @require             https://raw.githubusercontent.com/bs-detector/bs-detector/master/ext/js/lib/jquery-3.1.1.slim.min.js
 // ==/UserScript==
 
+console.log('a');
 /**
  * Account for possible jquery conflicts.
  */
 this.$ = this.jQuery = jQuery.noConflict(true);
 
-
-/**
- * IE9 and up support for CustomEvent, create the function if it doesn't exist.
- */
-(function () {
-    if ( typeof window.CustomEvent === 'function' ) return false;
-
-    function CustomEvent ( event, params ) {
-        params = params || { bubbles: false, cancelable: false, detail: undefined };
-        var evt = window.createEvent('CustomEvent');
-        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-        return evt;
-    }
-
-    CustomEvent.prototype = window.Event.prototype;
-    window.CustomEvent = CustomEvent;
-})();
-
-/**
- * Given a function, get the arg list out of it.
- */
-function _getArgs(func) {
-    // First match everything inside the function argument parens.
-    var args = func.toString().match(/function\s.*?\(([^)]*)\)/)[1];
-    // Split the arguments string into an array comma delimited.
-    return args.split(',').map(function(arg) {
-        // Ensure no inline comments are parsed and trim the whitespace.
-        return arg.replace(/\/\*.*\*\//, '').trim();
-    }).filter(function(arg) {
-        // Ensure no undefined values are added.
-        return arg;
-    });
-}
+console.log('b');
 
 /**
  * Chrome function mockups - used here to make it easier to copy and
  * paste from the standard extension to GM implementation outside of context.
- * When we copy code over, replace chrome calls with underscored functions.
+
+var CSS_FILES = [
+    '//github.com/bs-detector/bs-detector/raw/master/ext/css/bs-detector.css'
+];
  */
 
-function _chrome_extension_getURL(url) {
+/**
+ * Get the extension URL from github.
+function chrome.extension.getURL(url) {
     var EXT_URL = '//raw.githubusercontent.com/bs-detector/bs-detector/master/ext';
     return EXT_URL + url;
 }
-
-function _chrome_webNavigation_onDOMContentLoaded_addListener(callback, filter) {
-    // Add the event listener for content loaded.
-    // See: https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded
-    window.addEventListener('DOMContentLoaded', callback, false);
-}
-
-function _chrome_runtime_onMessage_addListener(callback) {
-    // Add the event listener for content loaded.
-    var eventFunction = function (e) {
-        // Add the details as args.
-        var passArgs = [];
-        var args = _getArgs(callback);
-        args.forEach( function (argName) {
-            if (e.detail.hasOwnProperty(argName)) {
-                passArgs.push(e.detail[argName]);
-            }
-            else {
-                passArgs.push('');
-            }
-        });
-        // Add the callback and functions defined for it.
-        callback.apply(this, passArgs);
-    }
-    window.addEventListener('_sendMessage', eventFunction, false);
-}
-
-function _chrome_runtime_sendMessage(extId, message, options, callback) {
-    var response = '';
-    // Make the new event.
-    var event = new CustomEvent('_sendMessage', {
-        detail: {
-            message: message,
-            request: message,
-            sender: 'sender',
-            sendResponse: function (message) {
-                response = message;
-            }
-        },
-        bubbles: false,
-        cancelable: false
-    });
-    // Dispatch the new event.
-    window.dispatchEvent(event);
-    // And make the callback with the results.
-    if (callback) {
-        callback(response);
-    }
-}
-
-/**
+function chrome.runtime.sendMessage(extensionId, message, options, callback) {}
+function chrome.runtime.onMessage.addListener(callback) {}
+function chrome.webNavigation.onDOMContentLoaded.addListener(callback) {}
 function chrome.pageAction.show(tabId) {}
 function chrome.tabs.sendMessage(tabId, message, options, callback) {}
  */
@@ -228,7 +154,7 @@ var
  * @param {string} url The external URL.
  * @param {callback} callback The callback on successful response.
  */
-xhReq(_chrome_extension_getURL('/data/data.json'), function (file) {
+xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
 
     'use strict';
 
@@ -249,7 +175,7 @@ xhReq(_chrome_extension_getURL('/data/data.json'), function (file) {
     }
 
     if (domainList.length > 0) {
-        _chrome_webNavigation_onDOMContentLoaded_addListener(function (e) {
+        chrome.webNavigation.onDOMContentLoaded.addListener(function (e) {
             var domain;
             if (e.frameId === 0) {
                 chrome.pageAction.show(e.tabId);
@@ -276,7 +202,7 @@ xhReq(_chrome_extension_getURL('/data/data.json'), function (file) {
  * @method chrome.runtime.onMessage.addListener
  * @param {function}
  */
-_chrome_runtime_onMessage_addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     'use strict';
 
@@ -522,7 +448,7 @@ BSDetector.prototype = {
 
             this.debug('this.toExpand[]: ', this.toExpand);
 
-            _chrome_runtime_sendMessage(null, {
+            chrome.runtime.sendMessage(null, {
                 'operation': 'expandLinks',
                 'shortLinks': this.toExpand.toString()
             }, null, function (response) {
@@ -934,7 +860,7 @@ if (window === window.top || url2Domain(window.location.hostname) == 'twitter.co
      * @method
      * @param {string}
      */
-    _chrome_runtime_sendMessage(null, {'operation': 'passData'}, null, function (state) {
+    chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
 
         'use strict';
 
@@ -962,7 +888,7 @@ if (window === window.top || url2Domain(window.location.hostname) == 'twitter.co
  * @param {function}
  */
 if (window.top === window) {
-    _chrome_runtime_onMessage_addListener(function (message) {
+    chrome.runtime.onMessage.addListener(function (message) {
 
         'use strict';
 
