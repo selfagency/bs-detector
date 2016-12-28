@@ -16,7 +16,6 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 
-
 /**
  * IE9 and up support for CustomEvent, create the function if it doesn't exist.
  */
@@ -33,8 +32,6 @@ this.$ = this.jQuery = jQuery.noConflict(true);
     CustomEvent.prototype = window.Event.prototype;
     window.CustomEvent = CustomEvent;
 })();
-
-
 
 /**
  * Given a function, get the arg list out of it.
@@ -65,14 +62,8 @@ function _chrome_extension_getURL(url) {
 
 function _chrome_webNavigation_onDOMContentLoaded_addListener(callback, filter) {
     // Add the event listener for content loaded.
-    $(document).ready(function() {
-        // Make the call back.
-        var event = new Object();
-        event.url = window.location.href;
-        event.frameId = 0;
-        event.tabId = 0;
-        callback(event);
-    });
+    // See: https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded
+    window.addEventListener('DOMContentLoaded', callback, false);
 }
 
 function _chrome_runtime_onMessage_addListener(callback) {
@@ -257,8 +248,6 @@ xhReq(_chrome_extension_getURL('/data/data.json'), function (file) {
         }
     }
 
-console.log('loading');
-console.log(siteList);
     if (domainList.length > 0) {
         _chrome_webNavigation_onDOMContentLoaded_addListener(function (e) {
             var domain;
@@ -271,7 +260,7 @@ console.log(siteList);
                       type: siteList[domain].type
                   });
                 } else {
-                  console.debug('No data found for domain.', domain, e);
+                  console.debug('no data found for domain', domain, e);
                 }
             }
         }, {
@@ -333,7 +322,7 @@ function BSDetector() {
     this.currentUrl = '';
     this.data = [];
     this.dataType = '';
-    this.debugActive = true;
+    this.debugActive = false;
     this.expandLinks = null;
     this.expanded = {};
     this.flagState = 0; // 0 initial, 1 open, -1 hidden
@@ -949,8 +938,6 @@ if (window === window.top || url2Domain(window.location.hostname) == 'twitter.co
 
         'use strict';
 
-console.log('state');
-console.log(state);
         // If we're ready, start loading data.
         if (state != 'undefined' && state.sites != 'undefined' && state.shorteners != 'undefined') {
             bsd.data = state.sites;
