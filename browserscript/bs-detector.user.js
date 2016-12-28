@@ -118,14 +118,10 @@ function _chrome_runtime_sendMessage(extId, message, options, callback) {
     }
 }
 
-function _chrome_pageAction_show(tabId) {
-    // Light the icon up.
-    // For Greasemonkey - do nothing, we don't have a tab to light.
-}
-
-function _chrome_tabs_sendMessage(tabId, message, options, callback) {
-    _chrome_runtime_sendMessage(null, message, null, callback);
-}
+/**
+function chrome.pageAction.show(tabId) {}
+function chrome.tabs.sendMessage(tabId, message, options, callback) {}
+ */
 
 /**
  * Utility functions needed by the front and backends of the extension.
@@ -267,10 +263,10 @@ console.log(siteList);
         _chrome_webNavigation_onDOMContentLoaded_addListener(function (e) {
             var domain;
             if (e.frameId === 0) {
-                _chrome_pageAction_show(e.tabId);
+                chrome.pageAction.show(e.tabId);
                 domain = url2Domain(e.url);
                 if (domain && siteList[domain]) {
-                  _chrome_tabs_sendMessage(e.tabId, {
+                  chrome.tabs.sendMessage(e.tabId, {
                       operation: 'flagSite',
                       type: siteList[domain].type
                   });
