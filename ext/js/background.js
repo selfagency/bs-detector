@@ -23,11 +23,10 @@ if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
  * @param {string} request The set of links to expand.
  * @return {promise} A Deferred promise to allow sending after all links processed.
  */
- function expandLinks(request) {
+ function expandLinks(request, success) {
 
     'use strict';
 
-    var defer = new $.Deferred();
     var links = request.shortLinks.split(',');
     // Loop over each link to expand it.
     $.each(links, function (index, url) {
@@ -35,13 +34,9 @@ if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
         // Make the AJAX call to expand, and handle response after.
         xhReq(expandThis, function (response) {
             expanded.push(response);
-            // Is that the last link?
-            if ((index + 1) >= links.length) {
-                defer.resolve();
-            }
+            success();
         });
     });
-    return defer.promise();
 }
 
 var
@@ -135,7 +130,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         case 'expandLinks':
             // Call link expanding, returning only
             // once all the links have been completed.
-            expandLinks(request).done(function () {
+            expandLinks(request, function () {
                 sendResponse({
                     expandedLinks: expanded
                 });
