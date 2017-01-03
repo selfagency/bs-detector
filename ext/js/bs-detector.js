@@ -233,7 +233,7 @@ BSDetector.prototype = {
 
             this.debug('this.toExpand[]: ', this.toExpand);
 
-            chrome.runtime.sendMessage(null, {
+            ext_runtimeSendMessage(null, {
                 'operation': 'expandLinks',
                 'shortLinks': this.toExpand.toString()
             }, null, function (response) {
@@ -625,9 +625,8 @@ BSDetector.prototype = {
 
 /**
  * @description Grab data from background and execute extension
- * @link https://developer.chrome.com/extensions/runtime#method-sendMessage
  *
- * @method chrome.runtime.sendMessage
+ * @method ext_runtimeSendMessage
  * @param {string} extensionId
  * @param {mixed} message
  * @param {object} options
@@ -643,7 +642,7 @@ if (window === window.top || url2Domain(window.location.hostname) === 'twitter.c
      * @method
      * @param {string}
      */
-    chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
+    ext_runtimeSendMessage(null, {'operation': 'passData'}, null, function (state) {
 
         'use strict';
 
@@ -665,13 +664,12 @@ if (window === window.top || url2Domain(window.location.hostname) === 'twitter.c
 
 /**
  * @description Listen for messages but only in the top frame
- * @link https://developer.chrome.com/extensions/runtime#event-onMessage
  *
- * @method chrome.runtime.onMessage.addListener
+ * @method ext_onRuntimeMessageAddListener
  * @param {function}
  */
 if (window.top === window) {
-    chrome.runtime.onMessage.addListener(function (message) {
+    ext_onRuntimeMessageAddListener(function (message) {
 
         'use strict';
 

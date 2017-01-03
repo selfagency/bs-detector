@@ -8,14 +8,6 @@
 /* jslint browser: true */
 
 
-/**
- * If we don't have a chrome object, check for browser and rename.
- */
-if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
-    chrome = browser;
-}
-
-
 
 /**
  * @description Expand a given set of links.
@@ -68,7 +60,7 @@ var
  * @param {string} url The external URL.
  * @param {callback} callback The callback on successful response.
  */
-xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
+xhReq(ext_getExtensionURL('/data/data.json'), function (file) {
 
     'use strict';
 
@@ -89,13 +81,13 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
     }
 
     if (domainList.length > 0) {
-        chrome.webNavigation.onDOMContentLoaded.addListener(function (e) {
+        ext_onDomLoadAddListener(function (e) {
             var domain;
             if (e.frameId === 0) {
-                chrome.pageAction.show(e.tabId);
+                ext_pageActionShow(e.tabId);
                 domain = url2Domain(e.url);
                 if (domain && siteList[domain]) {
-                    chrome.tabs.sendMessage(e.tabId, {
+                    ext_tabsSendMessage(e.tabId, {
                         operation: 'flagSite',
                         type: siteList[domain].type
                     });
@@ -113,10 +105,10 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
 
 /**
  * @description Add listeners to be called from bs-detector.js.
- * @method chrome.runtime.onMessage.addListener
+ * @method ext_onRuntimeMessageAddListener
  * @param {function}
  */
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+ext_onRuntimeMessageAddListener(function (request, sender, sendResponse) {
 
     'use strict';
 
@@ -145,14 +137,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 /**
  * @description Toggle display of the warning UI when the pageAction is clicked.
- * @method chrome.pageAction.onClicked.addListener
+ * @method ext_pageActionClickedAddListener
  * @param {function}
  */
-chrome.pageAction.onClicked.addListener(function (tab) {
+ext_pageActionClickedAddListener(function (tab) {
 
     'use strict';
 
-    chrome.tabs.sendMessage(tab.id, {
+    ext_tabsSendMessage(tab.id, {
         operation: 'toggleFlag'
     });
 });
