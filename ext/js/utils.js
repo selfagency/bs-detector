@@ -17,7 +17,7 @@ function url2Domain(url) {
 
     'use strict';
 
-   if (url) {
+    if (url) {
         url = url.toString().replace(/^(?:https?|ftp)\:\/\//i, '');
         url = url.toString().replace(/^www\./i, '');
         url = url.toString().replace(/\/.*/, '');
@@ -48,6 +48,6 @@ function xhReq(url, success, failure) {
                 failure(xhr.responseText);
             }
         }
-    }
+    };
     xhr.send(null);
 }

@@ -204,8 +204,10 @@ BSDetector.prototype = {
 
         'use strict';
 
-        var shorts = this.shorts;
-        var selectors = $('a[href]').filter(function (index, a) {
+        var
+            shorts = this.shorts,
+            selectors = $('a[href]');
+        $(selectors).filter(function (index, a) {
             var matches = shorts.some(function (shortener) {
                 return a.hostname.endsWith(shortener);
             });
@@ -631,7 +633,7 @@ BSDetector.prototype = {
  * @param {object} options
  * @param {function} responseCallback
  */
-if (window === window.top || url2Domain(window.location.hostname) == 'twitter.com') {
+if (window === window.top || url2Domain(window.location.hostname) === 'twitter.com') {
     var bsd = new BSDetector();
 
 

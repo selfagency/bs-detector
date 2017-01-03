@@ -23,7 +23,7 @@ if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
  * @param {string} request The set of links to expand.
  * @return {promise} A Deferred promise to allow sending after all links processed.
  */
- function expandLinks(request, success) {
+function expandLinks(request, success) {
 
     'use strict';
 
@@ -95,12 +95,12 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
                 chrome.pageAction.show(e.tabId);
                 domain = url2Domain(e.url);
                 if (domain && siteList[domain]) {
-                  chrome.tabs.sendMessage(e.tabId, {
-                      operation: 'flagSite',
-                      type: siteList[domain].type
-                  });
+                    chrome.tabs.sendMessage(e.tabId, {
+                        operation: 'flagSite',
+                        type: siteList[domain].type
+                    });
                 } else {
-                  console.debug('no data found for domain', domain, e);
+                    console.debug('no data found for domain', domain, e);
                 }
             }
         }, {
@@ -148,7 +148,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
  * @method chrome.pageAction.onClicked.addListener
  * @param {function}
  */
- chrome.pageAction.onClicked.addListener(function (tab) {
+chrome.pageAction.onClicked.addListener(function (tab) {
 
     'use strict';
 
