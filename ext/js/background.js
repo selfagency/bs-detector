@@ -5,12 +5,38 @@
  */
 
 /* global chrome,browser,JSON,$*/
-/*jslint browser: true */
+/* jslint browser: true */
 
 
-// If we don't have a browser object, check for chrome.
+/**
+ * If we don't have a chrome object, check for browser and rename.
+ */
 if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
     chrome = browser;
+}
+
+
+
+/**
+ * @description Expand a given set of links.
+ * @method expandLinks
+ * @param {string} request The set of links to expand.
+ * @return {promise} A Deferred promise to allow sending after all links processed.
+ */
+function expandLinks(request, success) {
+
+    'use strict';
+
+    var links = request.shortLinks.split(',');
+    // Loop over each link to expand it.
+    $.each(links, function (index, url) {
+        var expandThis = 'https://unshorten.me/json/' + encodeURIComponent(url);
+        // Make the AJAX call to expand, and handle response after.
+        xhReq(expandThis, function (response) {
+            expanded.push(response);
+            success();
+        });
+    });
 }
 
 var
@@ -36,23 +62,12 @@ var
 
 
 
-function xhReq(url, callback) {
-
-    'use strict';
-
-    var xhr = new XMLHttpRequest();
-    xhr.overrideMimeType('application/json');
-    xhr.open('GET', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            callback(xhr.responseText);
-        }
-    };
-    xhr.send(null);
-}
-
-
-
+/**
+ * @description Make the JSON call to gather data on load.
+ * @method xhReq
+ * @param {string} url The external URL.
+ * @param {callback} callback The callback on successful response.
+ */
 xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
 
     'use strict';
@@ -79,80 +94,60 @@ xhReq(chrome.extension.getURL('/data/data.json'), function (file) {
             if (e.frameId === 0) {
                 chrome.pageAction.show(e.tabId);
                 domain = url2Domain(e.url);
-                if(domain && siteList[domain]){
-                  chrome.tabs.sendMessage(e.tabId, {
-                      operation: 'flagSite',
-                      type: siteList[domain].type
-                  });
+                if (domain && siteList[domain]) {
+                    chrome.tabs.sendMessage(e.tabId, {
+                        operation: 'flagSite',
+                        type: siteList[domain].type
+                    });
                 } else {
-                  console.debug('no data found for domain', domain, e);
+                    console.debug('no data found for domain', domain, e);
                 }
             }
         }, {
-            url: domainList,
-            type: domainList.type
+            url: domainList
         });
     }
 });
 
 
 
-function addExpanded(response) {
-
-    'use strict';
-
-    expanded.push(response);
-    // console.log('api response: ' + response);
-}
-
-
-
-function expandLink(index, url) {
-
-    'use strict';
-
-    // console.log('url to expand: ' + url);
-    var expandThis = 'https://unshorten.me/json/' + encodeURIComponent(url);
-    // console.log('api call: ' + expandThis)
-    xhReq(expandThis, addExpanded);
-}
-
-
-
-function expandLinks(request) {
-
-    'use strict';
-
-    toExpand = request.shortLinks.split(',');
-    // console.log('incoming data: ' + toExpand);
-    $.each(toExpand, expandLink);
-}
-
-
-
+/**
+ * @description Add listeners to be called from bs-detector.js.
+ * @method chrome.runtime.onMessage.addListener
+ * @param {function}
+ */
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     'use strict';
 
     switch (request.operation) {
-    case 'passData':
-        sendResponse({
-            sites: siteList,
-            shorteners: shorts
-        });
+        case 'passData':
+            sendResponse({
+                sites: siteList,
+                shorteners: shorts
+            });
         break;
-    case 'expandLink':
-        expandLinks(request);
-        sendResponse({
-            expandedLinks: expanded
-        });
+        case 'expandLinks':
+            // Call link expanding, returning only
+            // once all the links have been completed.
+            expandLinks(request, function () {
+                sendResponse({
+                    expandedLinks: expanded
+                });
+            });
         break;
     }
+    // Support asynchronous response.
+    return true;
 });
 
 
 
-// toggle display of the warning UI when the pageAction is clicked
+/**
+ * @description Toggle display of the warning UI when the pageAction is clicked.
+ * @method chrome.pageAction.onClicked.addListener
+ * @param {function}
+ */
 chrome.pageAction.onClicked.addListener(function (tab) {
 
     'use strict';

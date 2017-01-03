@@ -8,7 +8,9 @@
 /*jslint browser: true */
 
 
-// If we don't have a browser object, check for chrome.
+/**
+ * If we don't have a chrome object, check for browser and rename.
+ */
 if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
     chrome = browser;
 }
@@ -202,13 +204,17 @@ BSDetector.prototype = {
 
         'use strict';
 
-        $.each(this.shorts, function () {
-            var
-                shortLink = 'a[href*="' + $(this) + '"]';
-
-            $(shortLink).each(function () {
-                bsd.toExpand.push($(this).attr('href'));
+        var
+            shorts = this.shorts,
+            selectors = $('a[href]');
+        $(selectors).filter(function (index, a) {
+            var matches = shorts.some(function (shortener) {
+                return a.hostname.endsWith(shortener);
             });
+            return $.uniqueSort(matches);
+        })
+        .each(function (index, a) {
+            bsd.toExpand.push(a.href);
         });
     },
 
@@ -335,13 +341,13 @@ BSDetector.prototype = {
         }
 
         if (this.dataType === 'caution') {
-            $('body').prepend('<div class="bs-alert bs-caution"></div>');
+            $('body').prepend($('<div class="bs-alert bs-caution">'));
         } else {
-            $('body').prepend('<div class="bs-alert"></div>');
+            $('body').prepend($('<div class="bs-alert">'));
         }
 
-        $('.bs-alert').append('<div class="bs-alert-close">✕</div>');
-        $('.bs-alert').append('<span>' + this.warnMessage + '</span>');
+        $('.bs-alert').append($('<div class="bs-alert-close">').text('✕'));
+        $('.bs-alert').append($('<span class="bs-alert-span">').text(this.warnMessage));
 
         $('.bs-alert-close').on('click', function () {
             $(navs).first().removeClass('bs-alert-shift');
@@ -434,7 +440,7 @@ BSDetector.prototype = {
             if (bsd.siteId === 'facebook') {
 
                 testLink = decodeURIComponent(this.href);
-                if(matches = bsd.lfbRegExp.exec(this.href)){
+                if (matches = bsd.lfbRegExp.exec(this.href)) {
                     thisUrl = decodeURIComponent(matches[1]);
                 }
                 if (thisUrl !== '') {
@@ -478,9 +484,9 @@ BSDetector.prototype = {
         if (!$badlinkWrapper.hasClass('bs-flag')) {
 
             if (this.dataType === 'caution') {
-                $badlinkWrapper.before('<div class="bs-alert-inline warning">' + this.warnMessage + '</div>');
+                $badlinkWrapper.before($('<div class="bs-alert-inline warning">').text(this.warnMessage));
             } else {
-                $badlinkWrapper.before('<div class="bs-alert-inline">' + this.warnMessage + '</div>');
+                $badlinkWrapper.before($('<div class="bs-alert-inline">').text(this.warnMessage));
             }
 
             $badlinkWrapper.addClass('bs-flag');
@@ -538,7 +544,7 @@ BSDetector.prototype = {
      *
      * @method observerCallback
      */
-    observerCallback: function(){
+    observerCallback: function () {
 
       'use strict';
 
@@ -552,7 +558,7 @@ BSDetector.prototype = {
      *
      * @method observerExec
      */
-    observerExec: function(){
+    observerExec: function () {
 
       'use strict';
 
@@ -567,7 +573,7 @@ BSDetector.prototype = {
      *
      * @method observe
      */
-    observe: function(){
+    observe: function () {
 
       'use strict';
 
@@ -627,31 +633,34 @@ BSDetector.prototype = {
  * @param {object} options
  * @param {function} responseCallback
  */
-if(window === window.top || url2Domain(window.location.hostname) == 'twitter.com'){
-  var bsd = new BSDetector();
+if (window === window.top || url2Domain(window.location.hostname) === 'twitter.com') {
+    var bsd = new BSDetector();
 
 
-  /**
-    * @description Grab data from background and execute extension
-    *
-    * @method
-    * @param {string}
-    */
-  chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
+    /**
+     * @description Grab data from background and execute extension
+     *
+     * @method
+     * @param {string}
+     */
+    chrome.runtime.sendMessage(null, {'operation': 'passData'}, null, function (state) {
 
-    'use strict';
+        'use strict';
 
-    bsd.data = state.sites;
-    bsd.shorts = state.shorteners;
+        // If we're ready, start loading data.
+        if (state != 'undefined' && state.sites != 'undefined' && state.shorteners != 'undefined') {
+            bsd.data = state.sites;
+            bsd.shorts = state.shorteners;
 
-    // Data loaded, start execution.
-    $(document).ready(function () {
-
-      bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
-      bsd.execute();
+            // Data loaded, start execution.
+            $(document).ready(function () {
+                bsd.expandLinks = bsd.asynch.bind(null, bsd.getLinks, bsd.processLinks);
+                bsd.execute();
+            });
+        }
     });
-  });
 }
+
 
 
 /**
