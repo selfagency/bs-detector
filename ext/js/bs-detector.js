@@ -8,14 +8,6 @@
 /*jslint browser: true */
 
 
-/**
- * If we don't have a chrome object, check for browser and rename.
- */
-if (typeof chrome === 'undefined' && typeof browser !== 'undefined') {
-    chrome = browser;
-}
-
-
 
 /**
  * @description Class constructor with variable initialisation
