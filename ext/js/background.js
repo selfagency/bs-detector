@@ -4,8 +4,8 @@
  * Licensed under LGPL-3.0 (https://github.com/selfagency/bs-detector/blob/master/LICENSE)
  */
 
-/* global chrome,browser,JSON,$*/
-/* jslint browser: true */
+/*global chrome,browser,JSON,$,console,xhReq*/
+/*jslint browser: true */
 
 
 /**
