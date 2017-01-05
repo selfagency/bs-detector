@@ -4,6 +4,10 @@
 
 **We've been nominated for a Golden Kitty from Product Hunt for Chrome Extension of the Year! [Vote here!](https://www.producthunt.com/@goldenkittymeow/collections/2016-chrome-extension-of-the-year)**
 
+B.S. Detector partners with OpenSources to obtain its source information.
+
+**Help us by submitting source classifications for review at [OpenSources.co](http://www.opensources.co/).**
+
 **B.S. Detector** is a rejoinder to Mark Zuckerberg's dubious claims that Facebook is unable to substantively address the proliferation of fake news on its platform. A browser extension for both Chrome and Mozilla-based browsers, B.S. Detector searches all links on a given webpage for references to unreliable sources, checking against a manually compiled list of domains. It then provides visual warnings about the presence of questionable links or the browsing of questionable websites:
 
 ![bs-detector-alert](http://bsdetector.tech/images/alert.png)
