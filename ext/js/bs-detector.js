@@ -44,8 +44,8 @@ function BSDetector() {
     this.windowUrl = window.location.hostname;
     this.observerRoot = null;
     this.observerFilter = null;
-    this.ownHostRegExp = new RegExp( window.location.host );
-    this.lfbRegExp = new RegExp( /^https?:\/\/l\.facebook\.com\/l\.php\?u=([^&]+)/);
+    this.ownHostRegExp = new RegExp(window.location.host);
+    this.lfbRegExp = new RegExp(/^https?:\/\/l\.facebook\.com\/l\.php\?u=([^&]+)/);
 }
 
 
@@ -66,7 +66,7 @@ BSDetector.prototype = {
         'use strict';
 
         if (this.debugActive === true) {
-            console.debug.apply(null,['[B.S. 💩 Detector] '].concat(arguments));
+            console.debug.apply(null, ['[B.S. 💩 Detector] '].concat(arguments));
         }
     },
 
@@ -207,13 +207,15 @@ BSDetector.prototype = {
         var
             shorts = this.shorts,
             selectors = $('a[href]');
+
         $(selectors).filter(function (index, a) {
             var matches = shorts.some(function (shortener) {
                 return a.hostname.endsWith(shortener);
             });
+
             return $.uniqueSort(matches);
-        })
-        .each(function (index, a) {
+
+        }).each(function (index, a) {
             bsd.toExpand.push(a.href);
         });
     },
@@ -546,11 +548,11 @@ BSDetector.prototype = {
      */
     observerCallback: function () {
 
-      'use strict';
+        'use strict';
 
-      bsd.debug('observerCallback');
-      bsd.observerRoot.mutationSummary("disconnect");
-      bsd.observerExec();
+        bsd.debug('observerCallback');
+        bsd.observerRoot.mutationSummary('disconnect');
+        bsd.observerExec();
     },
 
     /**
@@ -560,12 +562,12 @@ BSDetector.prototype = {
      */
     observerExec: function () {
 
-      'use strict';
+        'use strict';
 
-      bsd.debug('observerExec');
-      this.setAlertOnPosts();
-      window.setTimeout(this.observe,500);
-      window.setTimeout(this.setAlertOnPosts,1000);
+        bsd.debug('observerExec');
+        this.setAlertOnPosts();
+        window.setTimeout(this.observe, 500);
+        window.setTimeout(this.setAlertOnPosts, 1000);
     },
 
     /**
@@ -575,10 +577,10 @@ BSDetector.prototype = {
      */
     observe: function () {
 
-      'use strict';
+        'use strict';
 
-      bsd.debug('observe',bsd.observerCallback,bsd.observerFilter, bsd.observerRoot);
-      bsd.observerRoot.mutationSummary("connect", bsd.observerCallback, bsd.observerFilter);
+        bsd.debug('observe', bsd.observerCallback, bsd.observerFilter, bsd.observerRoot);
+        bsd.observerRoot.mutationSummary('connect', bsd.observerCallback, bsd.observerFilter);
     },
 
     /**
@@ -602,19 +604,19 @@ BSDetector.prototype = {
 
         switch (this.siteId) {
         case 'facebook':
-            this.observerRoot = $("body");
-            this.observerFilter = [{ element:"div" }];
+            this.observerRoot = $('body');
+            this.observerFilter = [{ element: 'div' }];
             break;
         case 'twitter':
-            this.observerRoot = $("div#page-container");
-            this.observerFilter = [{ element:"div" }];
+            this.observerRoot = $('div#page-container');
+            this.observerFilter = [{ element: 'div' }];
             break;
         case 'badSite':
             break;
         case 'none':
         default:
-            this.observerRoot = $("body");
-            this.observerFilter = [{ element:"div" }];
+            this.observerRoot = $('body');
+            this.observerFilter = [{ element: 'div' }];
             break;
         }
 
