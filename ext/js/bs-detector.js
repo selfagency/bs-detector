@@ -31,7 +31,7 @@ function BSDetector() {
     this.currentUrl = '';
     this.data = [];
     this.dataType = '';
-    this.debugActive = false;
+    this.debugActive = true;
     this.expandLinks = null;
     this.expanded = {};
     this.flagState = 0; // 0 initial, 1 open, -1 hidden
@@ -42,10 +42,10 @@ function BSDetector() {
     this.warnMessage = '';
     this.mutationObserver = {};
     this.windowUrl = window.location.hostname;
-    this.observerRoot = null;
-    this.observerFilter = null;
+    //this.observerRoot = null;
+    //this.observerFilter = null;
     this.ownHostRegExp = new RegExp(window.location.host);
-    this.lfbRegExp = new RegExp(/^https?:\/\/l\.facebook\.com\/l\.php\?u=([^&]+)/);
+    this.platform = new Platform(window.location.hostname);
 }
 
 
@@ -115,36 +115,6 @@ BSDetector.prototype = {
 
 
     /**
-     * @description Strip urls down to hostname
-     *
-     * @method cleanUrl
-     * @param {string} url
-     * @return {string}
-     */
-    cleanUrl: function (url) {
-
-        'use strict';
-
-        var
-            testLink = '',
-            thisUrl = '';
-
-        if (this.siteId === 'facebook') {
-            testLink = decodeURIComponent(url).substring(0, 30);
-
-            if (testLink === 'https://l.facebook.com/l.php?u=' || testLink === 'http://l.facebook.com/l.php?u=') {
-                thisUrl = decodeURIComponent(url).substring(30).split('&h=', 1);
-                url = thisUrl;
-            }
-
-        }
-
-        return url2Domain(url);
-    },
-
-
-
-    /**
      * @description Identify current site
      *
      * @method identifySite
@@ -154,19 +124,11 @@ BSDetector.prototype = {
         'use strict';
 
         // currentSite looks for the currentUrl (window.location.hostname) in the JSON data file
-        this.currentUrl = this.cleanUrl(this.windowUrl);
+        this.currentUrl = url2Domain(this.windowUrl);
 
         if (self === top) {
-            switch (this.currentUrl) {
-            case 'www.facebook.com':
-            case 'facebook.com':
-                this.siteId = 'facebook';
-                break;
-            case 'twitter.com':
-                this.siteId = 'twitter';
-                break;
-            default:
-                this.siteId = 'none';
+
+            if (this.platform.name === 'none') {
                 // Try to find the site in data
                 this.currentSite = this.data[this.currentUrl];
                 if (typeof this.currentSite === 'undefined') {
@@ -182,7 +144,6 @@ BSDetector.prototype = {
                     this.siteId = 'badlink';
                     this.dataType = this.currentSite.type;
                 }
-                break;
             }
         }
 
@@ -408,7 +369,7 @@ BSDetector.prototype = {
             thisUrl = $element.attr('href');
         }
         if (thisUrl !== null && thisUrl !== undefined) {
-            thisUrl = this.cleanUrl(thisUrl);
+            thisUrl = this.platform.cleanUrl(thisUrl);
         }
 
         return thisUrl;
@@ -438,18 +399,7 @@ BSDetector.prototype = {
                 $(this).attr('data-external', true);
             }
 
-            // convert facebook urls
-            if (bsd.siteId === 'facebook') {
-
-                testLink = decodeURIComponent(this.href);
-                if (matches = bsd.lfbRegExp.exec(this.href)) {
-                    thisUrl = decodeURIComponent(matches[1]);
-                }
-                if (thisUrl !== '') {
-                    $(this).attr('data-external', true);
-                    $(this).attr('data-expanded-url', thisUrl);
-                }
-            }
+            this.platform.expandExternalLinks($(this), this.href);
         });
 
         // process external links
@@ -510,12 +460,26 @@ BSDetector.prototype = {
         bsd.targetLinks();
 
         $('a[data-is-bs="true"]').each(function () {
+
+            var
+                index = 0,
+                itemSelectors = this.platform.config.itemSelectors;
+
             bsd.dataType = $(this).attr('data-bs-type');
             bsd.warningMsg();
 
             bsd.debug('Current warning link: ', this);
             bsd.debug('bsd.dataType: ', bsd.dataType);
 
+            if (itemSelectors.length > 0) {
+                for (index in itemSelectors) {
+
+                    if ($(this).parents(itemSelectors[index].parent).length >= 0) {
+                        bsd.flagPost($(this).closest(itemSelectors[index].body));
+                    }
+                }
+            }
+            /*
             switch (bsd.siteId) {
             case 'facebook':
                 if ($(this).parents('._1dwg').length >= 0) {
@@ -535,7 +499,7 @@ BSDetector.prototype = {
                 break;
             default:
                 break;
-            }
+            }*/
         });
 
         this.firstLoad = false;
@@ -579,8 +543,12 @@ BSDetector.prototype = {
 
         'use strict';
 
-        bsd.debug('observe', bsd.observerCallback, bsd.observerFilter, bsd.observerRoot);
-        bsd.observerRoot.mutationSummary('connect', bsd.observerCallback, bsd.observerFilter);
+        var
+            observerRoot = this.platform.config.observer.root,
+            observerFilter = this.platform.config.observer.filter;
+
+        bsd.debug('observe', bsd.observerCallback, observerFilter, observerRoot);
+        observerRoot.mutationSummary('connect', bsd.observerCallback, observerFilter);
     },
 
     /**
@@ -592,6 +560,8 @@ BSDetector.prototype = {
 
         'use strict';
 
+        this.debug(this.platform.expandExternalLinks);
+
         if (this.firstLoad === true) {
             this.identifySite();
 
@@ -601,7 +571,7 @@ BSDetector.prototype = {
 
             this.firstLoad = false;
         }
-
+/*
         switch (this.siteId) {
         case 'facebook':
             this.observerRoot = $('body');
@@ -618,7 +588,7 @@ BSDetector.prototype = {
             this.observerRoot = $('body');
             this.observerFilter = [{ element: 'div' }];
             break;
-        }
+        }*/
 
         this.observerExec();
 

@@ -46,4 +46,4 @@ gulp.task('watch', function () {
 
 gulp.task('minifier', ['minify_json', 'minify_css']);
 gulp.task('build', ['minifier']);
-gulp.task('default', ['build']);
+gulp.task('default', ['blank', 'build']);
