@@ -399,7 +399,7 @@ BSDetector.prototype = {
                 $(this).attr('data-external', true);
             }
 
-            this.platform.expandExternalLinks($(this), this.href);
+            bsd.platform.expandExternalLinks($(this), this.href);
         });
 
         // process external links
@@ -463,43 +463,19 @@ BSDetector.prototype = {
 
             var
                 index = 0,
-                itemSelectors = this.platform.config.itemSelectors;
+                itemSelectors = bsd.platform.config.itemSelectors;
 
             bsd.dataType = $(this).attr('data-bs-type');
             bsd.warningMsg();
 
-            bsd.debug('Current warning link: ', this);
-            bsd.debug('bsd.dataType: ', bsd.dataType);
-
             if (itemSelectors.length > 0) {
                 for (index in itemSelectors) {
 
-                    if ($(this).parents(itemSelectors[index].parent).length >= 0) {
+                    if ($(this).parents(itemSelectors[index].parent).length > 0) {
                         bsd.flagPost($(this).closest(itemSelectors[index].body));
                     }
                 }
             }
-            /*
-            switch (bsd.siteId) {
-            case 'facebook':
-                if ($(this).parents('._1dwg').length >= 0) {
-                    bsd.flagPost($(this).closest('.mtm'));
-                }
-                if ($(this).parents('.UFICommentContent').length >= 0) {
-                    bsd.flagPost($(this).closest('.UFICommentBody'));
-                }
-                break;
-            case 'twitter':
-                if ($(this).parents('.tweet').length >= 0) {
-                    bsd.flagPost($(this).closest('.js-tweet-text-container'));
-                }
-                break;
-            case 'badlink':
-            case 'none':
-                break;
-            default:
-                break;
-            }*/
         });
 
         this.firstLoad = false;
@@ -514,8 +490,14 @@ BSDetector.prototype = {
 
         'use strict';
 
-        bsd.debug('observerCallback');
-        bsd.observerRoot.mutationSummary('disconnect');
+        var
+            observerRoot = bsd.platform.config.observer.root,
+            observerRootObj = $(observerRoot);
+
+        if (typeof observerRootObj == 'object') {
+            observerRootObj.mutationSummary('disconnect');
+        }
+
         bsd.observerExec();
     },
 
@@ -528,10 +510,9 @@ BSDetector.prototype = {
 
         'use strict';
 
-        bsd.debug('observerExec');
         this.setAlertOnPosts();
-        window.setTimeout(this.observe, 500);
-        window.setTimeout(this.setAlertOnPosts, 1000);
+        window.setTimeout(bsd.observe, 500);
+        window.setTimeout(bsd.setAlertOnPosts, 1000);
     },
 
     /**
@@ -544,11 +525,13 @@ BSDetector.prototype = {
         'use strict';
 
         var
-            observerRoot = this.platform.config.observer.root,
-            observerFilter = this.platform.config.observer.filter;
+            observerRoot = bsd.platform.config.observer.root,
+            observerRootObj = $(observerRoot),
+            observerFilter = bsd.platform.config.observer.filter;
 
-        bsd.debug('observe', bsd.observerCallback, observerFilter, observerRoot);
-        observerRoot.mutationSummary('connect', bsd.observerCallback, observerFilter);
+        if (typeof observerRootObj == 'object') {
+            observerRootObj.mutationSummary('connect', bsd.observerCallback, observerFilter);
+        }
     },
 
     /**
@@ -560,8 +543,6 @@ BSDetector.prototype = {
 
         'use strict';
 
-        this.debug(this.platform.expandExternalLinks);
-
         if (this.firstLoad === true) {
             this.identifySite();
 
@@ -571,24 +552,6 @@ BSDetector.prototype = {
 
             this.firstLoad = false;
         }
-/*
-        switch (this.siteId) {
-        case 'facebook':
-            this.observerRoot = $('body');
-            this.observerFilter = [{ element: 'div' }];
-            break;
-        case 'twitter':
-            this.observerRoot = $('div#page-container');
-            this.observerFilter = [{ element: 'div' }];
-            break;
-        case 'badSite':
-            break;
-        case 'none':
-        default:
-            this.observerRoot = $('body');
-            this.observerFilter = [{ element: 'div' }];
-            break;
-        }*/
 
         this.observerExec();
 

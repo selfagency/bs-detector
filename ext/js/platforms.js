@@ -2,7 +2,7 @@ var platforms = {
     none: {
         itemSelectors: [],
         observer: {
-            root: 'div#page-container',
+            root: '',
             filter: []
         },
         externalLinkPattern: null,
@@ -77,7 +77,7 @@ function Platform(platformUrl) {
         url = platformUrl;
 
 
-    switch (this.currentUrl) {
+    switch (url) {
         case 'www.facebook.com':
         case 'facebook.com':
             this.name = 'facebook';
