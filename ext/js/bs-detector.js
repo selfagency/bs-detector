@@ -1,5 +1,5 @@
 /*!
- * B.S. Detector v0.2.7 (http://bsdetector.tech)
+ * B.S. Detector v0.2.8 (http://bsdetector.tech)
  * Copyright 2016 The B.S. Detector Authors (https://github.com/selfagency/bs-detector/graphs/contributors)
  * Licensed under LGPL-3.0 (https://github.com/selfagency/bs-detector/blob/master/LICENSE)
  */
@@ -485,7 +485,7 @@ BSDetector.prototype = {
     observerCallback: function () {
 
         'use strict';
-
+      
         var
             observerRoot = bsd.platform.config.observer.root,
             observerRootObj = $(observerRoot);
@@ -493,7 +493,6 @@ BSDetector.prototype = {
         if (typeof observerRootObj == 'object') {
             observerRootObj.mutationSummary('disconnect');
         }
-
         bsd.observerExec();
     },
 
@@ -519,7 +518,7 @@ BSDetector.prototype = {
     observe: function () {
 
         'use strict';
-
+      
         var
             observerRoot = bsd.platform.config.observer.root,
             observerRootObj = $(observerRoot),
