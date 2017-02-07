@@ -31,7 +31,7 @@ function BSDetector() {
     this.currentUrl = '';
     this.data = [];
     this.dataType = '';
-    this.debugActive = true;
+    this.debugActive = false;
     this.expandLinks = null;
     this.expanded = {};
     this.flagState = 0; // 0 initial, 1 open, -1 hidden
@@ -42,8 +42,6 @@ function BSDetector() {
     this.warnMessage = '';
     this.mutationObserver = {};
     this.windowUrl = window.location.hostname;
-    //this.observerRoot = null;
-    //this.observerFilter = null;
     this.ownHostRegExp = new RegExp(window.location.host);
     this.platform = new Platform(window.location.hostname);
 }
@@ -273,8 +271,6 @@ BSDetector.prototype = {
         } else {
             this.warnMessage = '⚠️ Warning: This may not be a reliable source. (' + classType + ')';
         }
-
-        this.debug('this.warnMessage: ', this.warnMessage);
     },
 
 
