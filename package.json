@@ -22,7 +22,7 @@
   "homepage": "https://github.com/selfagency/bs-detector#readme",
   "devDependencies": {
     "del": "^2.2.2",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-clean-css": "^2.0.13",
     "gulp-json-minify": "^1.0.5",
     "gulp-minify": "0.0.14",
